@@ -4,11 +4,13 @@ package org.usfirst.frc.team3218.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -20,6 +22,7 @@ import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
+	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
