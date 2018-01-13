@@ -15,6 +15,7 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
+	static double y;
 	 static Joystick Joystick = new Joystick(RobotMap.JoyStickPort1);
 	// Button button = new JoystickButton(stick, buttonNumber);
 
@@ -44,12 +45,12 @@ public class OI {
 	 }
 	 public static double getJoystickY(){
 			
-		 return -Joystick.getY();
+			return  -Joystick.getY();
 	
 	 }
 	 public static double getJoystickZ(){
 			
-		 return -Joystick.getZ();
+		 return Joystick.getZ();
 	
 	 }
 	 
