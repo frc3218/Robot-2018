@@ -1,17 +1,16 @@
 
 package org.usfirst.frc.team3218.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
+
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -99,14 +98,23 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		driveTrain.rightEnc.reset();
+		driveTrain.leftEnc.reset();
 	}
-
+	
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
+    	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
+		SmartDashboard.putNumber("Left Encoder:", Robot.driveTrain.leftEnc.get());
+		SmartDashboard.putNumber("Right Encoder:", Robot.driveTrain.rightEnc.get());
+		SmartDashboard.putNumber("Left Rate", Robot.driveTrain.leftEnc.getRate());
+		SmartDashboard.putNumber("Right Rate", Robot.driveTrain.rightEnc.getRate());
+		
 	}
 
 	/**

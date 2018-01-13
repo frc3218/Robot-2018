@@ -8,8 +8,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
+
+
 public class DriveWithJoystick extends Command {
 
+// Difference Commands
+	double maxDif;
+	double encoderFinal;
+	
     public DriveWithJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,10 +28,9 @@ public class DriveWithJoystick extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	//encoderFinal = (Robot.driveTrain.leftEnc.getRate()-Robot.driveTrain.rightEnc.getRate()/maxDif);
     	Robot.driveTrain.drive(OI.getJoystickY(), OI.getJoystickZ());
-    	System.out.println("Y:" + OI.getJoystickY());
-    	System.out.println("Z:" + OI.getJoystickZ());
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
