@@ -25,4 +25,6 @@ public class RobotMap {
 	public static int encoderLeftPortB = 3;
 	public static int encoderRightPortA = 0;
 	public static int encoderRightPortB = 1;
+	//Analog Channels
+	public static int sonarAPort = 0;
 }

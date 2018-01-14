@@ -1,37 +1,31 @@
 package org.usfirst.frc.team3218.robot.commands.DriveTrain;
 
-import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ *	at 5ft foward it is 21in up and 12 to 14 down
  */
+public class SonarTest extends Command {
 
-
-public class DriveWithJoystick extends Command {
-
-// Difference Commands
-	double maxDif;
-	double encoderFinal;
-	
-    public DriveWithJoystick() {
+    public SonarTest() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	
+    	
     }
 
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//encoderFinal = (Robot.driveTrain.leftEnc.getRate()-Robot.driveTrain.rightEnc.getRate()/maxDif);
-    	Robot.driveTrain.drive(OI.getJoystickY(), OI.getJoystickZ());
+    	SmartDashboard.putNumber("Average Voltage", Robot.driveTrain.sonarA.getAverageVoltage());
+    	SmartDashboard.putNumber("Voltage", Robot.driveTrain.sonarA.getVoltage());
     	
     }
 
@@ -42,6 +36,7 @@ public class DriveWithJoystick extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    
     }
 
     // Called when another command which requires one or more of the same
