@@ -2,6 +2,8 @@
 package org.usfirst.frc.team3218.robot;
 
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 
@@ -27,7 +29,7 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -35,9 +37,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
+		chooser.addDefault("Nothing", new Nothing());
+		chooser.addObject("Cross Auto Line", new DriveWithJoystick());
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		
 	}
 
 	/**
@@ -68,8 +73,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		driveTrain.leftEnc.setDistancePerPulse(1/73);
+		driveTrain.rightEnc.setDistancePerPulse(1/73);
 
+		autonomousCommand = chooser.getSelected();
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
