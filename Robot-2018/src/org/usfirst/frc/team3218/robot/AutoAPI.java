@@ -8,7 +8,7 @@ public class AutoAPI {
  public final static float AUTOLINE = 120;
  public final static float WALL_TO_SWITCH = 140.188f;
  public final static float WALL_TO_PLATFORM_CHANNEL = 235.25f;
-public final static float MID_LINE = 323.16f;
+ public final static float MID_LINE = 323.16f;
  
 	
 	
@@ -26,11 +26,13 @@ public final static float MID_LINE = 323.16f;
  	
 	}
 	
+ 	
 	public static void rotate(float angle, float speed){
 		
 		speed *= Math.signum(angle);
 		
 	}
+	
 	
 	public static void moveToHeight(){
 		
