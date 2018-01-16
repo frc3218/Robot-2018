@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3218.robot.subsystems;
 
 import org.usfirst.frc.team3218.robot.Robot;
-import org.usfirst.frc.team3218.robot.commands.vision.Pixy;
+import org.usfirst.frc.team3218.robot.commands.Vision.Pixy;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

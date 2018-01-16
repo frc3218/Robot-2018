@@ -4,6 +4,7 @@ package org.usfirst.frc.team3218.robot;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final Vision vision = new Vision();
 	public static OI oi;
 
 	Command autonomousCommand;

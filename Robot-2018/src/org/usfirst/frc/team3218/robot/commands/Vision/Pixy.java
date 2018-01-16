@@ -17,7 +17,7 @@ public class Pixy extends Command {
 	public static final int SAMPLE_COUNT = 10;
 	float smoothingFactor=0.5f;//figure out the best number for this
 	int maxBytes = 14 * MAX_OBJECTS + 2;
-	public I2C pixyi2c = new I2C(I2C.Port.kOnboard, 0x54);
+
 	char currentChecksum;
 	char currentSig;
 	char currentX;
@@ -31,7 +31,7 @@ public class Pixy extends Command {
 	
 	
 	//[signature] [sampleCount]
-	Blob blob = new Blob();
+	//Blob blob = new Blob();
 	public Blob[] blobArray = new Blob[MAX_SIGNATURES];
 	
     public Pixy() {
@@ -42,18 +42,27 @@ public class Pixy extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	for(int i = 0; i < blobArray.length; i++)
+    	{
+    		blobArray[i]=new Blob();
+    	}
 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     	byte[] pixyValues = new byte[maxBytes];
-    	pixyi2c.readOnly(pixyValues, maxBytes);
-	
+    	for(int i = 0; i< pixyValues.length;i++){
+    		pixyValues[i] = 1;
+    	}
+    	if(Robot.vision.pixyi2c.readOnly(pixyValues, maxBytes))
+    		System.out.println("FailedToRead"); //if this line is running you likely have one of two problems, either your interface (found in pxymon-> configure-> interface-> data output:i2c), or you didn't plug it in right
+    	for(int i = 0; i < pixyValues.length; i++)
+    	{
+    		//System.out.println(pixyValues[i]);
+    	}
 	// set was updated array to false.
-    	for(int i = 0; i<Robot.vision.wasUpdated.length; i++)  
+    	for(int i = 0; i<blobArray.length; i++)  
     	{
     		blobArray[i].wasUpdated=false;
     	}
@@ -61,7 +70,7 @@ public class Pixy extends Command {
     
 	//checks if data has been put into storage array
     	if(pixyValues!=null)
-	{
+    	{
     		//search through data array to find object
     		while(littleEndianToBigEndian(pixyValues[i],pixyValues[i+1])!=0xaa55)
     		{
@@ -77,14 +86,18 @@ public class Pixy extends Command {
     	i+=2;
 	
 	//if there is room for an object's data in the array and an object is found
+    	//System.out.println("82");
     	if(i<maxBytes-14 && littleEndianToBigEndian(pixyValues[i],pixyValues[i+1])==0xaa55)
     	{
     		//segments chunks of object Data
+    		System.out.println("85");
     		for(;i < pixyValues.length-14; i+=14)	
     		{
 			//checks for beginning of object
+    			System.out.println("89");
     			if(littleEndianToBigEndian(pixyValues[i],pixyValues[i+1]) == 0xaa55)  
     			{
+    				System.out.println("92");
     				//sets all variables for current object in for loop
     				currentChecksum = littleEndianToBigEndian(pixyValues[i + 2],pixyValues[i + 3]);
     				currentSig = littleEndianToBigEndian(pixyValues[i + 4],pixyValues[i + 5]);
@@ -95,14 +108,14 @@ public class Pixy extends Command {
     				
 				//checksum for one object
     				if( currentChecksum == (currentSig + currentX + currentY + currentWidth + currentHeight) && (currentChecksum > 0 )){//make sure data is good		
-    				
+    					System.out.println("it ran");
     					int tempInt = currentSig;
-    					SmartDashboard.putNumber("sig" , currentSig);   			
+    					/*SmartDashboard.putNumber("sig" , currentSig);   			
     					SmartDashboard.putNumber("X" +tempInt, blobArray[currentSig].averageX);
     			    	SmartDashboard.putNumber("Y" +tempInt, blobArray[currentSig].averageY);
     			    	SmartDashboard.putNumber("Width"+tempInt, blobArray[currentSig].averageWidth);
     			    	SmartDashboard.putNumber("Height"+tempInt, blobArray[currentSig].averageHeight);
-    					
+    					*/
     					calculateAverage(currentX, currentY, currentWidth, currentHeight, blobArray[currentSig]);
     					
     				}//checksum if close				
@@ -134,11 +147,15 @@ public class Pixy extends Command {
 			blob.averageX = X;
 			blob.averageY = Y;
 		}
+		SmartDashboard.putNumber("X", blob.averageX);
+		SmartDashboard.putNumber("Y", blob.averageY);
+		SmartDashboard.putNumber("W", blob.averageWidth);
+		SmartDashboard.putNumber("H", blob.averageHeight);
 	}
 	public void ChangeBrightness(byte Brightness)
 	{
 		byte[] lightnessArr = new byte[] {(byte) 0xFE, 0x00, Brightness};
-		pixyi2c.writeBulk(lightnessArr);
+		Robot.vision.pixyi2c.writeBulk(lightnessArr);
 	}
     private char littleEndianToBigEndian(byte one, byte two)
     {
