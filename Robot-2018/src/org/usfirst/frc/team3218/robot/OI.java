@@ -4,8 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+<<<<<<< HEAD
 import java.lang.invoke.SwitchPoint;
 
+=======
+import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollection;
+>>>>>>> 698779d75f703aadac20a84c2fe5fa1d5fe14628
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
 
@@ -21,6 +25,7 @@ public class OI {
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 	
+<<<<<<< HEAD
 	static double y;
 	
 	
@@ -34,6 +39,12 @@ public class OI {
 	public static Button liftScaleMid= new JoystickButton(Joystick, 6);
 	public static Button liftScaleHigh =  new JoystickButton(Joystick, 7);
 	
+=======
+	public static Joystick Joystick = new Joystick(RobotMap.JoyStickPort1);
+	 
+	public static Button button2 = new JoystickButton(Joystick, 2);
+	public static Button button3 = new JoystickButton(Joystick,3);
+>>>>>>> 698779d75f703aadac20a84c2fe5fa1d5fe14628
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
 	// There are a few additional built in buttons you can use. Additionally,
@@ -59,9 +70,13 @@ public class OI {
 	 public OI(){
 		 
 		 button2.whileHeld(new SonarTest());
+<<<<<<< HEAD
 		 
 		 
 		 
+=======
+		 button3.whileHeld(new CubeCollection());
+>>>>>>> 698779d75f703aadac20a84c2fe5fa1d5fe14628
 	 }
 	 
 	 
