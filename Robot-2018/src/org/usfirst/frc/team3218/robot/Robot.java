@@ -8,6 +8,7 @@ import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -28,7 +29,7 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
-
+	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	
@@ -41,6 +42,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		chooser.addDefault("Nothing", new Nothing());
 		chooser.addObject("Cross Auto Line", new DriveWithJoystick());
+		
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
@@ -110,6 +112,9 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		driveTrain.rightEnc.reset();
 		driveTrain.leftEnc.reset();
+		driveTrain.gyro.reset();
+		driveTrain.gyro.calibrate();
+	
 	}
 	
 	/**
@@ -120,10 +125,13 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
-		SmartDashboard.putNumber("Left Encoder:", Robot.driveTrain.leftEnc.get());
-		SmartDashboard.putNumber("Right Encoder:", Robot.driveTrain.rightEnc.get());
-		SmartDashboard.putNumber("Left Rate", Robot.driveTrain.leftEnc.getRate());
-		SmartDashboard.putNumber("Right Rate", Robot.driveTrain.rightEnc.getRate());
+		SmartDashboard.putNumber("Left Encoder:", driveTrain.leftEnc.get());
+		SmartDashboard.putNumber("Right Encoder:", driveTrain.rightEnc.get());
+		SmartDashboard.putNumber("Left Rate", driveTrain.leftEnc.getRate());
+		SmartDashboard.putNumber("Right Rate", driveTrain.rightEnc.getRate());
+		SmartDashboard.putNumber("GyroAngle", driveTrain.gyro.getAngle());
+		SmartDashboard.putNumber("GyroRate", driveTrain.gyro.getRate());
+		
 		
 	}
 
