@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import java.lang.invoke.SwitchPoint;
 
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
@@ -22,11 +23,16 @@ public class OI {
 	
 	static double y;
 	
-	public static Joystick stick = new Joystick(0);
+	
 	
 	public static Joystick Joystick = new Joystick(RobotMap.JoyStickPort1);
 	 
-	public static Button button2 = new JoystickButton(stick, 2);
+	public static Button button2 = new JoystickButton(Joystick, 2);
+	public static Button liftBottom = new JoystickButton(Joystick, 3);
+	public static Button liftSwitch = new JoystickButton(Joystick, 4);
+	public static Button liftScaleLow = new JoystickButton(Joystick, 5);
+	public static Button liftScaleMid= new JoystickButton(Joystick, 6);
+	public static Button liftScaleHigh =  new JoystickButton(Joystick, 7);
 	
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
@@ -54,7 +60,12 @@ public class OI {
 		 
 		 button2.whileHeld(new SonarTest());
 		 
+		 
+		 
 	 }
+	 
+	 
+	 
 	 
 	 public static double getJoystickX(){
 	
@@ -71,5 +82,27 @@ public class OI {
 		 return Joystick.getZ();
 	
 	 }
+	 public static void liftPositionSelector(){
+		 if(liftBottom.get()){
+			 Robot.lift.desiredPosition =1;
+		 }else if(liftSwitch.get()){
+			 
+			 Robot.lift.desiredPosition =2;
+		 }
+		 else if(liftScaleLow.get()){
+			 
+			 Robot.lift.desiredPosition =3;
+			 
+		 }else if(liftScaleMid.get()){
+			 
+			 Robot.lift.desiredPosition =4;
+			 
+		 }else if(liftScaleHigh.get()){
+			 
+			 Robot.lift.desiredPosition =5;
+		 
+	 }
+	 }
 	
+
 }
