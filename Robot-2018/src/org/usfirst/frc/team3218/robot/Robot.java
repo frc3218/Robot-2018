@@ -28,11 +28,9 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-<<<<<<< HEAD
+
 	public static final Lift lift =  new Lift();
-=======
 	public static final CubeControl cubeControl = new CubeControl();
->>>>>>> 698779d75f703aadac20a84c2fe5fa1d5fe14628
 	public static OI oi;
 	
 	Command autonomousCommand;
@@ -137,6 +135,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Rate", driveTrain.rightEnc.getRate());
 		SmartDashboard.putNumber("GyroAngle", driveTrain.gyro.getAngle());
 		SmartDashboard.putNumber("GyroRate", driveTrain.gyro.getRate());
+		
 		
 		
 	}

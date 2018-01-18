@@ -24,7 +24,7 @@ public class SonarTest extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("Average Voltage", Robot.driveTrain.sonarA.getAverageVoltage());
+    	SmartDashboard.putNumber("Average Voltage", (Robot.driveTrain.sonarA.getAverageVoltage()*1.062095)-0.01207);
     	SmartDashboard.putNumber("Voltage", Robot.driveTrain.sonarA.getVoltage());
     	
     }

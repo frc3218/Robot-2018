@@ -22,11 +22,13 @@ public class CubeCollection extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
+    	
   if (Robot.cubeControl.limitSwitch.get() == false) 
     {
 	  Robot.cubeControl.leftWheel.set(.2);
 	  Robot.cubeControl.rightWheel.set(.2);
     }
+  
   else{
 	  Robot.cubeControl.leftWheel.set(0);
 	  Robot.cubeControl.rightWheel.set(0);
