@@ -31,6 +31,7 @@ public class DriveTrain extends Subsystem {
 	SpeedController rightDrive1 = new Talon(RobotMap.rightDrive1Port);
 	SpeedController rightDrive2 = new Talon(RobotMap.rightDrive2Port);
 	SpeedController rightDrive3 = new Spark(RobotMap.rightDrive3Port);
+	
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 
 	public static Encoder leftEnc = new Encoder(RobotMap.encoderLeftPortA, RobotMap.encoderLeftPortB, true);

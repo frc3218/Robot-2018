@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+
+import java.lang.invoke.SwitchPoint;
+
+
 import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollection;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
@@ -19,11 +23,24 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
+
+	static double y;
 	
-	public static Joystick Joystick = new Joystick(RobotMap.JoyStickPort1);
+	
+	
+	public static Joystick Joystick = new Joystick(RobotMap.joyStickPort1);
+	public static Joystick buttonPanel = new Joystick(RobotMap.buttonPanelPort);
+	
+	public static Button liftBottom = new JoystickButton(buttonPanel, 1);
+	public static Button liftSwitch = new JoystickButton(buttonPanel, 2);
+	public static Button liftScaleLow = new JoystickButton(buttonPanel, 3);
+	public static Button liftScaleMid= new JoystickButton(buttonPanel, 4);
+	public static Button liftScaleHigh =  new JoystickButton(buttonPanel, 5);
+	
 	 
 	public static Button button2 = new JoystickButton(Joystick, 2);
 	public static Button button3 = new JoystickButton(Joystick,3);
+
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
 	// There are a few additional built in buttons you can use. Additionally,
@@ -49,8 +66,12 @@ public class OI {
 	 public OI(){
 		 
 		 button2.whileHeld(new SonarTest());
-		 button3.whileHeld(new CubeCollection());
+		 button2.whileHeld(new CubeCollection());
+
 	 }
+	 
+	 
+	 
 	 
 	 public static double getJoystickX(){
 	
@@ -67,5 +88,27 @@ public class OI {
 		 return Joystick.getZ();
 	
 	 }
+	 public static void liftPositionSelector(){
+		 if(liftBottom.get()){
+			 Robot.lift.desiredPosition =1;
+		 }else if(liftSwitch.get()){
+			 
+			 Robot.lift.desiredPosition =2;
+		 }
+		 else if(liftScaleLow.get()){
+			 
+			 Robot.lift.desiredPosition =3;
+			 
+		 }else if(liftScaleMid.get()){
+			 
+			 Robot.lift.desiredPosition =4;
+			 
+		 }else if(liftScaleHigh.get()){
+			 
+			 Robot.lift.desiredPosition =5;
+		 
+	 }
+	 }
 	
+
 }

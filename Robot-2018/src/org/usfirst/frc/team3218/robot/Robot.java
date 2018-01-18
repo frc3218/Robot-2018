@@ -7,6 +7,7 @@ import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3218.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -27,6 +28,8 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+
+	public static final Lift lift =  new Lift();
 	public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
 	
@@ -47,6 +50,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		
+		lift.liftPIDConfig();
 	}
 
 	/**
@@ -131,6 +135,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Rate", driveTrain.rightEnc.getRate());
 		SmartDashboard.putNumber("GyroAngle", driveTrain.gyro.getAngle());
 		SmartDashboard.putNumber("GyroRate", driveTrain.gyro.getRate());
+		
 		
 		
 	}
