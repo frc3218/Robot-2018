@@ -12,7 +12,14 @@ import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeEjectionOn;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GyroAngles;
+import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollection;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
+import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
+import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleHigh;
+import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleLow;
+import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleMid;
+import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionSwitch;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,6 +33,7 @@ public class OI {
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 
+<<<<<<< HEAD
 	
 	
 	
@@ -42,6 +50,25 @@ public class OI {
 	public static Button button1 = new JoystickButton(joystick,1);
 	public static Button button2 = new JoystickButton(joystick, 2);
 	public static Button button3 = new JoystickButton(joystick,3);
+=======
+	
+	
+	
+	
+	public static Joystick Joystick = new Joystick(RobotMap.joyStickPort1);
+	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
+	public static Joystick keyboard = new Joystick(RobotMap.keyboardPort);
+	
+	public static Button liftBottom = new JoystickButton(guitar, 1);
+	public static Button liftSwitch = new JoystickButton(guitar, 2);
+	public static Button liftScaleLow = new JoystickButton(guitar, 3);
+	public static Button liftScaleMid= new JoystickButton(guitar, 4);
+	public static Button liftScaleHigh =  new JoystickButton(guitar, 5);
+	
+	 
+	public static Button button2 = new JoystickButton(Joystick, 2);
+	public static Button button3 = new JoystickButton(Joystick,3);
+>>>>>>> 8b2e517a48d4bb9e649ef9e1f01c48b627c7c4e8
 
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
@@ -67,10 +94,22 @@ public class OI {
 	
 	 public OI(){
 		 
+<<<<<<< HEAD
 		 button2.toggleWhenPressed(new SonarTest());
 		 button1.whileHeld(new CubeCollectionOn());
 		 button3.whileHeld(new CubeEjectionOn());
 		 button4.whileHeld(new GyroAngles());
+=======
+		 button2.whileHeld(new SonarTest());
+		 button2.whileHeld(new CubeCollection());
+		 
+		 liftBottom.whenPressed(new SetLiftPositionBottom());
+		 liftSwitch.whenPressed(new SetLiftPositionSwitch());
+		 liftScaleLow.whenPressed(new SetLiftPositionScaleLow());
+		 liftScaleMid.whenPressed(new SetLiftPositionScaleMid());
+		 liftScaleHigh.whenPressed(new SetLiftPositionScaleHigh());
+
+>>>>>>> 8b2e517a48d4bb9e649ef9e1f01c48b627c7c4e8
 	 }
 	 
 	 
@@ -91,27 +130,7 @@ public class OI {
 		 return joystick.getZ();
 	
 	 }
-	 public static void liftPositionSelector(){
-		 if(liftBottom.get()){
-			 Robot.lift.desiredPosition =1;
-		 }else if(liftSwitch.get()){
-			 
-			 Robot.lift.desiredPosition =2;
-		 }
-		 else if(liftScaleLow.get()){
-			 
-			 Robot.lift.desiredPosition =3;
-			 
-		 }else if(liftScaleMid.get()){
-			 
-			 Robot.lift.desiredPosition =4;
-			 
-		 }else if(liftScaleHigh.get()){
-			 
-			 Robot.lift.desiredPosition =5;
-		 
-	 }
-	 }
+	 
 	
 
 }

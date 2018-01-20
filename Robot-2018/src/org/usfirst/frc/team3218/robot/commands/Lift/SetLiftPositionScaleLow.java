@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3218.robot.commands.lift;
+package org.usfirst.frc.team3218.robot.commands.Lift;
 
 import org.usfirst.frc.team3218.robot.Robot;
 
@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetLiftPosition extends Command {
+public class SetLiftPositionScaleLow extends Command {
 
-    public SetLiftPosition() {
+    public SetLiftPositionScaleLow() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.lift);
@@ -21,9 +21,10 @@ public class SetLiftPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    
+    	Robot.lift.setPosition(3);
     	
-    	Robot.lift.liftCim.setSelectedSensorPosition((int) ( Robot.lift.positionArray[Robot.lift.desiredPosition] * Robot.lift.ticksPerInch), 0, 0);
-    }
+    	}
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

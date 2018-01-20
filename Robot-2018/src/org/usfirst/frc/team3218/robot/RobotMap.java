@@ -8,12 +8,14 @@ package org.usfirst.frc.team3218.robot;
  */
 public class RobotMap {
 	
+	
 	// Driver Station USB Ports
 	public static int joyStickPort1 = 0;
-	public static int buttonPanelPort = 1;
+	public static int guitarPort = 1;
+	public static int keyboardPort = 2;
 	
 	//CAN bus channels
-	public static int liftCimPort = 10;
+	public static final int liftCimPort = 10;
 	
 	//PWM Channels
 	public static int leftDrive1Port = 0;
@@ -39,4 +41,5 @@ public class RobotMap {
 	//Analog Channels
 	public static int sonarAPort = 0;
 	public static int gyroPort = 1;
+	
 }
