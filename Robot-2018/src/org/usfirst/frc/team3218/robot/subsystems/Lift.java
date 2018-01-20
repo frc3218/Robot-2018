@@ -25,8 +25,10 @@ public class Lift extends Subsystem {
 	int CruiseVelocity; //encoderticks per 100ms
 	int Acceleration; //encoderticks per 100ms per second
 	final int HOLD_POSITION_POWER = 0; //power required for arm to stay at position
-	final int MANUAL_UP_POWER = 0;
-	final int MANUAL_DOWN_POWER = 180;
+	final int GUITAR_MANUAL_UP = 0;
+	final int GUITAR_MANUAL_DOWN = 180;
+	final int MANUAL_UP_POWER = 1;
+	final int MANUAL_DOWN_POWER = -1;
 	
 	public float ticksPerInch;
 	
@@ -62,12 +64,12 @@ public class Lift extends Subsystem {
     	//Cim values need to be checked against the actual motor
 		switch (Robot.oi.guitar.getPOV()) {
 
-		case MANUAL_UP_POWER:
-			liftCim.set(1);
+		case GUITAR_MANUAL_UP:
+			liftCim.set(MANUAL_UP_POWER);
 			break;
 
-		case MANUAL_DOWN_POWER:
-			liftCim.set(-1);
+		case GUITAR_MANUAL_DOWN:
+			liftCim.set(MANUAL_DOWN_POWER);
 			break;
 
 		default:

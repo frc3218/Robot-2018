@@ -5,6 +5,7 @@ import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -35,6 +36,13 @@ public class DriveTrain extends Subsystem {
 	SpeedController rightDrive2 = new Talon(RobotMap.rightDrive2Port);
 	SpeedController rightDrive3 = new Spark(RobotMap.rightDrive3Port);
 	
+	public WPI_TalonSRX leftBackDrive = new WPI_TalonSRX(RobotMap.leftDrive1Port);
+	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftDrive2Port);
+	public WPI_TalonSRX leftFrontDrive = new WPI_TalonSRX(RobotMap.leftDrive3Port);
+	public WPI_TalonSRX rightBackDrive = new WPI_TalonSRX(RobotMap.rightDrive1Port);
+	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightDrive2Port);
+	public WPI_TalonSRX rightFrontDrive = new WPI_TalonSRX(RobotMap.rightDrive3Port);
+	
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 
 	public static Encoder leftEnc = new Encoder(RobotMap.encoderLeftPortA, RobotMap.encoderLeftPortB, true);
@@ -62,7 +70,7 @@ public class DriveTrain extends Subsystem {
 		rightDrive2.setInverted(true);
 		rightDrive3.setInverted(true);
 
-		// making power 50%
+		// sets a max drive power
 		if (y >= power) {
 
 			y = power;

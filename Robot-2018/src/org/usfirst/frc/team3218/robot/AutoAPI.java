@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3218.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 public class AutoAPI {
 
 
@@ -19,8 +22,18 @@ public class AutoAPI {
  */
  	public static void driveStraight(float distance, float speed){
  		
- 		
- 		
+ 		/*
+ 		liftCim.set(ControlMode.MotionMagic, 0);
+    	liftCim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	liftCim.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	liftCim.configMotionAcceleration(Acceleration, 0);
+    
+    	liftCim.set(ControlMode.MotionMagic, 0);
+    	liftCim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	liftCim.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	liftCim.configMotionAcceleration(Acceleration, 0);
+    	*/
+    	
  		speed *= Math.signum(distance);
 	
  	
@@ -38,4 +51,9 @@ public class AutoAPI {
 		
 	}
 	
+	public static void resetEncoders()
+	{
+		//Robot.lift..setSelectedSensorPosition(0, 0, 0);
+	
+	}
 }
