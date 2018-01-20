@@ -34,7 +34,7 @@ public class Lift extends Subsystem {
 	
 	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
 	
-	public  WPI_TalonSRX liftCim = new WPI_TalonSRX(RobotMap.liftCimPort);
+	public  WPI_TalonSRX liftCIM = new WPI_TalonSRX(RobotMap.liftCIMID);
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -46,16 +46,16 @@ public class Lift extends Subsystem {
     public void liftPIDConfig(){
     	//timeouts and PIDidx are 0
     
-    	liftCim.set(ControlMode.MotionMagic, 0);
-    	liftCim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    	liftCim.configMotionCruiseVelocity(CruiseVelocity, 0);
-    	liftCim.configMotionAcceleration(Acceleration, 0);
+    	liftCIM.set(ControlMode.MotionMagic, 0);
+    	liftCIM.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	liftCIM.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	liftCIM.configMotionAcceleration(Acceleration, 0);
     	
     }
     
     public  void setPosition(int position){
-    		liftCim.set(ControlMode.MotionMagic, 0);
-        	Robot.lift.liftCim.setSelectedSensorPosition((int) ( Robot.lift.positionArray[position] * Robot.lift.ticksPerInch), 0, 0);
+    		liftCIM.set(ControlMode.MotionMagic, 0);
+        	Robot.lift.liftCIM.set(Robot.lift.positionArray[position] * Robot.lift.ticksPerInch);
    
     }
     
@@ -65,15 +65,15 @@ public class Lift extends Subsystem {
 		switch (Robot.oi.guitar.getPOV()) {
 
 		case GUITAR_MANUAL_UP:
-			liftCim.set(MANUAL_UP_POWER);
+			liftCIM.set(MANUAL_UP_POWER);
 			break;
 
 		case GUITAR_MANUAL_DOWN:
-			liftCim.set(MANUAL_DOWN_POWER);
+			liftCIM.set(MANUAL_DOWN_POWER);
 			break;
 
 		default:
-			liftCim.set(HOLD_POSITION_POWER);
+			liftCIM.set(HOLD_POSITION_POWER);
 			break;
 
     	}

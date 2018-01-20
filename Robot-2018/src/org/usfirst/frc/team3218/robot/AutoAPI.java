@@ -13,21 +13,24 @@ public class AutoAPI {
  public final static float WALL_TO_PLATFORM_CHANNEL = 235.25f;
  public final static float MID_LINE = 323.16f;
  
-	
-	
+ final static float TICKS_PER_INCH = 1/256; 	
+ 
 	
  /**
  * @param distance in inches, positive forwards, negative, backwards
  * @param speed in motor power, 0<s<1
  */
- 	public static void driveStraight(float distance, float speed){
+ 	public static void driveStraight(float distance, int speed, int acceleration){
  		
- 		/*
- 		liftCim.set(ControlMode.MotionMagic, 0);
-    	liftCim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    	liftCim.configMotionCruiseVelocity(CruiseVelocity, 0);
-    	liftCim.configMotionAcceleration(Acceleration, 0);
+ 		
+ 		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, 0);
+ 		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
+ 		Robot.driveTrain.rightMidDrive.set(distance);
     
+    
+    /*
     	liftCim.set(ControlMode.MotionMagic, 0);
     	liftCim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     	liftCim.configMotionCruiseVelocity(CruiseVelocity, 0);
