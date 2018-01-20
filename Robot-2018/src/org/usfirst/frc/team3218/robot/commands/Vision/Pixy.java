@@ -61,7 +61,9 @@ public class Pixy extends Command {
     	{
     		//System.out.println(pixyValues[i]);
     	}
-	// set was updated array to false.
+	
+    	
+    	// set was updated array to false.
     	for(int i = 0; i<blobArray.length; i++)  
     	{
     		blobArray[i].wasUpdated=false;
