@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import java.lang.invoke.SwitchPoint;
 
-
-import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollection;
+import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeControlOff;
+import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollectionOn;
+import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeEjectionOn;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.GyroAngles;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
 
 /**
@@ -24,11 +26,11 @@ public class OI {
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 
-	static double y;
 	
 	
 	
-	public static Joystick Joystick = new Joystick(RobotMap.joyStickPort1);
+	
+	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
 	public static Joystick buttonPanel = new Joystick(RobotMap.buttonPanelPort);
 	
 	public static Button liftBottom = new JoystickButton(buttonPanel, 1);
@@ -36,10 +38,10 @@ public class OI {
 	public static Button liftScaleLow = new JoystickButton(buttonPanel, 3);
 	public static Button liftScaleMid= new JoystickButton(buttonPanel, 4);
 	public static Button liftScaleHigh =  new JoystickButton(buttonPanel, 5);
-	
-	 
-	public static Button button2 = new JoystickButton(Joystick, 2);
-	public static Button button3 = new JoystickButton(Joystick,3);
+	public static Button button4 = new JoystickButton(joystick,4);
+	public static Button button1 = new JoystickButton(joystick,1);
+	public static Button button2 = new JoystickButton(joystick, 2);
+	public static Button button3 = new JoystickButton(joystick,3);
 
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
@@ -65,9 +67,10 @@ public class OI {
 	
 	 public OI(){
 		 
-		 button2.whileHeld(new SonarTest());
-		 button2.whileHeld(new CubeCollection());
-
+		 button2.toggleWhenPressed(new SonarTest());
+		 button1.whileHeld(new CubeCollectionOn());
+		 button3.whileHeld(new CubeEjectionOn());
+		 button4.whileHeld(new GyroAngles());
 	 }
 	 
 	 
@@ -75,17 +78,17 @@ public class OI {
 	 
 	 public static double getJoystickX(){
 	
-		 return -Joystick.getX();
+		 return -joystick.getX();
 	
 	 }
 	 public static double getJoystickY(){
 			
-			return  -Joystick.getY();
+			return  -joystick.getY();
 	
 	 }
 	 public static double getJoystickZ(){
 			
-		 return Joystick.getZ();
+		 return joystick.getZ();
 	
 	 }
 	 public static void liftPositionSelector(){

@@ -22,9 +22,12 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  *
  */
 public class DriveTrain extends Subsystem {
-	// Max Power
+	public static double[] pyroAr = new double[15]; 
+	public static double sum;
 	double power = .5;
-
+	public static double pastValue;
+	public static double newValue;
+	public static int times;
 	SpeedController leftDrive1 = new Talon(RobotMap.leftDrive1Port);
 	SpeedController leftDrive2 = new Talon(RobotMap.leftDrive2Port);
 	SpeedController leftDrive3 = new Spark(RobotMap.leftDrive3Port);
@@ -76,6 +79,19 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(y, z);
 		
     }
+    public static double rollingAverage(double num){
+    sum = 0;
+    pyroAr[14] = num;
+    for(int x = 0; x<pyroAr.length;x++){
+    	sum += pyroAr[x];
+    }
+    for(int i=0; i<=13; i++){
+    	pyroAr[i] = pyroAr[i + 1];
+    	
+    		
     
+    }
+    return (sum/pyroAr.length);
+    }
 }
 

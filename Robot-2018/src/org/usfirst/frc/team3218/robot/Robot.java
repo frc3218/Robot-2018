@@ -117,7 +117,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.rightEnc.reset();
 		driveTrain.leftEnc.reset();
 		driveTrain.gyro.reset();
-		driveTrain.gyro.calibrate();
+		
 	
 	}
 	
