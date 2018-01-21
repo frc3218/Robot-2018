@@ -32,7 +32,7 @@ public class DriveTrain extends Subsystem {
 	SpeedController leftDrive1 = new Talon(RobotMap.leftDrive1Port);
 	SpeedController leftDrive2 = new Talon(RobotMap.leftDrive2Port);
 	SpeedController leftDrive3 = new Spark(RobotMap.leftDrive3Port);
-	SpeedController rightDrive1 = new Talon(RobotMap.rightDrive1Port);
+	public SpeedController rightDrive1 = new Talon(RobotMap.rightDrive1Port);
 	SpeedController rightDrive2 = new Talon(RobotMap.rightDrive2Port);
 	SpeedController rightDrive3 = new Spark(RobotMap.rightDrive3Port);
 	
@@ -40,7 +40,7 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftMidDriveID);
 	public WPI_TalonSRX leftFrontDrive = new WPI_TalonSRX(RobotMap.leftFrontDriveID);
 	public WPI_TalonSRX rightBackDrive = new WPI_TalonSRX(RobotMap.rightBackDriveID);
-	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidriveID);
+	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidDriveID);
 	public WPI_TalonSRX rightFrontDrive = new WPI_TalonSRX(RobotMap.rightFrontDriveID);
 	
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);

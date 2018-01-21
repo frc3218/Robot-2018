@@ -23,7 +23,7 @@ public class CrossLine extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	AutoAPI.driveStraight(AutoAPI.AUTOLINE, .7f);
+    	AutoAPI.driveStraight(AutoAPI.AUTOLINE, 0,0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

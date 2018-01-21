@@ -2,7 +2,7 @@ package org.usfirst.frc.team3218.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
+import com.ctre.phoenix.motorcontrol.*;
 public class AutoAPI {
 
 
@@ -13,7 +13,7 @@ public class AutoAPI {
  public final static float WALL_TO_PLATFORM_CHANNEL = 235.25f;
  public final static float MID_LINE = 323.16f;
  
- final static float TICKS_PER_INCH = 1/256; 	
+ final static float TICKS_PER_INCH = 73; 	
  
 	
  /**
@@ -21,23 +21,30 @@ public class AutoAPI {
  * @param speed in motor power, 0<s<1
  */
  	public static void driveStraight(float distance, int speed, int acceleration){
+ 		distance *= TICKS_PER_INCH;
+ 		speed *= Math.signum(distance);// may not be needed
  		
- 		
- 		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, 0);
  		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
- 		Robot.driveTrain.rightMidDrive.set(distance);
+ 		
+ 		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, distance);
+ 		Robot.driveTrain.rightFrontDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
+ 		Robot.driveTrain.rightBackDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
+ 		
+ 		
+ 		Robot.driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(speed, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);
+ 		
+ 		Robot.driveTrain.leftMidDrive.set(ControlMode.MotionMagic, distance);
+ 		Robot.driveTrain.leftFrontDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
+ 		Robot.driveTrain.leftBackDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
+ 	
+ 	    
     
-    
-    /*
-    	liftCim.set(ControlMode.MotionMagic, 0);
-    	liftCim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    	liftCim.configMotionCruiseVelocity(CruiseVelocity, 0);
-    	liftCim.configMotionAcceleration(Acceleration, 0);
-    	*/
     	
- 		speed *= Math.signum(distance);
+ 		
 	
  	
 	}
