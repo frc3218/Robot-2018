@@ -24,13 +24,13 @@ public class RobotMap {
 	
 	//PWM Channels
 	public static int leftDrive1Port = 0;
-	public static int leftDrive2Port = 1;
-	public static int leftDrive3Port = 2;
+	public static int leftDrive2Port = 6;//1
+	public static int leftDrive3Port = 7;//2
 	public static int rightDrive1Port = 3;
 	public static int rightDrive2Port = 4;
 	public static int rightDrive3Port = 5;
 
-	public static int leftCollection1Port = 7;
+	public static int leftCollection1Port = 1;
 	public static int rightCollection1Port = 8;
 
 	//Digital Channels
@@ -46,5 +46,14 @@ public class RobotMap {
 	//Analog Channels
 	public static int sonarAPort = 0;
 	public static int gyroPort = 1;
+
+	//PCM Channels
+	public static int leftKoreyPort = 0;
+	public static int rightKoreyPort = 1;
+	public static int pistonKoreyPort = 2;
+	public static int leftGearShiftPort = 3;
+	public static int rightGearShiftPort = 4;
+	public static int climbGearPort = 5;
+	
 	
 }

@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -35,8 +36,9 @@ public class Lift extends Subsystem {
 	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
 	
 	public  WPI_TalonSRX liftCIM = new WPI_TalonSRX(RobotMap.liftCIMID);
-	
-    public void initDefaultCommand() {
+	public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
+    
+	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new ManualLiftControl());
@@ -45,7 +47,6 @@ public class Lift extends Subsystem {
     
     public void liftPIDConfig(){
     	//timeouts and PIDidx are 0
-    
     	liftCIM.set(ControlMode.MotionMagic, 0);
     	liftCIM.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     	liftCIM.configMotionCruiseVelocity(CruiseVelocity, 0);
@@ -56,7 +57,7 @@ public class Lift extends Subsystem {
     public  void setPosition(int position){
     		liftCIM.set(ControlMode.MotionMagic, 0);
         	Robot.lift.liftCIM.set(Robot.lift.positionArray[position] * Robot.lift.ticksPerInch);
-   
+        	
     }
     
     public void manual(){
@@ -77,8 +78,13 @@ public class Lift extends Subsystem {
 			break;
 
     	}
-    	
-    }
     
+    }
+   public void gearLow(){
+	   climbGear.set(false);
+   }
+   public void gearHigh(){
+	   climbGear.set(true);
+   }
 }
 

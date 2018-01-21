@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PWMTalonSRX;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -23,12 +24,16 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
  *
  */
 public class DriveTrain extends Subsystem {
-	public static double[] pyroAr = new double[15]; 
+	public static double[] gyroAr = new double[15]; 
 	public static double sum;
-	double power = .5;
+	public static int gyroTimes = 50;
 	public static double pastValue;
 	public static double newValue;
 	public static int times;
+	
+	final int SHIFT_UP_SPEED = 0;
+	final int SHIFT_DOWN_SPEED = 0;
+	
 	SpeedController leftDrive1 = new Talon(RobotMap.leftDrive1Port);
 	SpeedController leftDrive2 = new Talon(RobotMap.leftDrive2Port);
 	SpeedController leftDrive3 = new Spark(RobotMap.leftDrive3Port);
@@ -50,6 +55,15 @@ public class DriveTrain extends Subsystem {
 
 	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 	
+	public static Solenoid leftGearShift = new Solenoid(RobotMap.leftGearShiftPort);
+	public static Solenoid rightGearShift = new Solenoid(RobotMap.rightGearShiftPort);
+	
+	
+	
+	
+	
+	
+	
 	// Grouping Together Drives
 	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftDrive1, leftDrive2, leftDrive3);
 	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightDrive1, rightDrive2, rightDrive3);
@@ -66,40 +80,42 @@ public class DriveTrain extends Subsystem {
 
 	public void drive(double y, double z) {
 		// Inverting right drive
-		rightDrive1.setInverted(true);
-		rightDrive2.setInverted(true);
-		rightDrive3.setInverted(true);
-
-		// sets a max drive power
-		if (y >= power) {
-
-			y = power;
-		} else if (y <= -power) {
-			y = -power;
+		//rightDrive1.setInverted(true);
+		//rightDrive2.setInverted(true);
+		//rightDrive3.setInverted(true);
+		if(leftEnc.getRate() >= SHIFT_UP_SPEED && rightEnc.getRate() >= SHIFT_UP_SPEED){
+			highGear();
 		}
-
-		if (z >= power) {
-
-			z = power;
-		} else if (z <= -power) {
-			z = -power;
+		else if(leftEnc.getRate() < SHIFT_DOWN_SPEED && rightEnc.getRate() < SHIFT_DOWN_SPEED){
+			lowGear();
 		}
+		
     	drive.arcadeDrive(y, z);
 		
     }
     public static double rollingAverage(double num){
     sum = 0;
-    pyroAr[14] = num;
-    for(int x = 0; x<pyroAr.length;x++){
-    	sum += pyroAr[x];
+    gyroAr[gyroTimes] = num;
+    for(int x = 0; x<gyroTimes;x++){
+    	sum += gyroAr[x];
     }
-    for(int i=0; i<=13; i++){
-    	pyroAr[i] = pyroAr[i + 1];
+    for(int i=0; i<=(gyroTimes-1); i++){
+    	gyroAr[i] = gyroAr[i + 1];
     	
     		
     
     }
-    return (sum/pyroAr.length);
+    return (sum/gyroTimes);
+    }
+    
+    public void lowGear(){
+    	leftGearShift.set(false);
+    	rightGearShift.set(false);
+    }
+    
+    public void highGear(){
+    	leftGearShift.set(true);
+    	rightGearShift.set(true);
     }
 }
 
