@@ -14,12 +14,13 @@ public class RobotMap {
 	public static int guitarPort = 1;
 	
 	//CAN bus channels
-	public static final int liftCIMID = 10;
+	public static final int lift1ID= 10;
+	public static final int lift2ID= 11;
 	public static final int leftBackDriveID = 0;
 	public static final int leftMidDriveID = 1;
 	public static final int leftFrontDriveID = 2;
 	public static final int rightBackDriveID = 3;
-	public static final int rightMidriveID = 4;
+	public static final int rightMidDriveID = 4;
 	public static final int rightFrontDriveID = 5;
 	
 	//PWM Channels
@@ -54,6 +55,7 @@ public class RobotMap {
 	public static int leftGearShiftPort = 3;
 	public static int rightGearShiftPort = 4;
 	public static int climbGearPort = 5;
+	
 	
 	
 }

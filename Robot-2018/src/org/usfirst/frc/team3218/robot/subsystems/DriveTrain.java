@@ -45,7 +45,7 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftMidDriveID);
 	public WPI_TalonSRX leftFrontDrive = new WPI_TalonSRX(RobotMap.leftFrontDriveID);
 	public WPI_TalonSRX rightBackDrive = new WPI_TalonSRX(RobotMap.rightBackDriveID);
-	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidriveID);
+	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidDriveID);
 	public WPI_TalonSRX rightFrontDrive = new WPI_TalonSRX(RobotMap.rightFrontDriveID);
 	
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);

@@ -9,6 +9,7 @@ import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -32,6 +33,7 @@ public class Lift extends Subsystem {
 	final int MANUAL_DOWN_POWER = -1;
 	
 	public float ticksPerInch;
+	final int TICKS_PER_INCH = 100;
 	
 	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
 	
@@ -39,6 +41,10 @@ public class Lift extends Subsystem {
 	public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
     
 	public void initDefaultCommand() {
+	
+	public  WPI_TalonSRX lift1 = new WPI_TalonSRX(RobotMap.lift1ID);
+	
+    public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new ManualLiftControl());
@@ -51,6 +57,11 @@ public class Lift extends Subsystem {
     	liftCIM.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     	liftCIM.configMotionCruiseVelocity(CruiseVelocity, 0);
     	liftCIM.configMotionAcceleration(Acceleration, 0);
+    
+    	
+    	lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	lift1.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	lift1.configMotionAcceleration(Acceleration, 0);
     	
     }
     
@@ -58,25 +69,31 @@ public class Lift extends Subsystem {
     		liftCIM.set(ControlMode.MotionMagic, 0);
         	Robot.lift.liftCIM.set(Robot.lift.positionArray[position] * Robot.lift.ticksPerInch);
         	
+    		lift1.set(ControlMode.MotionMagic, Robot.lift.positionArray[position] * Robot.lift.TICKS_PER_INCH);
+        
+   
     }
     
     public void manual(){
     	//0 is up -1 is hold 180 is down
     	//Cim values need to be checked against the actual motor
+    	
+    	
 		switch (Robot.oi.guitar.getPOV()) {
 
 		case GUITAR_MANUAL_UP:
-			liftCIM.set(MANUAL_UP_POWER);
+			lift1.set(MANUAL_UP_POWER);
 			break;
 
 		case GUITAR_MANUAL_DOWN:
-			liftCIM.set(MANUAL_DOWN_POWER);
+			lift1.set(MANUAL_DOWN_POWER);
 			break;
 
 		default:
-			liftCIM.set(HOLD_POSITION_POWER);
+			lift1.set(HOLD_POSITION_POWER);
 			break;
-
+			
+			
     	}
     
     }
