@@ -9,7 +9,9 @@ import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,14 +27,22 @@ public class Lift extends Subsystem {
 	int CruiseVelocity; //encoderticks per 100ms
 	int Acceleration; //encoderticks per 100ms per second
 	final int HOLD_POSITION_POWER = 0; //power required for arm to stay at position
-	final int MANUAL_UP_POWER = 0;
-	final int MANUAL_DOWN_POWER = 180;
+	final int GUITAR_MANUAL_UP = 0;
+	final int GUITAR_MANUAL_DOWN = 180;
+	final int MANUAL_UP_POWER = 1;
+	final int MANUAL_DOWN_POWER = -1;
 	
 	public float ticksPerInch;
+	final int TICKS_PER_INCH = 100;
 	
 	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
 	
-	public  WPI_TalonSRX liftCim = new WPI_TalonSRX(RobotMap.liftCimPort);
+	public  WPI_TalonSRX liftCIM = new WPI_TalonSRX(RobotMap.liftCIMID);
+	public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
+    
+	public void initDefaultCommand() {
+	
+	public  WPI_TalonSRX lift1 = new WPI_TalonSRX(RobotMap.lift1ID);
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -43,40 +53,55 @@ public class Lift extends Subsystem {
     
     public void liftPIDConfig(){
     	//timeouts and PIDidx are 0
+    	liftCIM.set(ControlMode.MotionMagic, 0);
+    	liftCIM.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	liftCIM.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	liftCIM.configMotionAcceleration(Acceleration, 0);
     
-    	liftCim.set(ControlMode.MotionMagic, 0);
-    	liftCim.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    	liftCim.configMotionCruiseVelocity(CruiseVelocity, 0);
-    	liftCim.configMotionAcceleration(Acceleration, 0);
+    	
+    	lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	lift1.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	lift1.configMotionAcceleration(Acceleration, 0);
     	
     }
     
     public  void setPosition(int position){
-    		liftCim.set(ControlMode.MotionMagic, 0);
-        	Robot.lift.liftCim.setSelectedSensorPosition((int) ( Robot.lift.positionArray[position] * Robot.lift.ticksPerInch), 0, 0);
+    		liftCIM.set(ControlMode.MotionMagic, 0);
+        	Robot.lift.liftCIM.set(Robot.lift.positionArray[position] * Robot.lift.ticksPerInch);
+        	
+    		lift1.set(ControlMode.MotionMagic, Robot.lift.positionArray[position] * Robot.lift.TICKS_PER_INCH);
+        
    
     }
     
     public void manual(){
     	//0 is up -1 is hold 180 is down
     	//Cim values need to be checked against the actual motor
+    	
+    	
 		switch (Robot.oi.guitar.getPOV()) {
 
-		case MANUAL_UP_POWER:
-			liftCim.set(1);
+		case GUITAR_MANUAL_UP:
+			lift1.set(MANUAL_UP_POWER);
 			break;
 
-		case MANUAL_DOWN_POWER:
-			liftCim.set(-1);
+		case GUITAR_MANUAL_DOWN:
+			lift1.set(MANUAL_DOWN_POWER);
 			break;
 
 		default:
-			liftCim.set(HOLD_POSITION_POWER);
+			lift1.set(HOLD_POSITION_POWER);
 			break;
-
+			
+			
     	}
-    	
-    }
     
+    }
+   public void gearLow(){
+	   climbGear.set(false);
+   }
+   public void gearHigh(){
+	   climbGear.set(true);
+   }
 }
 

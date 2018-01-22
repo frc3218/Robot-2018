@@ -10,11 +10,16 @@ import java.lang.invoke.SwitchPoint;
 import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeControlOff;
 import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeEjectionOn;
+import org.usfirst.frc.team3218.robot.CubeControl.commands.KoreyCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GyroAngles;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollection;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
+import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOff;
+import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOn;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleLow;
@@ -34,6 +39,7 @@ public class OI {
 	// number it is.
 
 <<<<<<< HEAD
+
 	
 	
 	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
@@ -57,6 +63,27 @@ public class OI {
 	public static Button liftScaleHigh =  new JoystickButton(guitar, 5);
 	
 	 
+	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
+	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
+	
+	public static Button button1 = new JoystickButton(joystick,1);
+	public static Button button2 = new JoystickButton(joystick, 2);
+	public static Button button3 = new JoystickButton(joystick,3);
+	public static Button button4 = new JoystickButton(joystick,4);
+	public static Button button5 = new JoystickButton(joystick,5);
+	public static Button button6 = new JoystickButton(joystick,6);
+	public static Button button7 = new JoystickButton(joystick,7);
+	public static Button button8 = new JoystickButton(joystick,8);
+	public static Button button9 = new JoystickButton(joystick,9);
+	public static Button liftBottom = new JoystickButton(guitar, 5);
+	public static Button liftSwitch = new JoystickButton(guitar, 3);
+	public static Button liftScaleLow = new JoystickButton(guitar, 4);
+	public static Button liftScaleMid= new JoystickButton(guitar, 2);
+	public static Button liftScaleHigh =  new JoystickButton(guitar, 1);
+	
+	 
+	
+
 
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
@@ -90,7 +117,11 @@ public class OI {
 
 		 button2.whileHeld(new SonarTest());
 		 button2.whileHeld(new CubeCollection());
-		 
+		 button5.whenPressed(new GearShiftLow());
+		 button6.whenPressed(new GearShiftHigh());
+		 button7.whenPressed(new KoreyCollectionOn());
+		 button8.whenPressed(new ClimbingGearOn());
+		 button9.whenPressed(new ClimbingGearOff());
 		 liftBottom.whenPressed(new SetLiftPositionBottom());
 		 liftSwitch.whenPressed(new SetLiftPositionSwitch());
 		 liftScaleLow.whenPressed(new SetLiftPositionScaleLow());

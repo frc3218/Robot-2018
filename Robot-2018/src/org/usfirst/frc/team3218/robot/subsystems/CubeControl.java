@@ -6,6 +6,7 @@ import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeControlOff;
 import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollectionOn;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,9 +22,11 @@ public double ejectionSpeed = 0.5;
     // here. Call these from Commands.
 	public static SpeedController leftWheel = new Talon(RobotMap.leftCollection1Port);
 	public static SpeedController rightWheel = new Talon(RobotMap.rightCollection1Port);
-	
-	
 	public static DigitalInput limitSwitch = new DigitalInput(RobotMap.limitSwitchPortA);
+	public static Solenoid leftKorey = new Solenoid(RobotMap.leftKoreyPort);
+	public static Solenoid rightKorey = new Solenoid(RobotMap.rightKoreyPort);
+	public static Solenoid pistonKorey = new Solenoid(RobotMap.pistonKoreyPort);
+	
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -52,6 +55,17 @@ public double ejectionSpeed = 0.5;
 	public void cubeOff(){
 		    leftWheel.set(0);
 		    rightWheel.set(0);
-		    			}
-	
+		    pistonKorey.set(false);
+	}
+	public void koreyOn(){
+		leftKorey.set(true);
+		rightKorey.set(true);
+	}
+	public void koreyOff(){
+		leftKorey.set(false);
+		rightKorey.set(false);
+	}
+	public void koreyEject(){
+		pistonKorey.set(true);
+	}
 }
