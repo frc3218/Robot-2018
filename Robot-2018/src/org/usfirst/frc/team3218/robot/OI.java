@@ -36,28 +36,19 @@ public class OI {
 <<<<<<< HEAD
 	
 	
-	
-	
 	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
-	public static Joystick buttonPanel = new Joystick(RobotMap.buttonPanelPort);
+	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
 	
-	public static Button liftBottom = new JoystickButton(buttonPanel, 1);
-	public static Button liftSwitch = new JoystickButton(buttonPanel, 2);
-	public static Button liftScaleLow = new JoystickButton(buttonPanel, 3);
-	public static Button liftScaleMid= new JoystickButton(buttonPanel, 4);
-	public static Button liftScaleHigh =  new JoystickButton(buttonPanel, 5);
+	
+	
 	public static Button button4 = new JoystickButton(joystick,4);
 	public static Button button1 = new JoystickButton(joystick,1);
 	public static Button button2 = new JoystickButton(joystick, 2);
 	public static Button button3 = new JoystickButton(joystick,3);
 =======
+
 	
 	
-	
-	
-	public static Joystick Joystick = new Joystick(RobotMap.joyStickPort1);
-	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
-	public static Joystick keyboard = new Joystick(RobotMap.keyboardPort);
 	
 	public static Button liftBottom = new JoystickButton(guitar, 1);
 	public static Button liftSwitch = new JoystickButton(guitar, 2);
@@ -66,9 +57,6 @@ public class OI {
 	public static Button liftScaleHigh =  new JoystickButton(guitar, 5);
 	
 	 
-	public static Button button2 = new JoystickButton(Joystick, 2);
-	public static Button button3 = new JoystickButton(Joystick,3);
->>>>>>> 8b2e517a48d4bb9e649ef9e1f01c48b627c7c4e8
 
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
@@ -94,12 +82,12 @@ public class OI {
 	
 	 public OI(){
 		 
-<<<<<<< HEAD
+
 		 button2.toggleWhenPressed(new SonarTest());
 		 button1.whileHeld(new CubeCollectionOn());
 		 button3.whileHeld(new CubeEjectionOn());
 		 button4.whileHeld(new GyroAngles());
-=======
+
 		 button2.whileHeld(new SonarTest());
 		 button2.whileHeld(new CubeCollection());
 		 
@@ -109,7 +97,7 @@ public class OI {
 		 liftScaleMid.whenPressed(new SetLiftPositionScaleMid());
 		 liftScaleHigh.whenPressed(new SetLiftPositionScaleHigh());
 
->>>>>>> 8b2e517a48d4bb9e649ef9e1f01c48b627c7c4e8
+
 	 }
 	 
 	 
