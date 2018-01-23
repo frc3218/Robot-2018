@@ -14,14 +14,15 @@ public class RobotMap {
 	public static int guitarPort = 1;
 	
 	//CAN bus channels
-	public static final int lift1ID= 10;
-	public static final int lift2ID= 11;
-	public static final int leftBackDriveID = 0;
-	public static final int leftMidDriveID = 1;
-	public static final int leftFrontDriveID = 2;
-	public static final int rightBackDriveID = 3;
-	public static final int rightMidDriveID = 4;
-	public static final int rightFrontDriveID = 5;
+	//pdp is 0, pcm is 1
+	public static final int lift1ID= 9;
+	public static final int lift2ID= 10;
+	public static final int leftBottomDriveID = 2;
+	public static final int leftMidDriveID = 3;
+	public static final int leftTopDriveID = 4;
+	public static final int rightBottomDriveID = 5;
+	public static final int rightMidDriveID = 6;
+	public static final int rightTopDriveID = 7;
 	
 	//PWM Channels
 	public static int leftDrive1Port = 0;

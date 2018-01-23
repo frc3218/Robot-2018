@@ -30,8 +30,8 @@ public class AutoAPI {
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
  		
  		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, distance);
- 		Robot.driveTrain.rightFrontDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
- 		Robot.driveTrain.rightBackDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
+ 		Robot.driveTrain.rightTopDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
+ 		Robot.driveTrain.rightBottomDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
  		
  		
  		Robot.driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
@@ -39,8 +39,8 @@ public class AutoAPI {
  		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);
  		
  		Robot.driveTrain.leftMidDrive.set(ControlMode.MotionMagic, distance);
- 		Robot.driveTrain.leftFrontDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
- 		Robot.driveTrain.leftBackDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
+ 		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
+ 		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  	
  	    
     

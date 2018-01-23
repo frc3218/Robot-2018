@@ -41,12 +41,13 @@ public class DriveTrain extends Subsystem {
 	SpeedController rightDrive2 = new Talon(RobotMap.rightDrive2Port);
 	SpeedController rightDrive3 = new Spark(RobotMap.rightDrive3Port);
 	
-	public WPI_TalonSRX leftBackDrive = new WPI_TalonSRX(RobotMap.leftBackDriveID);
+	public WPI_TalonSRX leftBottomDrive = new WPI_TalonSRX(RobotMap.leftBottomDriveID);
 	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftMidDriveID);
-	public WPI_TalonSRX leftFrontDrive = new WPI_TalonSRX(RobotMap.leftFrontDriveID);
-	public WPI_TalonSRX rightBackDrive = new WPI_TalonSRX(RobotMap.rightBackDriveID);
+	public WPI_TalonSRX leftTopDrive = new WPI_TalonSRX(RobotMap.leftTopDriveID);
+	public WPI_TalonSRX rightBottomDrive = new WPI_TalonSRX(RobotMap.rightBottomDriveID);
 	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidDriveID);
-	public WPI_TalonSRX rightFrontDrive = new WPI_TalonSRX(RobotMap.rightFrontDriveID);
+	public WPI_TalonSRX rightTopDrive = new WPI_TalonSRX(RobotMap.rightTopDriveID);
+	
 	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 
@@ -92,24 +93,6 @@ public class DriveTrain extends Subsystem {
 		
     	drive.arcadeDrive(y, z);
 		
-    }
-    public static double rollingAverage(double num){
-    sum = 0;
-    
-    for(int i=0; i<=(timesRolled-1); i++){
-    gyroAr[gyroTimes] = num;
-    }
-    for(int x = 0; x<gyroTimes;x++){
-    	sum += gyroAr[x];
-    }
-    
-    for(int f=0; f<=(gyroTimes-1); f++){
-    	gyroAr[f] = gyroAr[f + 1];
-    	
-    		
-    
-    }
-    return (sum/gyroTimes);
     }
     
     public void lowGear(){

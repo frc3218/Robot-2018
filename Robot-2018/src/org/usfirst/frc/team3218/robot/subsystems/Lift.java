@@ -8,6 +8,7 @@ import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
 import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -32,7 +33,6 @@ public class Lift extends Subsystem {
 	final int GUITAR_MANUAL_DOWN = 180;
 	final int MANUAL_UP_POWER = 1;
 	final int MANUAL_DOWN_POWER = -1;
-	
 	public float ticksPerInch;
 	final int TICKS_PER_INCH = 100;
 	
