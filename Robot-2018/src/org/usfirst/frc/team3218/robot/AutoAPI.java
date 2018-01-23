@@ -12,7 +12,8 @@ public class AutoAPI {
  public final static float WALL_TO_SWITCH = 140.188f;
  public final static float WALL_TO_PLATFORM_CHANNEL = 235.25f;
  public final static float MID_LINE = 323.16f;
- 
+ public static double[] averages;
+ static double[][] sensorValues;
  final static float TICKS_PER_INCH = 73; 	
  
 	
@@ -65,5 +66,35 @@ public class AutoAPI {
 	{
 		//Robot.lift..setSelectedSensorPosition(0, 0, 0);
 	
+	}
+
+	
+	public static double sensorAverage (double newValue, String sensorName){
+		int sensorIndex;
+		int sampleCount = 0;
+		switch(sensorName){
+		case "gyro":sensorIndex = 1; sampleCount = 50;
+		break;
+		case "accelerometer": sensorIndex = 2; sampleCount = 50;
+		break;
+		case "leftEnc":sensorIndex = 3; sampleCount = 50;
+		break;
+		case "rightEnc":sensorIndex = 4; sampleCount = 50;
+		break;
+		case "liftEnc": sensorIndex = 5; sampleCount = 50;
+		break;
+		default: sensorIndex = 0; sampleCount = 0;
+		}
+		if(sensorIndex != 0){
+	averages[sensorIndex] -= (sensorValues[sensorIndex][0])/sampleCount;
+	for(int i=0; i<sampleCount-1;i++){
+		sensorValues[sensorIndex][i] = sensorValues[sensorIndex][i+1];
+		
+	}
+		sensorValues[sensorIndex][sampleCount-1] = newValue;
+		averages[sensorIndex]+= newValue/sampleCount;
+		return averages[sensorIndex];
+		}
+		return 0;
 	}
 }

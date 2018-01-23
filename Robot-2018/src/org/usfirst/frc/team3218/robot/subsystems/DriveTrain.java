@@ -1,16 +1,14 @@
 package org.usfirst.frc.team3218.robot.subsystems;
 
-import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -18,7 +16,6 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
  *
@@ -26,6 +23,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 public class DriveTrain extends Subsystem {
 	public static double[] gyroAr = new double[15]; 
 	public static double sum;
+
 	double power = .5;
 	static int timesRolled = 50;
 	public static int gyroTimes = 50;
@@ -49,7 +47,7 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX rightBackDrive = new WPI_TalonSRX(RobotMap.rightBackDriveID);
 	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidDriveID);
 	public WPI_TalonSRX rightFrontDrive = new WPI_TalonSRX(RobotMap.rightFrontDriveID);
-	
+	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 
 	public static Encoder leftEnc = new Encoder(RobotMap.encoderLeftPortA, RobotMap.encoderLeftPortB, true);
@@ -97,27 +95,20 @@ public class DriveTrain extends Subsystem {
     }
     public static double rollingAverage(double num){
     sum = 0;
-<<<<<<< HEAD
-    gyroAr[timesRolled] = num;
-    for(int x = 0; x<gyroAr.length;x++){
-    	sum += gyroAr[x];
-    }
+    
     for(int i=0; i<=(timesRolled-1); i++){
-=======
     gyroAr[gyroTimes] = num;
+    }
     for(int x = 0; x<gyroTimes;x++){
     	sum += gyroAr[x];
     }
-    for(int i=0; i<=(gyroTimes-1); i++){
->>>>>>> e0fdab298d301a6fed0e8e9235496028035e7904
-    	gyroAr[i] = gyroAr[i + 1];
+    
+    for(int f=0; f<=(gyroTimes-1); f++){
+    	gyroAr[f] = gyroAr[f + 1];
     	
     		
     
     }
-<<<<<<< HEAD
-    return (sum/gyroAr.length);
-=======
     return (sum/gyroTimes);
     }
     
@@ -129,7 +120,7 @@ public class DriveTrain extends Subsystem {
     public void highGear(){
     	leftGearShift.set(true);
     	rightGearShift.set(true);
->>>>>>> e0fdab298d301a6fed0e8e9235496028035e7904
+
     }
 }
 

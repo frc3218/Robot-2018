@@ -135,9 +135,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Rate", driveTrain.rightEnc.getRate());
 		SmartDashboard.putNumber("GyroAngle", driveTrain.gyro.getAngle());
 		SmartDashboard.putNumber("GyroRate", driveTrain.gyro.getRate());
-		
-		
-		
+		SmartDashboard.putNumber("Left EncoderRate:", driveTrain.leftEnc.getRate());
+		SmartDashboard.putNumber("Right EncoderRate:", driveTrain.rightEnc.getRate());
+		SmartDashboard.putNumber("AngleAverage",AutoAPI.sensorAverage(Robot.driveTrain.gyro.getAngle(), "gyro"));
+	    SmartDashboard.putNumber("Gyro Angle", Robot.driveTrain.gyro.getAngle());
+		SmartDashboard.putNumber("Left Encoder Average", AutoAPI.sensorAverage(DriveTrain.leftEnc.getRate(), "leftEnc"));
+	    SmartDashboard.putNumber("Right Encoder Average", AutoAPI.sensorAverage(driveTrain.rightEnc.getRate(), "rightEnc"));
+	   // SmartDashboard.putNumber("Accelerometer Average", AutoAPI.sensorAverage(driveTrain.accelerometer.get(), "accelerometer"));
+	    SmartDashboard.putNumber("Lift Encoder Average", AutoAPI.sensorAverage(Lift.liftEnc.getRate(), "liftEnc"));
+	    
 	}
 
 	/**

@@ -35,11 +35,12 @@ public class RobotMap {
 	public static int rightCollection1Port = 8;
 
 	//Digital Channels
-	public static int encoderLeftPortA = 2;
-	public static int encoderLeftPortB = 3;
-	public static int encoderRightPortA = 0;
-	public static int encoderRightPortB = 1;
-
+	public static int encoderLeftPortA = 0;
+	public static int encoderLeftPortB = 1;
+	public static int encoderRightPortA = 2;
+	public static int encoderRightPortB = 3;
+	public static int liftEncoderPortA = 8;
+	public static int liftEncoderPortB = 9;
 	
 
 	public static int limitSwitchPortA = 7;
@@ -47,7 +48,7 @@ public class RobotMap {
 	//Analog Channels
 	public static int sonarAPort = 0;
 	public static int gyroPort = 1;
-
+	public static int accelerometerPort = 2;
 	//PCM Channels
 	public static int leftKoreyPort = 0;
 	public static int rightKoreyPort = 1;

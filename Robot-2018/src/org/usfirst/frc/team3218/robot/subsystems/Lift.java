@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,10 +38,10 @@ public class Lift extends Subsystem {
 	
 	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
 	
-	public  WPI_TalonSRX liftCIM = new WPI_TalonSRX(RobotMap.liftCIMID);
+	
 	public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
-    
-	public void initDefaultCommand() {
+    public static Encoder liftEnc = new Encoder(RobotMap.liftEncoderPortA,RobotMap.liftEncoderPortB);
+
 	
 	public  WPI_TalonSRX lift1 = new WPI_TalonSRX(RobotMap.lift1ID);
 	
@@ -53,12 +54,7 @@ public class Lift extends Subsystem {
     
     public void liftPIDConfig(){
     	//timeouts and PIDidx are 0
-    	liftCIM.set(ControlMode.MotionMagic, 0);
-    	liftCIM.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    	liftCIM.configMotionCruiseVelocity(CruiseVelocity, 0);
-    	liftCIM.configMotionAcceleration(Acceleration, 0);
-    
-    	
+
     	lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     	lift1.configMotionCruiseVelocity(CruiseVelocity, 0);
     	lift1.configMotionAcceleration(Acceleration, 0);
@@ -66,9 +62,7 @@ public class Lift extends Subsystem {
     }
     
     public  void setPosition(int position){
-    		liftCIM.set(ControlMode.MotionMagic, 0);
-        	Robot.lift.liftCIM.set(Robot.lift.positionArray[position] * Robot.lift.ticksPerInch);
-        	
+    	
     		lift1.set(ControlMode.MotionMagic, Robot.lift.positionArray[position] * Robot.lift.TICKS_PER_INCH);
         
    

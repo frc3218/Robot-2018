@@ -14,7 +14,6 @@ import org.usfirst.frc.team3218.robot.CubeControl.commands.KoreyCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.GyroAngles;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollection;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
@@ -39,30 +38,13 @@ public class OI {
 	// number it is.
 
 <<<<<<< HEAD
-
-	
-	
-	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
-	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
-	
-	
-	
-	public static Button button4 = new JoystickButton(joystick,4);
-	public static Button button1 = new JoystickButton(joystick,1);
-	public static Button button2 = new JoystickButton(joystick, 2);
-	public static Button button3 = new JoystickButton(joystick,3);
 =======
 
 	
 	
 	
-	public static Button liftBottom = new JoystickButton(guitar, 1);
-	public static Button liftSwitch = new JoystickButton(guitar, 2);
-	public static Button liftScaleLow = new JoystickButton(guitar, 3);
-	public static Button liftScaleMid= new JoystickButton(guitar, 4);
-	public static Button liftScaleHigh =  new JoystickButton(guitar, 5);
-	
 	 
+
 	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
 	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
 	
@@ -83,6 +65,7 @@ public class OI {
 	
 	 
 	
+
 
 
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
@@ -113,7 +96,6 @@ public class OI {
 		 button2.toggleWhenPressed(new SonarTest());
 		 button1.whileHeld(new CubeCollectionOn());
 		 button3.whileHeld(new CubeEjectionOn());
-		 button4.whileHeld(new GyroAngles());
 
 		 button2.whileHeld(new SonarTest());
 		 button2.whileHeld(new CubeCollection());
@@ -127,7 +109,6 @@ public class OI {
 		 liftScaleLow.whenPressed(new SetLiftPositionScaleLow());
 		 liftScaleMid.whenPressed(new SetLiftPositionScaleMid());
 		 liftScaleHigh.whenPressed(new SetLiftPositionScaleHigh());
-
 
 	 }
 	 
