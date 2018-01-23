@@ -90,28 +90,9 @@ public class DriveTrain extends Subsystem {
 			lowGear();
 		}
 		
-    	drive.arcadeDrive(y, z);
+    	drive.arcadeDrive(y,z);
 		
     }
-    public static double rollingAverage(double num){
-    sum = 0;
-    
-    for(int i=0; i<=(timesRolled-1); i++){
-    gyroAr[gyroTimes] = num;
-    }
-    for(int x = 0; x<gyroTimes;x++){
-    	sum += gyroAr[x];
-    }
-    
-    for(int f=0; f<=(gyroTimes-1); f++){
-    	gyroAr[f] = gyroAr[f + 1];
-    	
-    		
-    
-    }
-    return (sum/gyroTimes);
-    }
-    
     public void lowGear(){
     	leftGearShift.set(false);
     	rightGearShift.set(false);

@@ -12,8 +12,8 @@ public class AutoAPI {
  public final static float WALL_TO_SWITCH = 140.188f;
  public final static float WALL_TO_PLATFORM_CHANNEL = 235.25f;
  public final static float MID_LINE = 323.16f;
- public static double[] averages;
- static double[][] sensorValues;
+ public static double[] averages = new double[6];
+ static double[][] sensorValues = new double [6][200];
  final static float TICKS_PER_INCH = 73; 	
  
 	
@@ -73,15 +73,15 @@ public class AutoAPI {
 		int sensorIndex;
 		int sampleCount = 0;
 		switch(sensorName){
-		case "gyro":sensorIndex = 1; sampleCount = 50;
+		case "gyro":sensorIndex = 1; sampleCount = 150;
 		break;
-		case "accelerometer": sensorIndex = 2; sampleCount = 50;
+		case "accelerometer": sensorIndex = 2; sampleCount = 150;
 		break;
-		case "leftEnc":sensorIndex = 3; sampleCount = 50;
+		case "leftEnc":sensorIndex = 3; sampleCount = 150;
 		break;
-		case "rightEnc":sensorIndex = 4; sampleCount = 50;
+		case "rightEnc":sensorIndex = 4; sampleCount = 150;
 		break;
-		case "liftEnc": sensorIndex = 5; sampleCount = 50;
+		case "liftEnc": sensorIndex = 5; sampleCount = 150;
 		break;
 		default: sensorIndex = 0; sampleCount = 0;
 		}
