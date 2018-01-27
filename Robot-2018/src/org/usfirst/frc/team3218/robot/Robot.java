@@ -8,6 +8,7 @@ import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
+import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,7 +29,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-
+	public static final Vision vision = new Vision();
 	public static final Lift lift =  new Lift();
 	public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
