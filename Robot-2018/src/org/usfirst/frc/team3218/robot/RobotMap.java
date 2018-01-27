@@ -15,8 +15,8 @@ public class RobotMap {
 	
 	//CAN bus channels
 	//pdp is 0, pcm is 1
-	public static final int lift1ID= 9;
-	public static final int lift2ID= 10;
+	public static final int lift1ID= 6;
+	public static final int lift2ID= 7;
 	public static final int leftBottomDriveID = 2;
 	public static final int leftMidDriveID = 3;
 	public static final int leftTopDriveID = 4;
@@ -26,22 +26,22 @@ public class RobotMap {
 	
 	//PWM Channels
 	public static int leftDrive1Port = 0;
-	public static int leftDrive2Port = 6;//1
-	public static int leftDrive3Port = 7;//2
+	public static int leftDrive2Port = 1;//1
+	public static int leftDrive3Port = 2;//2
 	public static int rightDrive1Port = 3;
 	public static int rightDrive2Port = 4;
 	public static int rightDrive3Port = 5;
 
-	public static int leftCollection1Port = 1;
-	public static int rightCollection1Port = 8;
+	public static int leftCollectionPort = 8;
+	public static int rightCollectionPort = 9;
 
 	//Digital Channels
 	public static int encoderLeftPortA = 0;
 	public static int encoderLeftPortB = 1;
 	public static int encoderRightPortA = 2;
 	public static int encoderRightPortB = 3;
-	public static int liftEncoderPortA = 8;
-	public static int liftEncoderPortB = 9;
+	public static int liftEncoderPortA = 4;
+	public static int liftEncoderPortB = 5;
 	
 
 	public static int limitSwitchPortA = 7;
@@ -53,9 +53,9 @@ public class RobotMap {
 	//PCM Channels
 	public static int leftKoreyPort = 5;
 	public static int rightKoreyPort = 1;
-	public static int pistonKoreyPort = 2;
-	public static int leftGearShiftPort = 3;
-	public static int rightGearShiftPort = 4;
+	public static int pistonKoreyPort = 4;
+	public static int leftHighGearShiftPort = 2;
+	public static int leftLowGearShiftPort = 3;
 	public static int climbGearPort = 0;
 	
 	

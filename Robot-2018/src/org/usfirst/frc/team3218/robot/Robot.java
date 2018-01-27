@@ -129,6 +129,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
+    	SmartDashboard.putString("Drive Command", driveTrain.getCurrentCommandName());
 		SmartDashboard.putNumber("Left Encoder:", driveTrain.leftEnc.get());
 		SmartDashboard.putNumber("Right Encoder:", driveTrain.rightEnc.get());
 		SmartDashboard.putNumber("Left Rate", driveTrain.leftEnc.getRate());
@@ -140,10 +141,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("AngleAverage",AutoAPI.sensorAverage(Robot.driveTrain.gyro.getAngle(), "gyro"));
 	    SmartDashboard.putNumber("Gyro Angle", Robot.driveTrain.gyro.getAngle());
 		SmartDashboard.putNumber("Left Encoder Average", AutoAPI.sensorAverage(DriveTrain.leftEnc.getRate(), "leftEnc"));
-	    SmartDashboard.putNumber("Right Encoder Average", AutoAPI.sensorAverage(driveTrain.rightEnc.getRate(), "rightEnc"));
+	    SmartDashboard.putNumber("Right Encoder Average", AutoAPI.sensorAverage(DriveTrain.rightEnc.getRate(), "rightEnc"));
 	   // SmartDashboard.putNumber("Accelerometer Average", AutoAPI.sensorAverage(driveTrain.accelerometer.get(), "accelerometer"));
 	    SmartDashboard.putNumber("Lift Encoder Average", AutoAPI.sensorAverage(Lift.liftEnc.getRate(), "liftEnc"));
-	    
 	}
 
 	/**

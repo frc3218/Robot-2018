@@ -24,7 +24,7 @@ public class AutoAPI {
  	public static void driveStraight(float distance, int speed, int acceleration){
  		distance *= TICKS_PER_INCH;
  		speed *= Math.signum(distance);// may not be needed
- 		
+ 		/*
  		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
@@ -42,7 +42,7 @@ public class AutoAPI {
  		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  	
- 	    
+ 	    */
     
     	
  		

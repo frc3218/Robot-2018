@@ -20,8 +20,8 @@ public double collectionSpeed = 0.3;
 public double ejectionSpeed = 0.5;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public static SpeedController leftWheel = new Talon(RobotMap.leftCollection1Port);
-	public static SpeedController rightWheel = new Talon(RobotMap.rightCollection1Port);
+	public static SpeedController leftWheel = new Talon(RobotMap.leftCollectionPort);
+	public static SpeedController rightWheel = new Talon(RobotMap.rightCollectionPort);
 	public static DigitalInput limitSwitch = new DigitalInput(RobotMap.limitSwitchPortA);
 	public static Solenoid leftKorey = new Solenoid(RobotMap.leftKoreyPort);
 	public static Solenoid rightKorey = new Solenoid(RobotMap.rightKoreyPort);
