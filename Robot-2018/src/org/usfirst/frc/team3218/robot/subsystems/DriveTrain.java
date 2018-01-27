@@ -24,7 +24,7 @@ public class DriveTrain extends Subsystem {
 	public static double[] gyroAr = new double[15]; 
 	public static double sum;
 
-	double power = .5;
+	
 	static int timesRolled = 50;
 	public static int gyroTimes = 50;
 	public static double pastValue;
@@ -34,20 +34,13 @@ public class DriveTrain extends Subsystem {
 	final int SHIFT_UP_SPEED = 0;
 	final int SHIFT_DOWN_SPEED = 0;
 	
-	SpeedController leftDrive1 = new Talon(RobotMap.leftDrive1Port);
-	SpeedController leftDrive2 = new Talon(RobotMap.leftDrive2Port);
-	SpeedController leftDrive3 = new Spark(RobotMap.leftDrive3Port);
-	SpeedController rightDrive1 = new Talon(RobotMap.rightDrive1Port);
-	SpeedController rightDrive2 = new Talon(RobotMap.rightDrive2Port);
-	SpeedController rightDrive3 = new Spark(RobotMap.rightDrive3Port);
-	/*
 	public WPI_TalonSRX leftBottomDrive = new WPI_TalonSRX(RobotMap.leftBottomDriveID);
 	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftMidDriveID);
 	public WPI_TalonSRX leftTopDrive = new WPI_TalonSRX(RobotMap.leftTopDriveID);
 	public WPI_TalonSRX rightBottomDrive = new WPI_TalonSRX(RobotMap.rightBottomDriveID);
 	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidDriveID);
 	public WPI_TalonSRX rightTopDrive = new WPI_TalonSRX(RobotMap.rightTopDriveID);
-	*/
+	
 	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 
@@ -60,14 +53,9 @@ public class DriveTrain extends Subsystem {
 	public static Solenoid leftLowGearShift = new Solenoid(RobotMap.leftLowGearShiftPort);
 	
 	
-	
-	
-	
-	
-	
 	// Grouping Together Drives
-	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftDrive1, leftDrive2, leftDrive3);
-	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightDrive1, rightDrive2, rightDrive3);
+	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
+	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
 	DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
 
 	// Put methods for controlling this subsystem

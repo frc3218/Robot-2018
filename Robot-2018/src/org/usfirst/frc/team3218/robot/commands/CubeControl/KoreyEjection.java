@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3218.robot.CubeControl.commands;
+package org.usfirst.frc.team3218.robot.commands.CubeControl;
 
 import org.usfirst.frc.team3218.robot.Robot;
 
@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class KoreyCollectionOn extends Command {
+public class KoreyEjection extends Command {
 
-    public KoreyCollectionOn() {
+    public KoreyEjection() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.cubeControl);
@@ -21,7 +21,7 @@ public class KoreyCollectionOn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cubeControl.koreyOn();
+    	Robot.cubeControl.koreyEject();
     }
 
     // Make this return true when this Command no longer needs to run execute()

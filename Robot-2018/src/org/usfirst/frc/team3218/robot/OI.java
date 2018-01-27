@@ -7,15 +7,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import java.lang.invoke.SwitchPoint;
 
-import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeControlOff;
-import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollectionOn;
-import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeEjectionOn;
-import org.usfirst.frc.team3218.robot.CubeControl.commands.KoreyCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollection;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.KoreyCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
 import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOff;
 import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOn;
@@ -91,12 +90,10 @@ public class OI {
 	 public OI(){
 		 
 
-		 button2.toggleWhenPressed(new SonarTest());
-		 button1.whileHeld(new CubeCollectionOn());
-		 button3.whileHeld(new CubeEjectionOn());
 
-		 button2.whileHeld(new SonarTest());
-		 button2.whileHeld(new CubeCollection());
+		 button3.whileHeld(new CubeCollectionOn());
+		 button4.whileHeld(new CubeEjectionOn());
+
 		 button5.whenPressed(new GearShiftLow());
 		 button6.whenPressed(new GearShiftHigh());
 		 button7.whenPressed(new KoreyCollectionOn());

@@ -43,10 +43,11 @@ public class Lift extends Subsystem {
 	
 	
 	public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
+	
     public static Encoder liftEnc = new Encoder(RobotMap.liftEncoderPortA,RobotMap.liftEncoderPortB);
     
 	
-	public  WPI_TalonSRX lift1 = new WPI_TalonSRX(RobotMap.lift1ID);
+	public  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
 	public  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -57,16 +58,16 @@ public class Lift extends Subsystem {
     
     public void liftPIDConfig(){
     	//timeouts and PIDidx are 0
-    	/*
-    	lift1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    	lift1.configMotionCruiseVelocity(CruiseVelocity, 0);
-    	lift1.configMotionAcceleration(Acceleration, 0);
-    	*/
+    	
+    	liftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	liftMaster.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	liftMaster.configMotionAcceleration(Acceleration, 0);
+    	
     }
     
     public  void setPosition(int position){
     	
-    		//lift1.set(ControlMode.MotionMagic, Robot.lift.positionArray[position] * Robot.lift.TICKS_PER_INCH);
+    		liftMaster.set(ControlMode.MotionMagic, Robot.lift.positionArray[position] * Robot.lift.TICKS_PER_INCH);
         
    
     }
@@ -79,18 +80,18 @@ public class Lift extends Subsystem {
 		switch (Robot.oi.guitar.getPOV()) {
 
 		case GUITAR_MANUAL_UP:
-			lift1.set(MANUAL_UP_POWER);
-			lift2.set(MANUAL_UP_POWER);
+			liftMaster.set(ControlMode.PercentOutput,MANUAL_UP_POWER);
+			lift2.set(ControlMode.PercentOutput,MANUAL_UP_POWER);
 			break;
 
 		case GUITAR_MANUAL_DOWN:
-			lift1.set(MANUAL_DOWN_POWER);
-			lift2.set(MANUAL_DOWN_POWER);
+			liftMaster.set(ControlMode.PercentOutput,MANUAL_DOWN_POWER);
+			lift2.set(ControlMode.PercentOutput,MANUAL_DOWN_POWER);
 			break;
 
 		default:
-			lift1.set(HOLD_POSITION_POWER);
-			lift2.set(HOLD_POSITION_POWER);
+			liftMaster.set(ControlMode.PercentOutput,HOLD_POSITION_POWER);
+			lift2.set(ControlMode.PercentOutput,HOLD_POSITION_POWER);
 			break;
 			
 			

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3218.robot.CubeControl.commands;
+package org.usfirst.frc.team3218.robot.commands.CubeControl;
 
 import org.usfirst.frc.team3218.robot.Robot;
 
