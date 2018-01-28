@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
@@ -16,14 +17,14 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 /**
  *
  */
 public class DriveTrain extends Subsystem {
 	public static double[] gyroAr = new double[15]; 
 	public static double sum;
-
+	
 	double power = .5;
 	static int timesRolled = 50;
 	public static int gyroTimes = 50;
@@ -53,17 +54,15 @@ public class DriveTrain extends Subsystem {
 
 	public static Encoder leftEnc = new Encoder(RobotMap.encoderLeftPortA, RobotMap.encoderLeftPortB, true);
 	public static Encoder rightEnc = new Encoder(RobotMap.encoderRightPortA, RobotMap.encoderRightPortB, false);
-
+	
 	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 	
 	public static Solenoid leftHighGearShift = new Solenoid(RobotMap.leftHighGearShiftPort);
 	public static Solenoid leftLowGearShift = new Solenoid(RobotMap.leftLowGearShiftPort);
+	public static Solenoid rightHighGearShift = new Solenoid(RobotMap.rightHighGearShiftPort);
+	public static Solenoid rightLowGearShift = new Solenoid(RobotMap.rightLowGearShiftPort);
 	
-	
-	
-	
-	
-	
+	public static Compressor compressor = new Compressor();
 	
 	// Grouping Together Drives
 	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftDrive1, leftDrive2, leftDrive3);
@@ -88,12 +87,16 @@ public class DriveTrain extends Subsystem {
     public void lowGear(){
     	leftHighGearShift.set(false);
     	leftLowGearShift.set(true);
+    	rightHighGearShift.set(false);
+    	rightLowGearShift.set(true);
+    
     }
     
     public void highGear(){
     	leftHighGearShift.set(true);
     	leftLowGearShift.set(false);
-
+    	rightHighGearShift.set(true);
+    	rightHighGearShift.set(false);
     }
 }
 

@@ -42,7 +42,6 @@ public class Lift extends Subsystem {
 	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
 	
 	
-	public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
     public static Encoder liftEnc = new Encoder(RobotMap.liftEncoderPortA,RobotMap.liftEncoderPortB);
     
 	
@@ -97,11 +96,6 @@ public class Lift extends Subsystem {
     	}
     
     }
-   public void gearLow(){
-	   climbGear.set(false);
-   }
-   public void gearHigh(){
-	   climbGear.set(true);
-   }
+ 
 }
 

@@ -51,13 +51,12 @@ public class RobotMap {
 	public static int gyroPort = 1;
 	public static int accelerometerPort = 2;
 	//PCM Channels
-	public static int leftKoreyPort = 5;
-	public static int rightKoreyPort = 1;
-	public static int pistonKoreyPort = 4;
+	public static int rightHighGearShiftPort = 0;
+	public static int rightLowGearShiftPort = 1;
 	public static int leftHighGearShiftPort = 2;
 	public static int leftLowGearShiftPort = 3;
-	public static int climbGearPort = 0;
-	
+	//PCM 
+	public static int compressorPort = 1;
 	
 	
 }

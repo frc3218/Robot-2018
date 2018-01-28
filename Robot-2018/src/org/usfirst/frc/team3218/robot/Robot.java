@@ -128,6 +128,24 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		dashboardOutputs();
+		
+		if(driveTrain.compressor.getPressureSwitchValue() == true){
+			driveTrain.compressor.stop();
+		}
+		else{
+			driveTrain.compressor.start();
+		}
+	}
+		
+	/**
+	 * This function is called periodically during test mode
+	 */
+	@Override
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
+	public void dashboardOutputs(){		
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
     	SmartDashboard.putString("Drive Command", driveTrain.getCurrentCommandName());
@@ -145,13 +163,7 @@ public class Robot extends IterativeRobot {
 	    SmartDashboard.putNumber("Right Encoder Average", AutoAPI.sensorAverage(DriveTrain.rightEnc.getRate(), "rightEnc"));
 	   // SmartDashboard.putNumber("Accelerometer Average", AutoAPI.sensorAverage(driveTrain.accelerometer.get(), "accelerometer"));
 	    SmartDashboard.putNumber("Lift Encoder Average", AutoAPI.sensorAverage(Lift.liftEnc.getRate(), "liftEnc"));
-	}
-
-	/**
-	 * This function is called periodically during test mode
-	 */
-	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
-	}
+	    SmartDashboard.putBoolean("Pressure Switch State", driveTrain.compressor.getPressureSwitchValue());
+	    SmartDashboard.putNumber("Compressor Current", driveTrain.compressor.getCompressorCurrent());
+		}
 }
