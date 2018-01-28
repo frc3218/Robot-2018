@@ -6,15 +6,17 @@ import com.ctre.phoenix.motorcontrol.*;
 public class AutoAPI {
 
 
- //distances
+ //distances in inches
  public final static float WALL_TO_SWITCH_CHANNEL = 67.188f;
  public final static float AUTOLINE = 120;
  public final static float WALL_TO_SWITCH = 140.188f;
  public final static float WALL_TO_PLATFORM_CHANNEL = 235.25f;
  public final static float MID_LINE = 323.16f;
+ final static float TICKS_PER_INCH = 73; 
+ 
  public static double[] averages = new double[6];
  static double[][] sensorValues = new double [6][200];
- final static float TICKS_PER_INCH = 73; 	
+ 	
  
 	
  /**
@@ -23,7 +25,7 @@ public class AutoAPI {
  */
  	public static void driveStraight(float distance, int speed, int acceleration){
  		distance *= TICKS_PER_INCH;
- 		speed *= Math.signum(distance);// may not be needed
+ 		//speed *= Math.signum(distance);// may not be needed
  		
  		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
@@ -41,20 +43,34 @@ public class AutoAPI {
  		Robot.driveTrain.leftMidDrive.set(ControlMode.MotionMagic, distance);
  		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
- 	
- 	    
-    
-    	
  		
+ 		while(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0) !=distance &&
+ 			  Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0) !=distance){
+ 		
+ 		}
+ 	    
+ 	}
 	
  	
-	}
-	
- 	
-	public static void rotate(float angle, float speed){
+	public static void rotate(int angle, int speed, int acceleration){
 		
-		speed *= Math.signum(angle);
-		
+		//speed *= Math.signum(angle);
+		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
+ 		
+ 		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, angle);
+ 		Robot.driveTrain.rightTopDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
+ 		Robot.driveTrain.rightBottomDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
+ 		
+ 		
+ 		Robot.driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(speed, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);
+ 		
+ 		Robot.driveTrain.leftMidDrive.set(ControlMode.MotionMagic, angle);
+ 		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
+ 		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
 	}
 	
 	

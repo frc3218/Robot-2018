@@ -128,6 +128,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+	
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
     	SmartDashboard.putString("Drive Command", driveTrain.getCurrentCommandName());

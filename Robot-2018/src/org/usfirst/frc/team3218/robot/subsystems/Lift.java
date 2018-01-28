@@ -49,6 +49,7 @@ public class Lift extends Subsystem {
 	
 	public  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
 	public  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
