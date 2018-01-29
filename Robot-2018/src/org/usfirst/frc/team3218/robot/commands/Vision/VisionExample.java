@@ -37,6 +37,7 @@ public class VisionExample {
 	}
 	private void LookTowards()
 	{
-		Robot.driveTrain.drive(0, (pixy.currentX-SCREEN_WIDTH/2<0) ? -1 : 1);
+		Robot.driveTrain.drive(0, (pixy.currentX-SCREEN_WIDTH/2<0) ? -0.25 * pixy.currentX/(SCREEN_WIDTH/2) : 0.25 * pixy.currentX/(SCREEN_WIDTH/2));//TODO: make work with motion magic
 	}
 }
+  
