@@ -1,8 +1,14 @@
 
 package org.usfirst.frc.team3218.robot;
 
+import java.security.PublicKey;
+
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
+import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
+import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
+import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
@@ -11,6 +17,7 @@ import org.usfirst.frc.team3218.robot.subsystems.Lift;
 import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -34,9 +41,12 @@ public class Robot extends IterativeRobot {
 	public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
 	
+	public String gameData;
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
 	
+	public static SendableChooser<String> position = new SendableChooser<>();
+	public static SendableChooser<String> objective = new SendableChooser<>();
+	public static SendableChooser<String> path = new SendableChooser<>();
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -44,13 +54,24 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		chooser.addDefault("Nothing", new Nothing());
-		chooser.addObject("Cross Auto Line", new DriveWithJoystick());
+		
+		position.addObject("1", "1");
+		position.addObject("2", "2");
+		position.addObject("3", "3");
+		
+		objective.addDefault("Nothing", "Nothing");
+		objective.addObject("Line", "Line");
+		objective.addObject("Switch", "Switch");
+		objective.addObject("Scale", "Scale");
+		objective.addObject("SwitchScale", "SwitchScale");
 		
 		
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		path.addObject("Close", "close");
+		path.addObject("Far", "far");
 		
+		SmartDashboard.putData("position", position);
+		SmartDashboard.putData("objectiveA", objective);
+		SmartDashboard.putData("path", path);
 		lift.liftPIDConfig();
 	}
 
@@ -82,10 +103,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		driveTrain.leftEnc.setDistancePerPulse(1/73);
-		driveTrain.rightEnc.setDistancePerPulse(1/73);
 
-		autonomousCommand = chooser.getSelected();
+		//autonomousCommand = chooser.getSelected();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -93,8 +112,17 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-
-		// schedule the autonomous command (example)
+		 gameData = DriverStation.getInstance().getGameSpecificMessage();
+			switch(objective.getSelected()){
+			case "Nothing": autonomousCommand = new Nothing(); break; 
+			case "Line": autonomousCommand = new CrossLine(); break;
+			case "Switch": autonomousCommand = new Switch(); break;
+			case "Scale": autonomousCommand = new Scale(); break;
+			case "SwitchScale": autonomousCommand = new SwitchScale(); break;
+			}
+		
+			
+		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

@@ -1,18 +1,15 @@
 package org.usfirst.frc.team3218.robot.commands.Auto;
 
-import org.usfirst.frc.team3218.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Nothing extends Command {
+public class Scale extends Command {
 
-    public Nothing() {
+    public Scale() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +18,6 @@ public class Nothing extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
