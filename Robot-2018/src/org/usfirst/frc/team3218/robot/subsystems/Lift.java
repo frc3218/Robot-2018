@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -34,23 +36,21 @@ public class Lift extends Subsystem {
 	final int HOLD_POSITION_POWER = 0; //power required for arm to stay at position
 	final int GUITAR_MANUAL_UP = 0;
 	final int GUITAR_MANUAL_DOWN = 180;
-	final double MANUAL_UP_POWER = 1;
-	final int MANUAL_DOWN_POWER = -1;
+	final double MANUAL_UP_POWER = .7;
+	final double MANUAL_DOWN_POWER = -0.7;
 	public float ticksPerInch;
 	final int TICKS_PER_INCH = 100;
 	
 	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
 	
 	
-	public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
-	
-    public static Encoder liftEnc = new Encoder(RobotMap.liftEncoderPortA,RobotMap.liftEncoderPortB);
-    
+	//public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
 	
 	public  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
 	public  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
-	
-    public void initDefaultCommand() {
+	public static Encoder liftEnc = new Encoder(RobotMap.liftEncoderPort1, RobotMap.liftEncoderPort2);
+	public static DigitalInput bottomSwitch = new DigitalInput(RobotMap.bottomLiftSwitchPort);
+	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new ManualLiftControl());
@@ -60,7 +60,7 @@ public class Lift extends Subsystem {
     public void liftPIDConfig(){
     	//timeouts and PIDidx are 0
     	
-    	liftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    	liftMaster.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
     	liftMaster.configMotionCruiseVelocity(CruiseVelocity, 0);
     	liftMaster.configMotionAcceleration(Acceleration, 0);
     	
@@ -100,10 +100,10 @@ public class Lift extends Subsystem {
     
     }
    public void gearLow(){
-	   climbGear.set(false);
+	 //  climbGear.set(false);
    }
    public void gearHigh(){
-	   climbGear.set(true);
+	 //  climbGear.set(true);
    }
 }
 

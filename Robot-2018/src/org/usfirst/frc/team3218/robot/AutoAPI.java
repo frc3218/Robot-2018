@@ -2,6 +2,9 @@ package org.usfirst.frc.team3218.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
+import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
+
 import com.ctre.phoenix.motorcontrol.*;
 public class AutoAPI {
 
@@ -54,7 +57,6 @@ public class AutoAPI {
  	
 	public static void rotate(int angle, int speed, int acceleration){
 		
-		//speed *= Math.signum(angle);
 		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
@@ -65,12 +67,18 @@ public class AutoAPI {
  		
  		
  		Robot.driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
- 		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(speed, 0);
- 		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(-speed, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionAcceleration(-acceleration, 0);
  		
  		Robot.driveTrain.leftMidDrive.set(ControlMode.MotionMagic, angle);
  		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
+ 		
+ 		while(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0) !=angle){
+ 	 			
+ 	 		Robot.driveTrain.rightMidDrive.setSelectedSensorPosition(0, 0, 0);
+ 	 		Robot.driveTrain.leftMidDrive.setSelectedSensorPosition(0, 0, 0);
+ 	 		}
 	}
 	
 	
@@ -89,15 +97,15 @@ public class AutoAPI {
 		int sensorIndex;
 		int sampleCount = 0;
 		switch(sensorName){
-		case "gyro":sensorIndex = 1; sampleCount = 150;
+		case "gyro":sensorIndex = 1; sampleCount = 30;
 		break;
 		case "accelerometer": sensorIndex = 2; sampleCount = 150;
 		break;
-		case "leftEnc":sensorIndex = 3; sampleCount = 150;
+		case "leftEnc":sensorIndex = 3; sampleCount = 30;
 		break;
-		case "rightEnc":sensorIndex = 4; sampleCount = 150;
+		case "rightEnc":sensorIndex = 4; sampleCount = 30;
 		break;
-		case "liftEnc": sensorIndex = 5; sampleCount = 150;
+		case "liftEnc": sensorIndex = 5; sampleCount = 30;
 		break;
 		default: sensorIndex = 0; sampleCount = 0;
 		}

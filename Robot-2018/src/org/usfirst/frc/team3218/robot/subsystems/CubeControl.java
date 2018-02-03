@@ -25,11 +25,7 @@ public double ejectionSpeed = 1;
     // here. Call these from Commands.
 	public static  WPI_TalonSRX leftWheels = new WPI_TalonSRX(RobotMap.leftCollectionID);
 	public static WPI_TalonSRX rightWheels = new WPI_TalonSRX(RobotMap.rightCollectionID);
-	public static DigitalInput limitSwitch = new DigitalInput(RobotMap.limitSwitchPortA);
-	
-	public static Solenoid leftKorey = new Solenoid(RobotMap.leftKoreyPort);
-	public static Solenoid rightKorey = new Solenoid(RobotMap.rightKoreyPort);
-	public static Solenoid pistonKorey = new Solenoid(RobotMap.pistonKoreyPort);
+	public static DigitalInput hasCube = new DigitalInput(RobotMap.cubeSwitchPort);
 	
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -40,7 +36,7 @@ public double ejectionSpeed = 1;
 
 	public void cubeCollection() {
 
-		if (limitSwitch.get() == false) {
+		if (hasCube.get() == false) {
 			leftWheels.set(collectionSpeed);
 			rightWheels.set(-collectionSpeed);
 		}
@@ -59,17 +55,6 @@ public double ejectionSpeed = 1;
 	public void cubeOff(){
 		    leftWheels.set(0);
 		    rightWheels.set(0);
-		    pistonKorey.set(false);
 	}
-	public void koreyOn(){
-		leftKorey.set(true);
-		rightKorey.set(true);
-	}
-	public void koreyOff(){
-		leftKorey.set(false);
-		rightKorey.set(false);
-	}
-	public void koreyEject(){
-		pistonKorey.set(true);
-	}
+	
 }

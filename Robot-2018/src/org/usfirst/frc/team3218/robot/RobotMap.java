@@ -15,46 +15,36 @@ public class RobotMap {
 	
 	//CAN bus channels
 	//pdp is 0, pcm is 1
-
-	public static final int leftBottomDriveID = 2;
-	public static final int leftMidDriveID = 3;
-	public static final int leftTopDriveID = 4;
-	public static final int rightBottomDriveID = 5;
-	public static final int rightMidDriveID = 6;
-	public static final int rightTopDriveID = 7;
-	public static final int lift1ID= 8;
-	public static final int lift2ID= 9;
+	public static final int leftBottomDriveID = 8;
+	public static final int leftMidDriveID = 7;
+	public static final int leftTopDriveID = 11;
+	public static final int rightBottomDriveID = 2;
+	public static final int rightMidDriveID = 5;
+	public static final int rightTopDriveID = 3;
+	public static final int lift1ID= 4;
+	public static final int lift2ID= 6;
 	public static final int leftCollectionID = 10;
-	public static final int rightCollectionID = 11;
+	public static final int rightCollectionID = 9;
 	
 	//PWM Channels
 
 	//Digital Channels
-	public static int encoderLeftPortA = 0;
-	public static int encoderLeftPortB = 1;
-	public static int encoderRightPortA = 2;
-	public static int encoderRightPortB = 3;
-	public static int liftEncoderPortA = 4;
-	public static int liftEncoderPortB = 5;
-	
-
-	public static int limitSwitchPortA = 7;
-
+	public static int cubeSwitchPort = 5;
+	public static int bottomLiftSwitchPort = 2;
+	public static int topLiftSwitchPort = 3;
+	public static int liftEncoderPort1 = 0;
+	public static int liftEncoderPort2 = 1;
 	//Analog Channels
-	public static int sonarAPort = 0;
-	public static int gyroPort = 1;
-	public static int accelerometerPort = 2;
+	public static int gyroPort = 0;
+	public static int accelerometerPort = 1;
+	public static int sonarAPort = 2;
+	public static int sonarBPort = 3;
+	
 	//PCM Channels
-
 	public static int rightHighGearShiftPort = 0;
 	public static int righLowGearShiftPort = 1;
 	public static int leftHighGearShiftPort = 2;
 	public static int leftLowGearShiftPort = 3;
-	public static int leftKoreyPort = 4;
-	public static int rightKoreyPort = 5;
-	public static int pistonKoreyPort = 6;
-	public static int climbGearPort = 7;
-	
-	
+	public static int climbGearPort = 4;
 	
 }

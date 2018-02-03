@@ -22,11 +22,39 @@ public class Switch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    /*
+    	String sendableChosenString = Robot.position.getSelected()
+    			+Robot.path.getSelected()+Robot.gameData;
+    			switch(sendableChosenString){
+    			case "1CloseLeft": methodCall;
+    			break;
+    			case "1FarLeft": methodCall;
+    			break;
+    			case "1CloseRight": methodCall;
+    			break;
+    			case "1FarRight": methodCall;
+    			break;
+    			case "2CloseLeft": methodCall;
+    			break;
+    			case "2FarLeft": methodCall;
+    			break;
+    			case "2CloseRight": methodCall;
+    			break;
+    			case "2FarRight": methodCall;
+    			break;
+    			case "3CloseLeft": methodCall;
+    			break;
+    			case "3FarLeft": methodCall;
+    			break;
+    			case "3CloseRight": methodCall;
+    			break;
+    			case "3FarRight": methodCall;
+    			break;
+    			default:nothing;
+    			}
     	
     	
-    	
-    	
-    	
+    */	
     	
     }
 

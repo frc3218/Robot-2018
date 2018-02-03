@@ -3,6 +3,8 @@ package org.usfirst.frc.team3218.robot;
 
 import java.security.PublicKey;
 
+import javax.print.attribute.standard.Compression;
+
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
@@ -10,6 +12,7 @@ import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
@@ -17,6 +20,7 @@ import org.usfirst.frc.team3218.robot.subsystems.Lift;
 import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -41,9 +45,10 @@ public class Robot extends IterativeRobot {
 	public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
 	
-	public String gameData;
+	
 	Command autonomousCommand;
 	
+	public static String gameData;
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
 	public static SendableChooser<String> path = new SendableChooser<>();
@@ -54,6 +59,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		
+		
 		
 		position.addObject("1", "1");
 		position.addObject("2", "2");
@@ -112,7 +119,7 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-		 gameData = DriverStation.getInstance().getGameSpecificMessage();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 			switch(objective.getSelected()){
 			case "Nothing": autonomousCommand = new Nothing(); break; 
 			case "Line": autonomousCommand = new CrossLine(); break;
@@ -133,6 +140,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		/*
+		if(driveTrain.compressor.getPressureSwitchValue() == true){
+			driveTrain.compressor.stop();
+		}
+		else{
+			driveTrain.compressor.start();
+		}
+		*/
 	}
 
 	@Override
@@ -143,8 +158,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		driveTrain.rightEnc.reset();
-		driveTrain.leftEnc.reset();
+		driveTrain.leftMidDrive.setSelectedSensorPosition(0, 0, 0);
+		driveTrain.rightMidDrive.setSelectedSensorPosition(0, 0, 0);
 		driveTrain.gyro.reset();
 		
 	
@@ -155,25 +170,25 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		/*
+		if(driveTrain.compressor.getPressureSwitchValue() == true){
+			driveTrain.compressor.stop();
+		}
+		else{
+			driveTrain.compressor.start();
+		}
+		*/
 		Scheduler.getInstance().run();
-	
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
-    	SmartDashboard.putString("Drive Command", driveTrain.getCurrentCommandName());
-		SmartDashboard.putNumber("Left Encoder:", driveTrain.leftEnc.get());
-		SmartDashboard.putNumber("Right Encoder:", driveTrain.rightEnc.get());
-		SmartDashboard.putNumber("Left Rate", driveTrain.leftEnc.getRate());
-		SmartDashboard.putNumber("Right Rate", driveTrain.rightEnc.getRate());
-		SmartDashboard.putNumber("GyroAngle", driveTrain.gyro.getAngle());
 		SmartDashboard.putNumber("GyroRate", driveTrain.gyro.getRate());
-		SmartDashboard.putNumber("Left EncoderRate:", driveTrain.leftEnc.getRate());
-		SmartDashboard.putNumber("Right EncoderRate:", driveTrain.rightEnc.getRate());
-		SmartDashboard.putNumber("AngleAverage",AutoAPI.sensorAverage(Robot.driveTrain.gyro.getAngle(), "gyro"));
-	    SmartDashboard.putNumber("Gyro Angle", Robot.driveTrain.gyro.getAngle());
-		SmartDashboard.putNumber("Left Encoder Average", AutoAPI.sensorAverage(DriveTrain.leftEnc.getRate(), "leftEnc"));
-	    SmartDashboard.putNumber("Right Encoder Average", AutoAPI.sensorAverage(DriveTrain.rightEnc.getRate(), "rightEnc"));
-	   // SmartDashboard.putNumber("Accelerometer Average", AutoAPI.sensorAverage(driveTrain.accelerometer.get(), "accelerometer"));
-	    SmartDashboard.putNumber("Lift Encoder Average", AutoAPI.sensorAverage(Lift.liftEnc.getRate(), "liftEnc"));
+		SmartDashboard.putNumber("AngleAverage",AutoAPI.sensorAverage(driveTrain.gyro.getAngle(), "gyro"));
+		SmartDashboard.putNumber("Left Encoder Average", AutoAPI.sensorAverage(driveTrain.leftMidDrive.getSelectedSensorPosition(0), "leftEnc"));
+	    SmartDashboard.putNumber("Right Encoder Average", AutoAPI.sensorAverage(driveTrain.leftMidDrive.getSelectedSensorPosition(0), "rightEnc"));
+	    SmartDashboard.putNumber("Lift Encoder Average Frankin", AutoAPI.sensorAverage(lift.liftEnc.getRate(), "liftEnc"));
+	    SmartDashboard.putBoolean("Bottom Limit Switch", lift.bottomSwitch.get());
+	 //   SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
+	    SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
 	}
 
 	/**

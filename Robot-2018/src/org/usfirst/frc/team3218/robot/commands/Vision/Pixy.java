@@ -70,7 +70,7 @@ public class Pixy extends Command {
     	}
     	int i = 0;
     
-	//checks if data has been put into storage array
+    	//checks if data has been put into storage array
     	if(pixyValues!=null)
     	{
     		//search through data array to find object

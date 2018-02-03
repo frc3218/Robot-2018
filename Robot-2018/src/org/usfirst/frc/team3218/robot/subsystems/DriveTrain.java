@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
@@ -43,14 +44,12 @@ public class DriveTrain extends Subsystem {
 	
 	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
-
-	public static Encoder leftEnc = new Encoder(RobotMap.encoderLeftPortA, RobotMap.encoderLeftPortB, true);
-	public static Encoder rightEnc = new Encoder(RobotMap.encoderRightPortA, RobotMap.encoderRightPortB, false);
-
+	public AnalogInput sonarB = new AnalogInput(RobotMap.sonarBPort);
+	//public static Compressor compressor = new Compressor();
 	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
-	
-	public static Solenoid leftHighGearShift = new Solenoid(RobotMap.leftHighGearShiftPort);
-	public static Solenoid leftLowGearShift = new Solenoid(RobotMap.leftLowGearShiftPort);
+
+//	public static Solenoid leftHighGearShift = new Solenoid(RobotMap.leftHighGearShiftPort);
+	//public static Solenoid leftLowGearShift = new Solenoid(RobotMap.leftLowGearShiftPort);
 	
 	
 	// Grouping Together Drives
@@ -74,13 +73,13 @@ public class DriveTrain extends Subsystem {
     }
     
     public void lowGear(){
-    	leftHighGearShift.set(false);
-    	leftLowGearShift.set(true);
+    //	leftHighGearShift.set(false);
+    //	leftLowGearShift.set(true);
     }
     
     public void highGear(){
-    	leftHighGearShift.set(true);
-    	leftLowGearShift.set(false);
+    	//leftHighGearShift.set(true);
+    //	leftLowGearShift.set(false);
 
     }
 }
