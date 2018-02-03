@@ -21,6 +21,7 @@ import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleMid;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionSwitch;
+import org.usfirst.frc.team3218.robot.commands.Vision.VisionExample;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -89,7 +90,7 @@ public class OI {
 		 
 
 		 button2.toggleWhenPressed(new SonarTest());
-		 button1.whileHeld(new CubeCollectionOn());
+		 //button1.whileHeld(new VisionExample()/*new CubeCollectionOn()*/);
 		 button3.whileHeld(new CubeEjectionOn());
 
 		 button2.whileHeld(new SonarTest());
@@ -113,6 +114,7 @@ public class OI {
 	
 	 }
 	 public static double getJoystickY(){
+		 
 			
 			return  -joystick.getY();
 	

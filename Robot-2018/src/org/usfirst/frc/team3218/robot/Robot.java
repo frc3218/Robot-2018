@@ -135,9 +135,9 @@ public class Robot extends IterativeRobot {
 		}
 		else{
 			driveTrain.compressor.start();
-		}
+		} 
 	}
-		
+	
 	/**
 	 * This function is called periodically during test mode
 	 */

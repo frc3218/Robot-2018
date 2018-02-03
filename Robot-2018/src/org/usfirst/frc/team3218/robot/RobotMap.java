@@ -26,8 +26,8 @@ public class RobotMap {
 	
 	//PWM Channels
 	public static int leftDrive1Port = 0;
-	public static int leftDrive2Port = 1;//1
-	public static int leftDrive3Port = 2;//2
+	public static int leftDrive2Port = 1;
+	public static int leftDrive3Port = 2;
 	public static int rightDrive1Port = 3;
 	public static int rightDrive2Port = 4;
 	public static int rightDrive3Port = 5;
@@ -51,11 +51,12 @@ public class RobotMap {
 	public static int gyroPort = 1;
 	public static int accelerometerPort = 2;
 	//PCM Channels
-	public static int rightHighGearShiftPort = 0;
-	public static int rightLowGearShiftPort = 1;
+	public static int rightHighGearShiftPort = 1;
+	public static int rightLowGearShiftPort = 0;
 	public static int leftHighGearShiftPort = 2;
 	public static int leftLowGearShiftPort = 3;
 	//PCM 
+	
 	public static int compressorPort = 1;
 	
 	
