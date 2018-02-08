@@ -40,7 +40,8 @@ public class DriveTrain extends Subsystem {
 	SpeedController rightDrive1 = new Talon(RobotMap.rightDrive1Port);
 	SpeedController rightDrive2 = new Talon(RobotMap.rightDrive2Port);
 	SpeedController rightDrive3 = new Spark(RobotMap.rightDrive3Port);
-	
+	// port 1 is drive 2 
+	//port 2 is drive 3 
 	
 	/*
 	public WPI_TalonSRX leftBottomDrive = new WPI_TalonSRX(RobotMap.leftBottomDriveID);
