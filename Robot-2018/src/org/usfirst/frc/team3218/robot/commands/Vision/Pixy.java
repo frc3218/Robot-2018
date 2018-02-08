@@ -56,7 +56,7 @@ public class Pixy extends Command {
     		pixyValues[i] = 1;
     	}
     	if(Robot.vision.pixyi2c.readOnly(pixyValues, maxBytes))
-    		System.out.println("FailedToRead"); //if this line is running you likely have one of two problems, either your interface (found in pxymon-> configure-> interface-> data output:i2c), or you didn't plug it in right
+    	//	System.out.println("FailedToRead"); //if this line is running you likely have one of two problems, either your interface (found in pxymon-> configure-> interface-> data output:i2c), or you didn't plug it in right
     	for(int i = 0; i < pixyValues.length; i++)
     	{
     		//System.out.println(pixyValues[i]);

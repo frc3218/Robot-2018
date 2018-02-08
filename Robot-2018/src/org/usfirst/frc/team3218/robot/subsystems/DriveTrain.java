@@ -1,8 +1,10 @@
 package org.usfirst.frc.team3218.robot.subsystems;
 
+import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
@@ -45,12 +47,13 @@ public class DriveTrain extends Subsystem {
 	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
 	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 	public AnalogInput sonarB = new AnalogInput(RobotMap.sonarBPort);
-	//public static Compressor compressor = new Compressor();
+	public static Compressor compressor = new Compressor(1);
 	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 
-//	public static Solenoid leftHighGearShift = new Solenoid(RobotMap.leftHighGearShiftPort);
-	//public static Solenoid leftLowGearShift = new Solenoid(RobotMap.leftLowGearShiftPort);
-	
+	public static Solenoid leftHighGearShift = new Solenoid(1, RobotMap.leftHighGearShiftPort);
+	public static Solenoid leftLowGearShift = new Solenoid(1, RobotMap.leftLowGearShiftPort);
+	public static Solenoid rightHighGearShift = new Solenoid(1,RobotMap.rightHighGearShiftPort);
+	public static Solenoid rightLowGearShift = new Solenoid(1, RobotMap.rightLowGearShiftPort);
 	
 	// Grouping Together Drives
 	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
@@ -73,14 +76,18 @@ public class DriveTrain extends Subsystem {
     }
     
     public void lowGear(){
-    //	leftHighGearShift.set(false);
-    //	leftLowGearShift.set(true);
+    	leftHighGearShift.set(true);
+    	leftLowGearShift.set(false);
+    	rightHighGearShift.set(false);
+    	rightLowGearShift.set(true);
+    
     }
     
     public void highGear(){
-    	//leftHighGearShift.set(true);
-    //	leftLowGearShift.set(false);
-
+    	leftHighGearShift.set(false);
+    	leftLowGearShift.set(true);
+    	rightHighGearShift.set(true);
+    	rightLowGearShift.set(false);
     }
 }
 

@@ -31,25 +31,26 @@ public class Lift extends Subsystem {
     // here. Call these from Commands.
 	
 	//these values need testing
-	int CruiseVelocity; //encoderticks per 100ms
-	int Acceleration; //encoderticks per 100ms per second
-	final int HOLD_POSITION_POWER = 0; //power required for arm to stay at position
-	final int GUITAR_MANUAL_UP = 0;
-	final int GUITAR_MANUAL_DOWN = 180;
-	final double MANUAL_UP_POWER = .7;
-	final double MANUAL_DOWN_POWER = -0.7;
-	public float ticksPerInch;
-	final int TICKS_PER_INCH = 100;
+	private int CruiseVelocity; //encoderticks per 100ms
+	private int Acceleration; //encoderticks per 100ms per second
+	private double HOLD_POSITION_POWER = .05; //power required for arm to stay at position
+	private static final int GUITAR_MANUAL_UP = 0;
+	private static final int GUITAR_MANUAL_DOWN = 180;
 	
-	public int[] positionArray = new int[]{0,0,0,0,0,0};//array of positions for the lift in inches
+	private static final double MANUAL_UP_POWER = .5;
+	private double MANUAL_DOWN_POWER = -0.5;
+	private static final double TICKS_PER_INCH = 5000/37;
+	private static final int MAX_TICK_HEIGHT = 5300;
+	public int[] positionArray = new int[]{0,0,1500,3500,4400,5300};//array of positions for the lift in ticks 0 index is empty
 	
 	
-	//public static Solenoid climbGear = new Solenoid(RobotMap.climbGearPort);
+	public static Solenoid climbGear = new Solenoid(1, RobotMap.climbGearPort);
 	
 	public  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
 	public  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
 	public static Encoder liftEnc = new Encoder(RobotMap.liftEncoderPort1, RobotMap.liftEncoderPort2);
 	public static DigitalInput bottomSwitch = new DigitalInput(RobotMap.bottomLiftSwitchPort);
+	public static DigitalInput topSwitch = new DigitalInput(RobotMap.topLiftSwitchPort);
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -63,12 +64,14 @@ public class Lift extends Subsystem {
     	liftMaster.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
     	liftMaster.configMotionCruiseVelocity(CruiseVelocity, 0);
     	liftMaster.configMotionAcceleration(Acceleration, 0);
+    	liftMaster.setInverted(false);
+    	lift2.setInverted(true);
     	
     }
     
     public  void setPosition(int position){
     	
-    		liftMaster.set(ControlMode.MotionMagic, Robot.lift.positionArray[position] * Robot.lift.TICKS_PER_INCH);
+    		liftMaster.set(ControlMode.MotionMagic, Robot.lift.positionArray[position]);
         
    
     }
@@ -77,17 +80,40 @@ public class Lift extends Subsystem {
     	//0 is up -1 is hold 180 is down
     	//Cim values need to be checked against the actual motor
     	
-    	
+    	if(climbGear.get()){
+			MANUAL_DOWN_POWER = -0.1;
+			HOLD_POSITION_POWER = .1;
+			
+		}
+		else{
+			MANUAL_DOWN_POWER = -0.5;
+		}
 		switch (Robot.oi.guitar.getPOV()) {
 
 		case GUITAR_MANUAL_UP:
+			if(liftEnc.get() < MAX_TICK_HEIGHT && !topSwitch.get()){
 			liftMaster.set(ControlMode.PercentOutput,MANUAL_UP_POWER);
+			
 			lift2.set(ControlMode.PercentOutput,MANUAL_UP_POWER);
+			}else{
+				liftMaster.set(ControlMode.PercentOutput,HOLD_POSITION_POWER);
+				lift2.set(ControlMode.PercentOutput,HOLD_POSITION_POWER);
+			}
 			break;
 
 		case GUITAR_MANUAL_DOWN:
+	
+		if(!bottomSwitch.get()){
 			liftMaster.set(ControlMode.PercentOutput,MANUAL_DOWN_POWER);
 			lift2.set(ControlMode.PercentOutput,MANUAL_DOWN_POWER);
+			if(liftEnc.get()<1000){
+				liftMaster.set(ControlMode.PercentOutput,MANUAL_DOWN_POWER/2);
+				lift2.set(ControlMode.PercentOutput,  MANUAL_DOWN_POWER/2);	
+			}
+		}else{
+			liftMaster.set(ControlMode.PercentOutput, 0);
+			lift2.set(ControlMode.PercentOutput, 0);
+		}
 			break;
 
 		default:
@@ -95,15 +121,15 @@ public class Lift extends Subsystem {
 			lift2.set(ControlMode.PercentOutput,HOLD_POSITION_POWER);
 			break;
 			
-			
     	}
-    
+		
+ 
     }
    public void gearLow(){
-	 //  climbGear.set(false);
+	   climbGear.set(false);
    }
    public void gearHigh(){
-	 //  climbGear.set(true);
+	   climbGear.set(true);
    }
 }
 

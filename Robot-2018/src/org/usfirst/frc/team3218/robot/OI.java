@@ -90,19 +90,20 @@ public class OI {
 		 
 
 		 button1.whenPressed(new SonarTest());
-		 button3.whileHeld(new CubeCollectionOn());
+		 button3.toggleWhenPressed(new CubeCollectionOn());
 		 button4.whileHeld(new CubeEjectionOn());
 
+		 
 		 button5.whenPressed(new GearShiftLow());
 		 button6.whenPressed(new GearShiftHigh());
 		 button8.whenPressed(new ClimbingGearOn());
 		 button9.whenPressed(new ClimbingGearOff());
 		 
-		 liftBottom.whenPressed(new SetLiftPositionBottom());
-		 liftSwitch.whenPressed(new SetLiftPositionSwitch());
-		 liftScaleLow.whenPressed(new SetLiftPositionScaleLow());
-		 liftScaleMid.whenPressed(new SetLiftPositionScaleMid());
-		 liftScaleHigh.whenPressed(new SetLiftPositionScaleHigh());
+		 liftBottom.whileHeld(new SetLiftPositionBottom());
+		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
+		 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
+		 liftScaleMid.whileHeld(new SetLiftPositionScaleMid());
+		 liftScaleHigh.whileHeld(new SetLiftPositionScaleHigh());
 
 	 }
 	 

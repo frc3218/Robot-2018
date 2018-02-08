@@ -41,8 +41,8 @@ public class RobotMap {
 	public static int sonarBPort = 3;
 	
 	//PCM Channels
-	public static int rightHighGearShiftPort = 0;
-	public static int righLowGearShiftPort = 1;
+	public static int rightHighGearShiftPort = 5;
+	public static int rightLowGearShiftPort = 6;
 	public static int leftHighGearShiftPort = 2;
 	public static int leftLowGearShiftPort = 3;
 	public static int climbGearPort = 4;

@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveWithJoystick extends Command {
 
 // Difference Commands
-	double maxDif;
-	double encoderFinal;
 	
     public DriveWithJoystick() {
         // Use requires() here to declare subsystem dependencies

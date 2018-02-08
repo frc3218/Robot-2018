@@ -19,6 +19,8 @@ import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
 import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -60,7 +62,16 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		
-		
+		driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		lift.liftPIDConfig();
+
+		driveTrain.leftBottomDrive.setInverted(true);
+		driveTrain.leftMidDrive.setInverted(true);
+		driveTrain.leftTopDrive.setInverted(true);
+		driveTrain.rightBottomDrive.setInverted(true);
+		driveTrain.rightMidDrive.setInverted(true);
+		driveTrain.rightTopDrive.setInverted(true);
 		
 		position.addObject("1", "1");
 		position.addObject("2", "2");
@@ -79,7 +90,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("position", position);
 		SmartDashboard.putData("objectiveA", objective);
 		SmartDashboard.putData("path", path);
-		lift.liftPIDConfig();
+		
 	}
 
 	/**
@@ -140,14 +151,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		/*
-		if(driveTrain.compressor.getPressureSwitchValue() == true){
-			driveTrain.compressor.stop();
-		}
-		else{
-			driveTrain.compressor.start();
-		}
-		*/
+	
 	}
 
 	@Override
@@ -161,8 +165,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.leftMidDrive.setSelectedSensorPosition(0, 0, 0);
 		driveTrain.rightMidDrive.setSelectedSensorPosition(0, 0, 0);
 		driveTrain.gyro.reset();
-		
-	
+		lift.liftPIDConfig();
 	}
 	
 	/**
@@ -170,25 +173,34 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		/*
-		if(driveTrain.compressor.getPressureSwitchValue() == true){
+		
+		if(driveTrain.compressor.getPressureSwitchValue()){
 			driveTrain.compressor.stop();
 		}
 		else{
 			driveTrain.compressor.start();
 		}
-		*/
+		
+	if(lift.bottomSwitch.get()){
+		lift.liftEnc.reset();
+	}
+	lift.liftMaster.setSelectedSensorPosition(lift.liftEnc.get(), 0, 0);
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
-		SmartDashboard.putNumber("GyroRate", driveTrain.gyro.getRate());
-		SmartDashboard.putNumber("AngleAverage",AutoAPI.sensorAverage(driveTrain.gyro.getAngle(), "gyro"));
-		SmartDashboard.putNumber("Left Encoder Average", AutoAPI.sensorAverage(driveTrain.leftMidDrive.getSelectedSensorPosition(0), "leftEnc"));
-	    SmartDashboard.putNumber("Right Encoder Average", AutoAPI.sensorAverage(driveTrain.leftMidDrive.getSelectedSensorPosition(0), "rightEnc"));
-	    SmartDashboard.putNumber("Lift Encoder Average Frankin", AutoAPI.sensorAverage(lift.liftEnc.getRate(), "liftEnc"));
-	    SmartDashboard.putBoolean("Bottom Limit Switch", lift.bottomSwitch.get());
-	 //   SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
-	    SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
+    	
+		SmartDashboard.putNumber("AngleAverage",driveTrain.gyro.getAngle());
+		  SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
+
+		
+		SmartDashboard.putNumber("Left Encoder Average", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
+	    SmartDashboard.putNumber("Right Encoder Average", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Lift Encoder Average Frankin", lift.liftMaster.getSelectedSensorPosition(0));
+	
+		SmartDashboard.putBoolean("Bottom Limit Switch", lift.bottomSwitch.get());
+	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
+	    SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
+	  	  
 	}
 
 	/**

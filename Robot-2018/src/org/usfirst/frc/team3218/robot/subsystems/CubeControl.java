@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  *
  */
 public class CubeControl extends Subsystem {
-public double collectionSpeed = 0.3;
+public double collectionSpeed = 1;
 public double ejectionSpeed = 1;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -36,21 +36,16 @@ public double ejectionSpeed = 1;
 
 	public void cubeCollection() {
 
-		if (hasCube.get() == false) {
+		
 			leftWheels.set(collectionSpeed);
 			rightWheels.set(-collectionSpeed);
-		}
-
-		else {
-			leftWheels.set(0);
-			rightWheels.set(0);
-		}
+		
+		
 	}
 	public void cubeEjection(){
-		if(OI.button1.get()==false){
 	    	leftWheels.set(-ejectionSpeed);
 	    	rightWheels.set(ejectionSpeed);
-	    }
+	    
 	}
 	public void cubeOff(){
 		    leftWheels.set(0);
