@@ -19,23 +19,17 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class DriveTrain extends Subsystem {
-	public static double[] gyroAr = new double[15]; 
-	public static double sum;
 
 	
-	static int timesRolled = 50;
-	public static int gyroTimes = 50;
-	public static double pastValue;
-	public static double newValue;
-	public static int times;
 	
-	final int SHIFT_UP_SPEED = 0;
-	final int SHIFT_DOWN_SPEED = 0;
+	private final int SHIFT_UP_SPEED=0;
+	private final int SHIFT_DOWN_SPEED = 0;
 	
 	public WPI_TalonSRX leftBottomDrive = new WPI_TalonSRX(RobotMap.leftBottomDriveID);
 	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftMidDriveID);
@@ -55,6 +49,8 @@ public class DriveTrain extends Subsystem {
 	public static Solenoid rightHighGearShift = new Solenoid(1,RobotMap.rightHighGearShiftPort);
 	public static Solenoid rightLowGearShift = new Solenoid(1, RobotMap.rightLowGearShiftPort);
 	
+	public Encoder leftEnc = new Encoder(RobotMap.leftEncoderPortA, RobotMap.leftEncoderPortB);
+	public Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB);
 	// Grouping Together Drives
 	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
 	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
@@ -68,11 +64,19 @@ public class DriveTrain extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new DriveWithJoystick());
 	}
-
+	public void drivePIDConfig(){		
+		rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
+		leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0,0);
+		leftMidDrive.setSelectedSensorPosition(0, 0, 0);
+		rightMidDrive.setSelectedSensorPosition(0, 0, 0);
+		rightEnc.reset();
+		leftEnc.reset();
+		rightEnc.setReverseDirection(true);
+	}
 	public void drive(double y, double z) {
 	
     	drive.arcadeDrive(y, z);
-		
+    	SmartDashboard.putNumber("leftenc", leftEnc.getRate());
     }
     
     public void lowGear(){
@@ -89,5 +93,22 @@ public class DriveTrain extends Subsystem {
     	rightHighGearShift.set(true);
     	rightLowGearShift.set(false);
     }
+   public void automaticTransmission(){
+	   if(leftEnc.getRate() >=SHIFT_UP_SPEED && rightEnc.getRate() >= SHIFT_UP_SPEED){
+		   leftHighGearShift.set(false);
+		   leftLowGearShift.set(true);
+		   rightHighGearShift.set(true);
+		   rightLowGearShift.set(false);
+	   }
+	   else if(leftEnc.getRate()<=SHIFT_DOWN_SPEED && rightEnc.getRate()<=SHIFT_DOWN_SPEED){
+		   leftHighGearShift.set(true);
+		   leftLowGearShift.set(false);
+		   rightHighGearShift.set(false);
+		   rightLowGearShift.set(true);
+		   
+	   }
+	   
+   }
+
 }
 

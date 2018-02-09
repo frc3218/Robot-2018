@@ -1,5 +1,9 @@
 package org.usfirst.frc.team3218.robot;
 
+import java.lang.Thread.State;
+
+import edu.wpi.first.wpilibj.Timer.StaticInterface;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -29,11 +33,16 @@ public class RobotMap {
 	//PWM Channels
 
 	//Digital Channels
-	public static int cubeSwitchPort = 5;
+	public static int cubeSwitchPort = 8;
 	public static int bottomLiftSwitchPort = 2;
 	public static int topLiftSwitchPort = 3;
 	public static int liftEncoderPort1 = 0;
 	public static int liftEncoderPort2 = 1;
+	public static int leftEncoderPortA = 6;
+	public static int leftEncoderPortB = 7;
+	public static int rightEncoderPortA = 4;
+	public static int rightEncoderPortB = 5;
+	
 	//Analog Channels
 	public static int gyroPort = 0;
 	public static int accelerometerPort = 1;

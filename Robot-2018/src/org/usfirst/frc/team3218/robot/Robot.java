@@ -61,10 +61,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		
-		driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		lift.liftPIDConfig();
+	
 
 		driveTrain.leftBottomDrive.setInverted(true);
 		driveTrain.leftMidDrive.setInverted(true);
@@ -151,7 +148,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-	
+		//driveTrain.automaticTransmission();
 	}
 
 	@Override
@@ -162,10 +159,10 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		driveTrain.leftMidDrive.setSelectedSensorPosition(0, 0, 0);
-		driveTrain.rightMidDrive.setSelectedSensorPosition(0, 0, 0);
+		
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
+		driveTrain.drivePIDConfig();
 	}
 	
 	/**
@@ -173,7 +170,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
+	//	driveTrain.automaticTransmission();
 		if(driveTrain.compressor.getPressureSwitchValue()){
 			driveTrain.compressor.stop();
 		}
@@ -184,19 +181,20 @@ public class Robot extends IterativeRobot {
 	if(lift.bottomSwitch.get()){
 		lift.liftEnc.reset();
 	}
+	
 	lift.liftMaster.setSelectedSensorPosition(lift.liftEnc.get(), 0, 0);
-		Scheduler.getInstance().run();
+	
+	driveTrain.rightMidDrive.setSelectedSensorPosition( driveTrain.rightEnc.get(), 0, 0);
+	driveTrain.leftMidDrive.setSelectedSensorPosition( driveTrain.leftEnc.get(), 0, 0);
+			Scheduler.getInstance().run();
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
-    	
 		SmartDashboard.putNumber("AngleAverage",driveTrain.gyro.getAngle());
 		  SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
-
-		
 		SmartDashboard.putNumber("Left Encoder Average", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
-	    SmartDashboard.putNumber("Right Encoder Average", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
+	   SmartDashboard.putNumber("Right Encoder Average", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Encoder Average Frankin", lift.liftMaster.getSelectedSensorPosition(0));
-	
+		SmartDashboard.putNumber("left enc test", driveTrain.leftEnc.get());
 		SmartDashboard.putBoolean("Bottom Limit Switch", lift.bottomSwitch.get());
 	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
