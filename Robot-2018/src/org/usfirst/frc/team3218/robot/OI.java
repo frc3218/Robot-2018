@@ -14,7 +14,6 @@ import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
 import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOff;
 import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOn;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
@@ -53,6 +52,7 @@ public class OI {
 	public static Button button7 = new JoystickButton(joystick,7);
 	public static Button button8 = new JoystickButton(joystick,8);
 	public static Button button9 = new JoystickButton(joystick,9);
+	
 	public static Button liftBottom = new JoystickButton(guitar, 5);
 	public static Button liftSwitch = new JoystickButton(guitar, 3);
 	public static Button liftScaleLow = new JoystickButton(guitar, 4);
@@ -89,10 +89,10 @@ public class OI {
 	 public OI(){
 		 
 
-		 button1.whenPressed(new SonarTest());
-		 button3.toggleWhenPressed(new CubeCollectionOn());
+		
+		 button3.toggleWhenActive(new CubeCollectionOn());
 		 button4.whileHeld(new CubeEjectionOn());
-
+		 
 		 
 		 button5.whenPressed(new GearShiftLow());
 		 button6.whenPressed(new GearShiftHigh());

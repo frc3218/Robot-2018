@@ -1,10 +1,13 @@
 package org.usfirst.frc.team3218.robot.subsystems;
 
+import java.util.EventListenerProxy;
+
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.IFollower;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
@@ -27,9 +30,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends Subsystem {
 
 	
-	
-	private final int SHIFT_UP_SPEED=0;
-	private final int SHIFT_DOWN_SPEED = 0;
+	private final int SHIFT_DOWN_SPEED = 3500;
+	private final int SHIFT_UP_SPEED= 5000;
 	
 	public WPI_TalonSRX leftBottomDrive = new WPI_TalonSRX(RobotMap.leftBottomDriveID);
 	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftMidDriveID);
@@ -39,8 +41,8 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX rightTopDrive = new WPI_TalonSRX(RobotMap.rightTopDriveID);
 	
 	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
-	public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
-	public AnalogInput sonarB = new AnalogInput(RobotMap.sonarBPort);
+	//public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
+	//public AnalogInput sonarB = new AnalogInput(RobotMap.sonarBPort);
 	public static Compressor compressor = new Compressor(1);
 	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 
@@ -52,9 +54,14 @@ public class DriveTrain extends Subsystem {
 	public Encoder leftEnc = new Encoder(RobotMap.leftEncoderPortA, RobotMap.leftEncoderPortB);
 	public Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB);
 	// Grouping Together Drives
+	
+	
 	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
 	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
+	
+	
 	DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
+	
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -69,14 +76,27 @@ public class DriveTrain extends Subsystem {
 		leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0,0);
 		leftMidDrive.setSelectedSensorPosition(0, 0, 0);
 		rightMidDrive.setSelectedSensorPosition(0, 0, 0);
+		
+		leftMidDrive.selectProfileSlot(0, 0);
+		leftMidDrive.config_kF(0, .3, 0);
+		leftMidDrive.config_kP(0, 0, 0);
+		leftMidDrive.config_kI(0, 0, 0);
+		leftMidDrive.config_kD(0, 0, 0);
+    	
+    	rightMidDrive.selectProfileSlot(0, 0);
+    	rightMidDrive.config_kF(0, .3, 0);
+    	rightMidDrive.config_kP(0, 0, 0);
+    	rightMidDrive.config_kI(0, 0, 0);
+    	rightMidDrive.config_kD(0, 0, 0);
 		rightEnc.reset();
 		leftEnc.reset();
 		rightEnc.setReverseDirection(true);
+		leftEnc.setReverseDirection(true);
 	}
 	public void drive(double y, double z) {
 	
     	drive.arcadeDrive(y, z);
-    	SmartDashboard.putNumber("leftenc", leftEnc.getRate());
+    	automaticTransmission();
     }
     
     public void lowGear(){
@@ -94,20 +114,13 @@ public class DriveTrain extends Subsystem {
     	rightLowGearShift.set(false);
     }
    public void automaticTransmission(){
-	   if(leftEnc.getRate() >=SHIFT_UP_SPEED && rightEnc.getRate() >= SHIFT_UP_SPEED){
-		   leftHighGearShift.set(false);
-		   leftLowGearShift.set(true);
-		   rightHighGearShift.set(true);
-		   rightLowGearShift.set(false);
+	   if(Math.abs((leftEnc.getRate()+rightEnc.getRate())/2) > SHIFT_UP_SPEED){
+		   highGear();
 	   }
-	   else if(leftEnc.getRate()<=SHIFT_DOWN_SPEED && rightEnc.getRate()<=SHIFT_DOWN_SPEED){
-		   leftHighGearShift.set(true);
-		   leftLowGearShift.set(false);
-		   rightHighGearShift.set(false);
-		   rightLowGearShift.set(true);
-		   
+	   else if(Math.abs((leftEnc.getRate()+rightEnc.getRate())/2) < SHIFT_DOWN_SPEED){
+		   lowGear();
 	   }
-	   
+	  
    }
 
 }

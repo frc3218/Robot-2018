@@ -22,7 +22,7 @@ public class SetLiftPositionScaleLow extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     
-    	Robot.lift.setPosition(3);
+    	Robot.lift.setPosition(Robot.lift.positionArray[3]);
     	
     	}
 

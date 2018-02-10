@@ -2,7 +2,9 @@ package org.usfirst.frc.team3218.robot.commands.Auto;
 
 import javax.swing.text.html.FormSubmitEvent;
 
+import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.subsystems.Lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -22,19 +24,39 @@ public class Switch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    /*
+    
     	String sendableChosenString = Robot.position.getSelected()
     			+Robot.path.getSelected()+Robot.gameData;
     			switch(sendableChosenString){
-    			case "1CloseLeft": methodCall;
+    			case "1CloseLeft": 
+    			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 0, 0);
+    			AutoAPI.rotate(90, 0, 0);
+    			AutoAPI.driveStraight(0,0,0);//drive to switch horizontal
+    			AutoAPI.moveToHeight(2);
     			break;
-    			case "1FarLeft": methodCall;
+    			case "1FarLeft":
+    			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 0, 0);
+        		AutoAPI.rotate(90, 0, 0);
+        		AutoAPI.driveStraight(0,0,0);//drive to switch horizontal
+        		AutoAPI.moveToHeight(2);
     			break;
-    			case "1CloseRight": methodCall;
+    			case "1CloseRight": 
+    			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH_CHANNEL,0,0);
+    			AutoAPI.rotate(90, 0, 0);
+    			AutoAPI.driveStraight(0,0,0);//drive across field
+    			AutoAPI.rotate(-90,0,0);
+    			AutoAPI.driveStraight(0,0,0);//drive to switch vertical
+    			AutoAPI.moveToHeight(2);
     			break;
-    			case "1FarRight": methodCall;
+    			case "1FarRight":
+    			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL,0,0);
+    			AutoAPI.rotate(90,0,0);
+    			AutoAPI.driveStraight(0,0,0);//drive across field
+    			AutoAPI.rotate(90,0,0);
+    			AutoAPI.driveStraight(0,0,0);//drive to switch vertical (backward)
+    			AutoAPI.moveToHeight(2);
     			break;
-    			case "2CloseLeft": methodCall;
+    			/* "2CloseLeft": methodCall;
     			break;
     			case "2FarLeft": methodCall;
     			break;
@@ -50,12 +72,11 @@ public class Switch extends Command {
     			break;
     			case "3FarRight": methodCall;
     			break;
-    			default:nothing;
+    			default:nothing;*/
     			}
     	
     	
-    */	
-    	
+    
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -65,6 +86,9 @@ public class Switch extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.lift.liftMaster.set(0);
+    	Robot.lift.lift2.set(0);
+    	Robot.cubeControl.cubeOff();
     }
 
     // Called when another command which requires one or more of the same

@@ -3,6 +3,8 @@ package org.usfirst.frc.team3218.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
+import edu.wpi.first.wpilibj.Talon;
+
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 
 import com.ctre.phoenix.motorcontrol.*;
@@ -27,9 +29,9 @@ public class AutoAPI {
  * @param speed in motor power, 0<s<1
  */
  	public static void driveStraight(float distance, int speed, int acceleration){
+ 		  resetSonsors();
  		distance *= TICKS_PER_INCH;
  		//speed *= Math.signum(distance);// may not be needed
- 		
  		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
@@ -47,48 +49,62 @@ public class AutoAPI {
  		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		
- 		while(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0) !=distance &&
- 			  Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0) !=distance){
- 		
+ 		while(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0) < distance &&
+ 			  Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0) < distance){
+ 			Robot.driveTrain.rightMidDrive.setSelectedSensorPosition( Robot.driveTrain.rightEnc.get(), 0, 0);
+ 			Robot.driveTrain.leftMidDrive.setSelectedSensorPosition( Robot.driveTrain.leftEnc.get(), 0, 0);
+ 			
  		}
  	    
  	}
 	
  	
 	public static void rotate(int angle, int speed, int acceleration){
+	    resetSonsors();
 		
 		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
- 		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
- 		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(-speed, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionAcceleration(-acceleration, 0);
  		
  		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, angle);
  		Robot.driveTrain.rightTopDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
  		Robot.driveTrain.rightBottomDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
  		
- 		
+ 		Robot.driveTrain.gyro.getAngle();
  		Robot.driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
- 		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(-speed, 0);
- 		Robot.driveTrain.leftMidDrive.configMotionAcceleration(-acceleration, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(speed, 0);
+ 		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);
  		
  		Robot.driveTrain.leftMidDrive.set(ControlMode.MotionMagic, angle);
  		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		
- 		while(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0) !=angle){
+ 		while(Math.abs(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0)) <Math.abs(angle)){
  	 			
- 	 		Robot.driveTrain.rightMidDrive.setSelectedSensorPosition(0, 0, 0);
- 	 		Robot.driveTrain.leftMidDrive.setSelectedSensorPosition(0, 0, 0);
+ 	 		Robot.driveTrain.rightMidDrive.setSelectedSensorPosition((int) Robot.driveTrain.gyro.getAngle(), 0, 0);
+ 	 		Robot.driveTrain.leftMidDrive.setSelectedSensorPosition((int) Robot.driveTrain.gyro.getAngle(), 0, 0);
  	 		}
 	}
 	
 	
-	public static void moveToHeight(){
+	public static void moveToHeight(int position){
 		
+		Robot.lift.setPosition(position);
+		while(Robot.lift.liftMaster.getSelectedSensorPosition(0) < Robot.lift.positionArray[position]){
+			
+		}
+		Robot.cubeControl.cubeEjection();
 	}
 	
-	public static void resetEncoders()
+	public static void resetSonsors()
 	{
 		Robot.lift.liftMaster.setSelectedSensorPosition(0, 0, 0);
+		Robot.driveTrain.rightMidDrive.setSelectedSensorPosition(0, 0, 0);
+ 		Robot.driveTrain.leftMidDrive.setSelectedSensorPosition(0, 0, 0);
+ 		Robot.lift.liftEnc.reset();
+ 		Robot.driveTrain.leftEnc.reset();
+ 		Robot.driveTrain.rightEnc.reset();
+ 		Robot.driveTrain.gyro.reset();
 	
 	}
 

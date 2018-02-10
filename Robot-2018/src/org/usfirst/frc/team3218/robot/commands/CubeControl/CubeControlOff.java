@@ -22,7 +22,12 @@ public class CubeControlOff extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    Robot.cubeControl.cubeOff();
+    	if(!OI.button3.get()){
+    	Robot.cubeControl.cubeOff();
+    	}
+    	else{
+    		Robot.cubeControl.cubeCollection();
+    	}
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

@@ -5,6 +5,7 @@ import java.security.PublicKey;
 
 import javax.print.attribute.standard.Compression;
 
+import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
@@ -12,7 +13,6 @@ import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -47,13 +48,13 @@ public class Robot extends IterativeRobot {
 	public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
 	
-	
+	PowerDistributionPanel pdp = new PowerDistributionPanel(0);
 	Command autonomousCommand;
 	
 	public static String gameData;
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
-	public static SendableChooser<String> path = new SendableChooser<>();
+	public static SendableChooser<String> path1 = new SendableChooser<>();
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -61,7 +62,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-	
+
 
 		driveTrain.leftBottomDrive.setInverted(true);
 		driveTrain.leftMidDrive.setInverted(true);
@@ -81,12 +82,12 @@ public class Robot extends IterativeRobot {
 		objective.addObject("SwitchScale", "SwitchScale");
 		
 		
-		path.addObject("Close", "close");
-		path.addObject("Far", "far");
+		path1.addObject("Close", "close");
+		path1.addObject("Far", "far");
 		
-		SmartDashboard.putData("position", position);
-		SmartDashboard.putData("objectiveA", objective);
-		SmartDashboard.putData("path", path);
+		//SmartDashboard.putData("position", position);
+		//SmartDashboard.putData("objective", objective);
+		//SmartDashboard.putData("path", path1);
 		
 	}
 
@@ -118,7 +119,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
+		driveTrain.lowGear();
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -148,7 +149,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//driveTrain.automaticTransmission();
+		
 	}
 
 	@Override
@@ -163,6 +164,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
 		driveTrain.drivePIDConfig();
+		pdp.clearStickyFaults();
 	}
 	
 	/**
@@ -170,7 +172,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-	//	driveTrain.automaticTransmission();
+	
 		if(driveTrain.compressor.getPressureSwitchValue()){
 			driveTrain.compressor.stop();
 		}
@@ -183,22 +185,28 @@ public class Robot extends IterativeRobot {
 	}
 	
 	lift.liftMaster.setSelectedSensorPosition(lift.liftEnc.get(), 0, 0);
-	
 	driveTrain.rightMidDrive.setSelectedSensorPosition( driveTrain.rightEnc.get(), 0, 0);
 	driveTrain.leftMidDrive.setSelectedSensorPosition( driveTrain.leftEnc.get(), 0, 0);
 			Scheduler.getInstance().run();
+			
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
 		SmartDashboard.putNumber("AngleAverage",driveTrain.gyro.getAngle());
-		  SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
+		//SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
+		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());
 		SmartDashboard.putNumber("Left Encoder Average", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
-	   SmartDashboard.putNumber("Right Encoder Average", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Encoder Average", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Encoder Average Frankin", lift.liftMaster.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("left enc test", driveTrain.leftEnc.get());
+		
+		SmartDashboard.putNumber("Right Encoder rate",driveTrain.rightEnc.getRate());
+		SmartDashboard.putNumber("left encoder rate", driveTrain.leftEnc.getRate());
+		SmartDashboard.putNumber("Lift Encoder rate", lift.liftEnc.getRate());
+
+		SmartDashboard.putNumber("lift power", lift.liftMaster.getMotorOutputPercent());
 		SmartDashboard.putBoolean("Bottom Limit Switch", lift.bottomSwitch.get());
 	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
+	    
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
-	  	  
 	}
 
 	/**

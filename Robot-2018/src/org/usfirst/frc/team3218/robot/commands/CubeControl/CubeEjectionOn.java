@@ -2,6 +2,7 @@ package org.usfirst.frc.team3218.robot.commands.CubeControl;
 
 import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -31,6 +32,9 @@ public class CubeEjectionOn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    if(OI.button3.get()){
+    	Robot.cubeControl.cubeCollection();
+    }
     }
 
     // Called when another command which requires one or more of the same
