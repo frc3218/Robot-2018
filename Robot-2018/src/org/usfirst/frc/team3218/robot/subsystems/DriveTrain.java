@@ -75,6 +75,11 @@ public class DriveTrain extends Subsystem {
 		lowGear();
 		rightMidDrive.setSafetyEnabled(false);
 		leftMidDrive.setSafetyEnabled(false);
+		rightBottomDrive.setSafetyEnabled(false);
+		leftBottomDrive.setSafetyEnabled(false);
+		rightTopDrive.setSafetyEnabled(false);
+		leftTopDrive.setSafetyEnabled(false);
+		drive.setSafetyEnabled(false);
 		rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0,0);
 		leftMidDrive.setSelectedSensorPosition(0, 0, 0);
