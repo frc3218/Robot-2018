@@ -98,7 +98,7 @@ public class DriveTrain extends Subsystem {
 	}
 	public void drive(double y, double z) {
 	
-    	drive.arcadeDrive(y, z);
+    	drive.arcadeDrive(y, z*.95);
     	automaticTransmission();
     }
     
