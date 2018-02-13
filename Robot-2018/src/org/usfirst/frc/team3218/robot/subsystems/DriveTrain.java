@@ -71,20 +71,21 @@ public class DriveTrain extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new DriveWithJoystick());
 	}
-	public void drivePIDConfig(){		
-		rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
-		leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0,0);
+	public void drivePIDConfig(){	
+		lowGear();
+		rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0,0);
 		leftMidDrive.setSelectedSensorPosition(0, 0, 0);
 		rightMidDrive.setSelectedSensorPosition(0, 0, 0);
 		
 		leftMidDrive.selectProfileSlot(0, 0);
-		leftMidDrive.config_kF(0, .3, 0);
+		leftMidDrive.config_kF(0, 6, 0);
 		leftMidDrive.config_kP(0, 0, 0);
 		leftMidDrive.config_kI(0, 0, 0);
 		leftMidDrive.config_kD(0, 0, 0);
     	
     	rightMidDrive.selectProfileSlot(0, 0);
-    	rightMidDrive.config_kF(0, .3, 0);
+    	rightMidDrive.config_kF(0, 6, 0);
     	rightMidDrive.config_kP(0, 0, 0);
     	rightMidDrive.config_kI(0, 0, 0);
     	rightMidDrive.config_kD(0, 0, 0);

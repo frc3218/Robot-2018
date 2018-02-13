@@ -49,12 +49,13 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	PowerDistributionPanel pdp = new PowerDistributionPanel(0);
-	Command autonomousCommand;
-	
+	public static Command autonomousCommand;
+	//game data returns capital combinations of L or R from that teams perspective
 	public static String gameData;
+	
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
-	public static SendableChooser<String> path1 = new SendableChooser<>();
+	public static SendableChooser<String> path = new SendableChooser<>();
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -63,6 +64,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 
+		driveTrain.drivePIDConfig();
 
 		driveTrain.leftBottomDrive.setInverted(true);
 		driveTrain.leftMidDrive.setInverted(true);
@@ -71,7 +73,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.rightMidDrive.setInverted(true);
 		driveTrain.rightTopDrive.setInverted(true);
 		
-		position.addObject("1", "1");
+		position.addDefault("1", "1");
 		position.addObject("2", "2");
 		position.addObject("3", "3");
 		
@@ -81,13 +83,13 @@ public class Robot extends IterativeRobot {
 		objective.addObject("Scale", "Scale");
 		objective.addObject("SwitchScale", "SwitchScale");
 		
+		path.addDefault("Close", "close");
+		path.addObject("Far", "far");
 		
-		path1.addObject("Close", "close");
-		path1.addObject("Far", "far");
 		
-		//SmartDashboard.putData("position", position);
-		//SmartDashboard.putData("objective", objective);
-		//SmartDashboard.putData("path", path1);
+		SmartDashboard.putData("position",position);
+		SmartDashboard.putData("objective",objective);
+		SmartDashboard.putData("path",path);
 		
 	}
 
@@ -119,7 +121,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		driveTrain.lowGear();
+		driveTrain.drivePIDConfig();
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -149,7 +151,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
+		SmartDashboard.putData(driveTrain);
+		SmartDashboard.putNumber("left Drivetrain Power", Robot.driveTrain.leftMidDrive.getMotorOutputPercent());
+		SmartDashboard.putNumber("right Drivetrain Power", Robot.driveTrain.rightMidDrive.getMotorOutputPercent());
+		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Encoder", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
+	
 	}
 
 	@Override
@@ -158,13 +165,15 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
+	if(autonomousCommand!=null)
 			autonomousCommand.cancel();
 		
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
-		driveTrain.drivePIDConfig();
 		pdp.clearStickyFaults();
+		SmartDashboard.putData("position",position);
+		SmartDashboard.putData("objective",objective);
+		SmartDashboard.putData("path",path);
 	}
 	
 	/**
@@ -188,14 +197,14 @@ public class Robot extends IterativeRobot {
 	driveTrain.rightMidDrive.setSelectedSensorPosition( driveTrain.rightEnc.get(), 0, 0);
 	driveTrain.leftMidDrive.setSelectedSensorPosition( driveTrain.leftEnc.get(), 0, 0);
 			Scheduler.getInstance().run();
-			
+			SmartDashboard.putData(driveTrain);
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
 		SmartDashboard.putNumber("AngleAverage",driveTrain.gyro.getAngle());
 		//SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
 		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());
-		SmartDashboard.putNumber("Left Encoder Average", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Encoder Average", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Encoder", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Encoder Average Frankin", lift.liftMaster.getSelectedSensorPosition(0));
 		
 		SmartDashboard.putNumber("Right Encoder rate",driveTrain.rightEnc.getRate());

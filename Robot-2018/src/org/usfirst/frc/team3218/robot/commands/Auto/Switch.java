@@ -26,21 +26,21 @@ public class Switch extends Command {
     protected void execute() {
     
     	String sendableChosenString = Robot.position.getSelected()
-    			+Robot.path.getSelected()+Robot.gameData;
+    			+Robot.path.getSelected()+Robot.gameData.substring(0,1);
     			switch(sendableChosenString){
-    			case "1CloseLeft": 
+    			case "1CloseL": 
     			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 0, 0);
     			AutoAPI.rotate(90, 0, 0);
     			AutoAPI.driveStraight(0,0,0);//drive to switch horizontal
     			AutoAPI.moveToHeight(2);
     			break;
-    			case "1FarLeft":
+    			case "1FarL":
     			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 0, 0);
         		AutoAPI.rotate(90, 0, 0);
         		AutoAPI.driveStraight(0,0,0);//drive to switch horizontal
         		AutoAPI.moveToHeight(2);
     			break;
-    			case "1CloseRight": 
+    			case "1CloseR": 
     			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH_CHANNEL,0,0);
     			AutoAPI.rotate(90, 0, 0);
     			AutoAPI.driveStraight(0,0,0);//drive across field
@@ -48,7 +48,7 @@ public class Switch extends Command {
     			AutoAPI.driveStraight(0,0,0);//drive to switch vertical
     			AutoAPI.moveToHeight(2);
     			break;
-    			case "1FarRight":
+    			case "1FarR":
     			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL,0,0);
     			AutoAPI.rotate(90,0,0);
     			AutoAPI.driveStraight(0,0,0);//drive across field

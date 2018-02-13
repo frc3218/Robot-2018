@@ -22,7 +22,7 @@ public class SwitchScale extends Command {
     protected void execute() {
     	/*
     	String sendableChosenString = Robot.position.getSelected()
-    			+Robot.path.getSelected()+Robot.gameData;
+    			+Robot.path1.getSelected()+Robot.gameData;
     			switch(sendableChosenString){
     			case "1CloseLeft": methodCall;
     			break;

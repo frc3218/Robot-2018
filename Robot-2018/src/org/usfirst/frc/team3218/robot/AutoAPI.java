@@ -12,12 +12,12 @@ public class AutoAPI {
 
 
  //distances in inches
- public final static float WALL_TO_SWITCH_CHANNEL = 67.188f;
- public final static float AUTOLINE = 120;
- public final static float WALL_TO_SWITCH = 140.188f;
- public final static float WALL_TO_PLATFORM_CHANNEL = 235.25f;
- public final static float MID_LINE = 323.16f;
- final static float TICKS_PER_INCH = 73; 
+ public final static int WALL_TO_SWITCH_CHANNEL = 67;
+ public final static int AUTOLINE = 120;
+ public final static int WALL_TO_SWITCH = 140;
+ public final static int WALL_TO_PLATFORM_CHANNEL = 235;
+ public final static int MID_LINE = 323;
+ final static float TICKS_PER_INCH = 90; 
  
  public static double[] averages = new double[6];
  static double[][] sensorValues = new double [6][200];
@@ -26,13 +26,13 @@ public class AutoAPI {
 	
  /**
  * @param distance in inches, positive forwards, negative, backwards
- * @param speed in motor power, 0<s<1
+ * @param speed in ticks, 0<s<1
  */
- 	public static void driveStraight(float distance, int speed, int acceleration){
- 		  resetSonsors();
+ 	public static void driveStraight(int distance, int speed, int acceleration){
+ 		
  		distance *= TICKS_PER_INCH;
  		//speed *= Math.signum(distance);// may not be needed
- 		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+ 	
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
  		
@@ -41,7 +41,6 @@ public class AutoAPI {
  		Robot.driveTrain.rightBottomDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
  		
  		
- 		Robot.driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
  		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);
  		
