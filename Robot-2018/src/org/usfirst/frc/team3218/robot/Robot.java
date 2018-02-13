@@ -100,7 +100,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		lift.gearHigh();
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-	if(autonomousCommand!=null)
+		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
 		driveTrain.gyro.reset();
@@ -181,7 +181,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-	
 		if(driveTrain.compressor.getPressureSwitchValue()){
 			driveTrain.compressor.stop();
 		}
@@ -205,7 +204,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Lift Encoder Average Frankin", lift.liftMaster.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Lift Encoder", lift.liftMaster.getSelectedSensorPosition(0));
 		
 		SmartDashboard.putNumber("Right Encoder rate",driveTrain.rightEnc.getRate());
 		SmartDashboard.putNumber("left encoder rate", driveTrain.leftEnc.getRate());
