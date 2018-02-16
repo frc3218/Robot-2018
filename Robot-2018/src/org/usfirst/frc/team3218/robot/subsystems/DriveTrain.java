@@ -73,12 +73,6 @@ public class DriveTrain extends Subsystem {
 	}
 	public void drivePIDConfig(){	
 		lowGear();
-		rightMidDrive.setSafetyEnabled(false);
-		leftMidDrive.setSafetyEnabled(false);
-		rightBottomDrive.setSafetyEnabled(false);
-		leftBottomDrive.setSafetyEnabled(false);
-		rightTopDrive.setSafetyEnabled(false);
-		leftTopDrive.setSafetyEnabled(false);
 		drive.setSafetyEnabled(false);
 		rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0,0);
@@ -99,10 +93,9 @@ public class DriveTrain extends Subsystem {
 		rightEnc.reset();
 		leftEnc.reset();
 		rightEnc.setReverseDirection(true);
-		leftEnc.setReverseDirection(true);
+		leftEnc.setReverseDirection(false);
 	}
 	public void drive(double y, double z) {
-	
     	drive.arcadeDrive(y, z*.95);
     	automaticTransmission();
     }

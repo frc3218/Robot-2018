@@ -121,6 +121,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		driveTrain.gyro.reset();
+		lift.liftPIDConfig();
+		pdp.clearStickyFaults();
 		driveTrain.drivePIDConfig();
 		//autonomousCommand = chooser.getSelected();
 		
@@ -171,6 +174,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
 		pdp.clearStickyFaults();
+		driveTrain.drivePIDConfig();
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("path",path);

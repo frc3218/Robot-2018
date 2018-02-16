@@ -25,7 +25,6 @@ public double ejectionSpeed = 1;
     // here. Call these from Commands.
 	public static  WPI_TalonSRX leftWheels = new WPI_TalonSRX(RobotMap.leftCollectionID);
 	public static WPI_TalonSRX rightWheels = new WPI_TalonSRX(RobotMap.rightCollectionID);
-	public static DigitalInput hasCube = new DigitalInput(RobotMap.cubeSwitchPort);
 	
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -39,14 +38,14 @@ public double ejectionSpeed = 1;
 		if(OI.button4.get()){
 			
 		}
-		else{	leftWheels.set(collectionSpeed);
-			rightWheels.set(-collectionSpeed);
+		else{	leftWheels.set(-collectionSpeed);
+			rightWheels.set(collectionSpeed);
 		}
 		
 	}
 	public void cubeEjection(){
-	    	leftWheels.set(-ejectionSpeed);
-	    	rightWheels.set(ejectionSpeed);
+	    	leftWheels.set(ejectionSpeed);
+	    	rightWheels.set(-ejectionSpeed);
 	    	
 	}
 	public void cubeOff(){

@@ -33,9 +33,9 @@ public class RobotMap {
 	//PWM Channels
 
 	//Digital Channels
-	public static int cubeSwitchPort = 8;
-	public static int bottomLiftSwitchPort = 2;
-	public static int topLiftSwitchPort = 3;
+
+	public static int bottomLiftSwitchPort = 8;
+	public static int topLiftSwitchPort = 9;
 	public static int liftEncoderPort1 = 0;
 	public static int liftEncoderPort2 = 1;
 	public static int leftEncoderPortA = 6;
@@ -50,8 +50,8 @@ public class RobotMap {
 	public static int sonarBPort = 3;
 	
 	//PCM Channels
-	public static int rightHighGearShiftPort = 5;
-	public static int rightLowGearShiftPort = 6;
+	public static int rightHighGearShiftPort = 0;
+	public static int rightLowGearShiftPort = 1;
 	public static int leftHighGearShiftPort = 2;
 	public static int leftLowGearShiftPort = 3;
 	public static int climbGearPort = 4;

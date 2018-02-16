@@ -43,7 +43,7 @@ public class Lift extends Subsystem {
 	private double MANUAL_DOWN_POWER = -0.5;
 	private static final double TICKS_PER_INCH = 5000/37;
 	private static final int MAX_TICK_HEIGHT = 5300;
-	public int[] positionArray = new int[]{0,0,1500,3500,4400,5500};//array of positions for the lift in ticks 0 index is empty
+	public int[] positionArray = new int[]{0,0,1500,3500,4400,5300};//array of positions for the lift in ticks 0 index is empty
 	
 	
 	public static Solenoid climbGear = new Solenoid(1, RobotMap.climbGearPort);
@@ -67,7 +67,7 @@ public class Lift extends Subsystem {
     	liftMaster.configMotionCruiseVelocity(CruiseVelocity, 0);
     	liftMaster.configMotionAcceleration(upAcceleration, 0);
     	liftMaster.setInverted(false);
-    	lift2.setInverted(true);
+    	lift2.setInverted(false);
     	liftMaster.selectProfileSlot(0, 0);
     	liftMaster.config_kF(0, 1, 0);
     	liftMaster.config_kP(0, 0, 0);
@@ -136,10 +136,10 @@ public class Lift extends Subsystem {
  
     }
    public void gearLow(){
-	   climbGear.set(false);
+	   climbGear.set(true);
    }
    public void gearHigh(){
-	   climbGear.set(true);
+	   climbGear.set(false);
    }
 
 }
