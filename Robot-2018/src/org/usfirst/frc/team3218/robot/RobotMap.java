@@ -16,7 +16,7 @@ public class RobotMap {
 	// Driver Station USB Ports
 	public static int joyStickPort1 = 0;
 	public static int guitarPort = 1;
-	
+	public static int xboxControllerPort = 3;
 	//CAN bus channels
 	//pdp is 0, pcm is 1
 	public static final int leftBottomDriveID = 8;
@@ -33,9 +33,9 @@ public class RobotMap {
 	//PWM Channels
 
 	//Digital Channels
-	public static int cubeSwitchPort = 8;
-	public static int bottomLiftSwitchPort = 2;
-	public static int topLiftSwitchPort = 3;
+	
+	public static int bottomLiftSwitchPort = 8;
+	public static int topLiftSwitchPort = 9;
 	public static int liftEncoderPort1 = 0;
 	public static int liftEncoderPort2 = 1;
 	public static int leftEncoderPortA = 6;

@@ -50,7 +50,7 @@ public class Lift extends Subsystem {
 	
 	public  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
 	public  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
-	public static Encoder liftEnc = new Encoder(RobotMap.liftEncoderPort1, RobotMap.liftEncoderPort2);
+	public  Encoder liftEnc = new Encoder(RobotMap.liftEncoderPort1, RobotMap.liftEncoderPort2);
 	public static DigitalInput bottomSwitch = new DigitalInput(RobotMap.bottomLiftSwitchPort);
 	public static DigitalInput topSwitch = new DigitalInput(RobotMap.topLiftSwitchPort);
 	public void initDefaultCommand() {
@@ -92,7 +92,7 @@ public class Lift extends Subsystem {
     	
     	if(climbGear.get()){
 			MANUAL_DOWN_POWER = -0.1;
-			HOLD_POSITION_POWER = .1;
+			HOLD_POSITION_POWER = 0;
 			
 		}
 		else{

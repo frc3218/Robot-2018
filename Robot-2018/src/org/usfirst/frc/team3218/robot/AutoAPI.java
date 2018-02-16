@@ -32,7 +32,7 @@ public class AutoAPI {
  		
  		distance *= TICKS_PER_INCH;
  		//speed *= Math.signum(distance);// may not be needed
- 	
+ 		Robot.driveTrain.rightMidDrive.setSensorPhase(false);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
  		
@@ -71,7 +71,6 @@ public class AutoAPI {
  		Robot.driveTrain.rightTopDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
  		Robot.driveTrain.rightBottomDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
  		
- 		Robot.driveTrain.gyro.getAngle();
  		Robot.driveTrain.leftMidDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
  		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);

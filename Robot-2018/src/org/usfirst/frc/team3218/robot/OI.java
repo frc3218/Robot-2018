@@ -1,6 +1,9 @@
 package org.usfirst.frc.team3218.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Timer.StaticInterface;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -8,6 +11,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import java.lang.invoke.SwitchPoint;
 
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.AutomaticTransmission;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
@@ -39,9 +43,18 @@ public class OI {
 	
 	
 	 
-
+	public static  XboxController xbox = new XboxController(RobotMap.xboxControllerPort);
 	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
 	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
+	
+	public static Button aButton = new JoystickButton(xbox, 1);
+	public static Button bButton = new JoystickButton(xbox, 2);
+	public static Button xButton = new JoystickButton(xbox, 3);
+	public static Button yButton = new JoystickButton(xbox, 4);
+	public static Button leftBumper = new JoystickButton(xbox, 5);
+	public static Button rightBumper = new JoystickButton(xbox, 6);
+	
+	
 	
 	public static Button button1 = new JoystickButton(joystick,1);
 	public static Button button2 = new JoystickButton(joystick, 2);
@@ -88,12 +101,11 @@ public class OI {
 	
 	 public OI(){
 		 
-
-		
+		 leftBumper.whenPressed(new GearShiftLow());
+		 rightBumper.whenPressed(new GearShiftHigh());
+		 yButton.toggleWhenActive(new AutomaticTransmission());
 		 button3.toggleWhenActive(new CubeCollectionOn());
 		 button4.whileHeld(new CubeEjectionOn());
-		 
-		 
 		 button5.whenPressed(new GearShiftLow());
 		 button6.whenPressed(new GearShiftHigh());
 		 button8.whenPressed(new ClimbingGearOn());
@@ -107,10 +119,28 @@ public class OI {
 
 	 }
 	 
+	 public static  double getXboxControllerLeftY(){
+		return -xbox.getY(Hand.kLeft);
+		 
+	 }
 	 
-	 
-	 
-	 public static double getJoystickX(){
+	 public static  double getXboxControllerLeftZ(){
+		
+		return xbox.getX(Hand.kLeft);
+		
+	 } 
+	 public  double getXboxControllerRightY(){
+			return xbox.getY(Hand.kRight);
+			 
+	 }
+		 
+	public  double getXboxControllerRightZ(){
+			
+			return xbox.getX(Hand.kRight);
+			 
+	}
+	
+	public static double getJoystickX(){
 	
 		 return -joystick.getX();
 	
@@ -121,7 +151,7 @@ public class OI {
 	
 	 }
 	 public static double getJoystickZ(){
-			
+		 
 		 return joystick.getZ();
 	
 	 }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team3218.robot;
 import java.security.PublicKey;
 
 import javax.print.attribute.standard.Compression;
+import javax.print.attribute.standard.MediaSize.Other;
 
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
@@ -23,6 +24,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -63,7 +65,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 
-		driveTrain.drivePIDConfig();
+		
 
 		driveTrain.leftBottomDrive.setInverted(true);
 		driveTrain.leftMidDrive.setInverted(true);
@@ -121,7 +123,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		driveTrain.gyro.reset();
+		lift.liftPIDConfig();
 		driveTrain.drivePIDConfig();
+		pdp.clearStickyFaults();
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -170,7 +175,9 @@ public class Robot extends IterativeRobot {
 		
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
+		driveTrain.drivePIDConfig();
 		pdp.clearStickyFaults();
+		lift.gearHigh();
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("path",path);
@@ -204,7 +211,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Lift Encoder", lift.liftMaster.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Lift Encoder", lift.liftEnc.get());
 		
 		SmartDashboard.putNumber("Right Encoder rate",driveTrain.rightEnc.getRate());
 		SmartDashboard.putNumber("left encoder rate", driveTrain.leftEnc.getRate());
@@ -215,6 +222,10 @@ public class Robot extends IterativeRobot {
 	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
 	    
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
+	    SmartDashboard.putNumber("Xbox Y Left Joy", Robot.oi.getXboxControllerLeftY());
+	    SmartDashboard.putNumber("Xbox Z Right Joy", Robot.oi.getXboxControllerLeftZ());
+	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kLeft));
+	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kRight));
 	}
 
 	/**

@@ -2,9 +2,13 @@ package org.usfirst.frc.team3218.robot.subsystems;
 
 import java.util.EventListenerProxy;
 
+import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IFollower;
@@ -20,6 +24,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,8 +35,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends Subsystem {
 
 	
-	private final int SHIFT_DOWN_SPEED = 3500;
-	private final int SHIFT_UP_SPEED= 5000;
+	private final static int SHIFT_DOWN_SPEED = 3500;
+	private final static int SHIFT_UP_SPEED= 5000;
 	
 	public WPI_TalonSRX leftBottomDrive = new WPI_TalonSRX(RobotMap.leftBottomDriveID);
 	public WPI_TalonSRX leftMidDrive = new WPI_TalonSRX(RobotMap.leftMidDriveID);
@@ -51,8 +56,11 @@ public class DriveTrain extends Subsystem {
 	public static Solenoid rightHighGearShift = new Solenoid(1,RobotMap.rightHighGearShiftPort);
 	public static Solenoid rightLowGearShift = new Solenoid(1, RobotMap.rightLowGearShiftPort);
 	
-	public Encoder leftEnc = new Encoder(RobotMap.leftEncoderPortA, RobotMap.leftEncoderPortB);
-	public Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB);
+	public static  Encoder leftEnc = new Encoder(RobotMap.leftEncoderPortA, RobotMap.leftEncoderPortB);
+	public static  Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB);
+	
+	  static boolean toggleShifting = false;
+
 	// Grouping Together Drives
 	
 	
@@ -69,7 +77,7 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveWithJoystick());
+		setDefaultCommand(new DriveWithXbox());
 	}
 	public void drivePIDConfig(){	
 		lowGear();
@@ -107,7 +115,7 @@ public class DriveTrain extends Subsystem {
     	automaticTransmission();
     }
     
-    public void lowGear(){
+    public static void lowGear(){
     	leftHighGearShift.set(true);
     	leftLowGearShift.set(false);
     	rightHighGearShift.set(false);
@@ -115,20 +123,35 @@ public class DriveTrain extends Subsystem {
     
     }
     
-    public void highGear(){
+    public static void highGear(){
     	leftHighGearShift.set(false);
     	leftLowGearShift.set(true);
     	rightHighGearShift.set(true);
     	rightLowGearShift.set(false);
     }
-   public void automaticTransmission(){
-	   if(Math.abs((leftEnc.getRate()+rightEnc.getRate())/2) > SHIFT_UP_SPEED){
+   public static void automaticTransmission(){
+	  if(Math.abs((leftEnc.getRate()+rightEnc.getRate())/2) > SHIFT_UP_SPEED){
 		   highGear();
 	   }
 	   else if(Math.abs((leftEnc.getRate()+rightEnc.getRate())/2) < SHIFT_DOWN_SPEED){
 		   lowGear();
 	   }
 	  
+   }
+   	
+   public void driveWithXbox(double y, double z) {
+	  /*
+	   if(Math.abs(y) < 0.2)
+			   y = 0;
+	   
+	   if(Math.abs(y) == y){
+		   Robot.driveTrain.drive(y,z);
+	   }
+	   else{
+	   Robot.driveTrain.drive(y,-z);
+	   }
+	   */
+	   drive.arcadeDrive(OI.getXboxControllerLeftY(), OI.getXboxControllerLeftZ());
    }
 
 }
