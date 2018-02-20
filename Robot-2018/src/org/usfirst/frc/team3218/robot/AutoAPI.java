@@ -69,7 +69,18 @@ public class AutoAPI {
  		}
  	    
  	}
-	
+ 	
+	public static void simpleDrive(double distance){
+		distance *= TICKS_PER_INCH;
+		resetDriveTrain();
+		
+		while((Math.abs(Robot.driveTrain.leftEnc.get())+Math.abs(Robot.driveTrain.rightEnc.get()))/2 < distance){
+			
+			Robot.driveTrain.drive(.3, 0);		
+			
+		}
+
+	}
  	
 	public static void rotate(int angle, int speed, int acceleration){
 	    resetDriveTrain();
@@ -126,34 +137,6 @@ public class AutoAPI {
  		Robot.driveTrain.rightEnc.reset();
  		Robot.driveTrain.gyro.reset();
 	
-	}
-	public static double sensorAverage (double newValue, String sensorName){
-		int sensorIndex;
-		int sampleCount = 0;
-		switch(sensorName){
-		case "gyro":sensorIndex = 1; sampleCount = 30;
-		break;
-		case "accelerometer": sensorIndex = 2; sampleCount = 150;
-		break;
-		case "leftEnc":sensorIndex = 3; sampleCount = 30;
-		break;
-		case "rightEnc":sensorIndex = 4; sampleCount = 30;
-		break;
-		case "liftEnc": sensorIndex = 5; sampleCount = 30;
-		break;
-		default: sensorIndex = 0; sampleCount = 0;
-		}
-		if(sensorIndex != 0){
-	averages[sensorIndex] -= (sensorValues[sensorIndex][0])/sampleCount;
-	for(int i=0; i<sampleCount-1;i++){
-		sensorValues[sensorIndex][i] = sensorValues[sensorIndex][i+1];
-		
-	}
-		sensorValues[sensorIndex][sampleCount-1] = newValue;
-		averages[sensorIndex]+= newValue/sampleCount;
-		return averages[sensorIndex];
-		}
-		return 0;
 	}
 	
 	

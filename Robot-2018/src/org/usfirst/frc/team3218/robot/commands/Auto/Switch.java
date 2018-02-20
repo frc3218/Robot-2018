@@ -40,7 +40,7 @@ public class Switch extends Command {
     			AutoAPI.moveToHeight(2);
     			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
     			AutoAPI.rotate(90,300,300);
-    			AutoAPI.driveStraight(6,2000,250);
+    			AutoAPI.simpleDrive(6);
     			break;
     			case "3R":
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
