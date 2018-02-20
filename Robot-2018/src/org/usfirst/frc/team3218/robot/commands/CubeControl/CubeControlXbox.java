@@ -12,6 +12,7 @@ public class CubeControlXbox extends Command {
     public CubeControlXbox() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.cubeControl);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +21,7 @@ public class CubeControlXbox extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cubeControl.cubeControlXbox(Robot.oi.getXboxControllerRightY(), Robot.oi.getXboxControllerRightZ());
+    	Robot.cubeControl.cubeControlXbox(Robot.oi.xbox.getPOV());
     		
     	
     }

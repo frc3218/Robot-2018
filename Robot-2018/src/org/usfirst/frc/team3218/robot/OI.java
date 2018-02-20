@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 import java.lang.invoke.SwitchPoint;
+import java.util.function.DoubleToLongFunction;
 
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
@@ -130,6 +131,5 @@ public class OI {
 		 return xbox.getX(Hand.kRight);
 	
 	 }
-	
 
 }

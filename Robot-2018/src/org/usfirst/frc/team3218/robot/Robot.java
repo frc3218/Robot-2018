@@ -97,9 +97,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("path",path);
-		
-	}
 
+	}
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
@@ -230,6 +229,7 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
 	    
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", compressor.getPressureSwitchValue());
+	 
 	}
 
 	/**
