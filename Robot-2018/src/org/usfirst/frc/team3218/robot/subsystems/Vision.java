@@ -5,6 +5,7 @@ import org.usfirst.frc.team3218.robot.commands.Vision.Pixy;
 //import org.usfirst.frc.team3218.robot.commands.Vision.LightsOut;
 //import org.usfirst.frc.team3218.robot.commands.Vision.USBCamera;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
