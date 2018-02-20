@@ -5,6 +5,7 @@ import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlXbox;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -25,18 +26,18 @@ public double ejectionSpeed = 1;
     // here. Call these from Commands.
 	public static  WPI_TalonSRX leftWheels = new WPI_TalonSRX(RobotMap.leftCollectionID);
 	public static WPI_TalonSRX rightWheels = new WPI_TalonSRX(RobotMap.rightCollectionID);
-	
+	public DifferentialDrive cubeCollect = new DifferentialDrive(leftWheels, rightWheels);
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new CubeControlOff());
+		setDefaultCommand(new CubeControlXbox());
 
 	}
 
 	public void cubeCollection() {
 
 	
-			leftWheels.set(-collectionSpeed);
+			leftWheels.set(-collectionSpeed*.5);
 			rightWheels.set(collectionSpeed);
 	
 		
@@ -49,6 +50,9 @@ public double ejectionSpeed = 1;
 	public void cubeOff(){
 		    leftWheels.set(0);
 		    rightWheels.set(0);
+	}
+	public void cubeControlXbox(double y, double z){
+		cubeCollect.arcadeDrive(y, z);
 	}
 	
 }

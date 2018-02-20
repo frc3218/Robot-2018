@@ -12,7 +12,6 @@ import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
@@ -211,8 +210,6 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 	driveTrain.leftMidDrive.setSelectedSensorPosition( driveTrain.leftEnc.get(), 0, 0);
 			Scheduler.getInstance().run();
 			SmartDashboard.putData(driveTrain);
-		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
-    	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
 		SmartDashboard.putNumber("Angle",driveTrain.gyro.getAngle());
 		//SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
 		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());
