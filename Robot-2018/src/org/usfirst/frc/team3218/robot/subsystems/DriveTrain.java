@@ -43,7 +43,6 @@ public class DriveTrain extends Subsystem {
 	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
 	//public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 	//public AnalogInput sonarB = new AnalogInput(RobotMap.sonarBPort);
-	public static Compressor compressor = new Compressor(1);
 	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 
 	public static Solenoid leftHighGearShift = new Solenoid(1, RobotMap.leftHighGearShiftPort);
@@ -80,13 +79,13 @@ public class DriveTrain extends Subsystem {
 		rightMidDrive.setSelectedSensorPosition(0, 0, 0);
 		
 		leftMidDrive.selectProfileSlot(0, 0);
-		leftMidDrive.config_kF(0, 6, 0);
+		leftMidDrive.config_kF(0, 7, 0);
 		leftMidDrive.config_kP(0, 0, 0);
 		leftMidDrive.config_kI(0, 0, 0);
 		leftMidDrive.config_kD(0, 0, 0);
     	
     	rightMidDrive.selectProfileSlot(0, 0);
-    	rightMidDrive.config_kF(0, 6, 0);
+    	rightMidDrive.config_kF(0, 7, 0);
     	rightMidDrive.config_kP(0, 0, 0);
     	rightMidDrive.config_kI(0, 0, 0);
     	rightMidDrive.config_kD(0, 0, 0);
@@ -97,7 +96,7 @@ public class DriveTrain extends Subsystem {
 	}
 	public void drive(double y, double z) {
     	drive.arcadeDrive(y, z*.95);
-    	automaticTransmission();
+   
     }
     
     public void lowGear(){

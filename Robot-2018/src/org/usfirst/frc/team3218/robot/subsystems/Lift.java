@@ -35,18 +35,18 @@ public class Lift extends Subsystem {
 	private int upAcceleration=1760;
 	private int downAcceleration=200;
 	//encoderticks per 100ms per second
-	private double HOLD_POSITION_POWER = .05; //power required for arm to stay at position
+	private double HOLD_POSITION_POWER = .1; //power required for arm to stay at position
 	private static final int GUITAR_MANUAL_UP = 0;
 	private static final int GUITAR_MANUAL_DOWN = 180;
 	
 	private static final double MANUAL_UP_POWER = .5;
-	private double MANUAL_DOWN_POWER = -0.5;
+	private double MANUAL_DOWN_POWER = -0.1;
 	private static final double TICKS_PER_INCH = 5000/37;
 	private static final int MAX_TICK_HEIGHT = 5300;
-	public int[] positionArray = new int[]{0,0,1500,3500,4400,5300};//array of positions for the lift in ticks 0 index is empty
+	public int[] positionArray = new int[]{0,0,2000,3500,4400,5100};//array of positions for the lift in ticks 0 index is empty
 	
 	
-	public static Solenoid climbGear = new Solenoid(1, RobotMap.climbGearPort);
+	public static Solenoid highLiftGear = new Solenoid(1,RobotMap.climbGearPort);
 	
 	public  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
 	public  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
@@ -67,7 +67,7 @@ public class Lift extends Subsystem {
     	liftMaster.configMotionCruiseVelocity(CruiseVelocity, 0);
     	liftMaster.configMotionAcceleration(upAcceleration, 0);
     	liftMaster.setInverted(false);
-    	lift2.setInverted(false);
+    	lift2.setInverted(true);
     	liftMaster.selectProfileSlot(0, 0);
     	liftMaster.config_kF(0, 1, 0);
     	liftMaster.config_kP(0, 0, 0);
@@ -89,15 +89,9 @@ public class Lift extends Subsystem {
     public void manual(){
     	//0 is up -1 is hold 180 is down
     	//Cim values need to be checked against the actual motor
-    	
-    	if(climbGear.get()){
-			MANUAL_DOWN_POWER = -0.1;
-			HOLD_POSITION_POWER = .1;
-			
-		}
-		else{
-			MANUAL_DOWN_POWER = -0.5;
-		}
+
+
+    
 		switch (Robot.oi.guitar.getPOV()) {
 
 		case GUITAR_MANUAL_UP:
@@ -136,10 +130,10 @@ public class Lift extends Subsystem {
  
     }
    public void gearLow(){
-	   climbGear.set(true);
+	   highLiftGear.set(true);
    }
    public void gearHigh(){
-	   climbGear.set(false);
+	   highLiftGear.set(false);
    }
 
 }

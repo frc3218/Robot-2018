@@ -18,7 +18,7 @@ public class CrossLine extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	AutoAPI.driveStraight(AutoAPI.AUTOLINE, 3000, 300);
+    	AutoAPI.driveStraight(AutoAPI.AUTOLINE, 2000, 2000);
 
     }
 

@@ -11,6 +11,7 @@ import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
@@ -18,9 +19,11 @@ import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
 import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -48,9 +51,11 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+	public  Compressor compressor = new Compressor(1);
 	public static Command autonomousCommand;
 	//game data returns capital combinations of L or R from that teams perspective
 	public static String gameData;
+	CameraServer cameraServer;
 	
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
@@ -62,9 +67,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-
-		driveTrain.drivePIDConfig();
-
+		
+		try{
+	   		 cameraServer = CameraServer.getInstance(); 
+	   		 cameraServer.startAutomaticCapture("USB Camera", RobotMap.cameraPort);
+	   	}catch(Exception e){
+	   	}	
+	
 		driveTrain.leftBottomDrive.setInverted(true);
 		driveTrain.leftMidDrive.setInverted(true);
 		driveTrain.leftTopDrive.setInverted(true);
@@ -100,6 +109,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		lift.gearHigh();
+		compressor.clearAllPCMStickyFaults();
+		AutoAPI.resetDriveTrain();
 		
 	}
 
@@ -121,6 +132,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
 		pdp.clearStickyFaults();
@@ -146,8 +158,9 @@ public class Robot extends IterativeRobot {
 		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+SmartDashboard.putString("autoString",  position.getSelected() + path.getSelected() + Robot.gameData);
+	
 	}
-
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -155,6 +168,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putData(driveTrain);
+		SmartDashboard.putNumber("Angle",driveTrain.gyro.getAngle());
 		SmartDashboard.putNumber("left Drivetrain Power", Robot.driveTrain.leftMidDrive.getMotorOutputPercent());
 		SmartDashboard.putNumber("right Drivetrain Power", Robot.driveTrain.rightMidDrive.getMotorOutputPercent());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
@@ -168,13 +182,15 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
 		pdp.clearStickyFaults();
 		driveTrain.drivePIDConfig();
+		lift.gearHigh();
+		cubeControl.setDefaultCommand(new CubeControlOff());
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("path",path);
@@ -185,12 +201,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		if(driveTrain.compressor.getPressureSwitchValue()){
-			driveTrain.compressor.stop();
-		}
-		else{
-			driveTrain.compressor.start();
-		}
 		
 	if(lift.bottomSwitch.get()){
 		lift.liftEnc.reset();
@@ -203,7 +213,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putData(driveTrain);
 		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
     	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
-		SmartDashboard.putNumber("AngleAverage",driveTrain.gyro.getAngle());
+		SmartDashboard.putNumber("Angle",driveTrain.gyro.getAngle());
 		//SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
 		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
@@ -214,11 +224,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("left encoder rate", driveTrain.leftEnc.getRate());
 		SmartDashboard.putNumber("Lift Encoder rate", lift.liftEnc.getRate());
 
-		SmartDashboard.putNumber("lift power", lift.liftMaster.getMotorOutputPercent());
+		
+		SmartDashboard.putNumber("6 output", lift.lift2.getMotorOutputPercent());
+		SmartDashboard.putNumber("4 output", lift.liftMaster.getMotorOutputPercent());
+		
+		
 		SmartDashboard.putBoolean("Bottom Limit Switch", lift.bottomSwitch.get());
 	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
 	    
-	    SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
+	    SmartDashboard.putBoolean("Compressor Pressure Switch", compressor.getPressureSwitchValue());
 	}
 
 	/**

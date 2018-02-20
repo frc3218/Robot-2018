@@ -38,7 +38,7 @@ public double ejectionSpeed = 1;
 		if(OI.button4.get()){
 			
 		}
-		else{	leftWheels.set(-collectionSpeed);
+		else{	leftWheels.set(-collectionSpeed*.5);
 			rightWheels.set(collectionSpeed);
 		}
 		
