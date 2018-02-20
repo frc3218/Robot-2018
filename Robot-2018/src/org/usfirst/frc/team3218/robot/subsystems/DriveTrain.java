@@ -4,7 +4,7 @@ import java.util.EventListenerProxy;
 
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IFollower;
@@ -69,7 +69,7 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveWithJoystick());
+		setDefaultCommand(new DriveWithXbox());
 	}
 	public void drivePIDConfig(){	
 		lowGear();
@@ -80,13 +80,13 @@ public class DriveTrain extends Subsystem {
 		rightMidDrive.setSelectedSensorPosition(0, 0, 0);
 		
 		leftMidDrive.selectProfileSlot(0, 0);
-		leftMidDrive.config_kF(0, 6, 0);
+		leftMidDrive.config_kF(0, 7, 0);
 		leftMidDrive.config_kP(0, 0, 0);
 		leftMidDrive.config_kI(0, 0, 0);
 		leftMidDrive.config_kD(0, 0, 0);
     	
     	rightMidDrive.selectProfileSlot(0, 0);
-    	rightMidDrive.config_kF(0, 6, 0);
+    	rightMidDrive.config_kF(0, 7, 0);
     	rightMidDrive.config_kP(0, 0, 0);
     	rightMidDrive.config_kI(0, 0, 0);
     	rightMidDrive.config_kD(0, 0, 0);
@@ -97,9 +97,36 @@ public class DriveTrain extends Subsystem {
 	}
 	public void drive(double y, double z) {
     	drive.arcadeDrive(y, z*.95);
-    	automaticTransmission();
-    }
+	}
     
+	public void driveWithXbox(double y,double z){
+		switch((int) y*10){
+		case 4: z *=.6;
+		break;
+		case 5: z *=.5;
+		break;
+		case 6: z *=.4;
+		break;
+		case 7: z *=.3;
+		break;
+		case 8: z *=.2;
+		break;
+		case 9: z *=.15;
+		break;
+		case 10: z *=.1;
+		break;
+		}
+		if(Math.abs(y) < .2)  y=0;
+			
+		
+		if(Math.abs(y) == y){
+			Robot.driveTrain.drive(y,z);
+		}else{
+			Robot.driveTrain.drive(y,-z);
+		}
+		
+		
+	}
     public void lowGear(){
     	leftHighGearShift.set(true);
     	leftLowGearShift.set(false);

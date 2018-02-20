@@ -1,41 +1,33 @@
-package org.usfirst.frc.team3218.robot.commands.DriveTrain;
+package org.usfirst.frc.team3218.robot.commands.Lift;
 
-import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
+public class LiftGearHigh extends Command {
 
-
-public class DriveWithJoystick extends Command {
-
-// Difference Commands
-	
-    public DriveWithJoystick() {
+    public LiftGearHigh() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//encoderFinal = (Robot.driveTrain.leftEnc.getRate()-Robot.driveTrain.rightEnc.getRate()/maxDif);
-    	Robot.driveTrain.drive(OI.getJoystickY(), OI.getJoystickZ());
-    	
+    Robot.lift.gearHigh();
+    
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

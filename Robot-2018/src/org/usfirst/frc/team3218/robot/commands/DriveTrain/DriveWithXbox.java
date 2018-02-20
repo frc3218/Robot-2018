@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3218.robot.commands.Lift;
+package org.usfirst.frc.team3218.robot.commands.DriveTrain;
 
 import org.usfirst.frc.team3218.robot.Robot;
 
@@ -7,12 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClimbingGearOff extends Command {
+public class DriveWithXbox extends Command {
 
-    public ClimbingGearOff() {
+    public DriveWithXbox() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -21,13 +20,12 @@ public class ClimbingGearOff extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    Robot.lift.gearHigh();
-    
+    	Robot.driveTrain.driveWithXbox(Robot.oi.getXboxControllerLeftY(),Robot.oi.getXboxControllerLeftZ());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

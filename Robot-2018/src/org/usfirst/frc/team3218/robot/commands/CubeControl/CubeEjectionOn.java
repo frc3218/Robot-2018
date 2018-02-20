@@ -32,9 +32,9 @@ public class CubeEjectionOn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    if(OI.button3.get()){
+    
     	Robot.cubeControl.cubeCollection();
-    }
+  
     }
 
     // Called when another command which requires one or more of the same

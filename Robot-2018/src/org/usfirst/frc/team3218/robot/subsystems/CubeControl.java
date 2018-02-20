@@ -35,12 +35,10 @@ public double ejectionSpeed = 1;
 
 	public void cubeCollection() {
 
-		if(OI.button4.get()){
-			
-		}
-		else{	leftWheels.set(-collectionSpeed);
+	
+			leftWheels.set(-collectionSpeed);
 			rightWheels.set(collectionSpeed);
-		}
+	
 		
 	}
 	public void cubeEjection(){

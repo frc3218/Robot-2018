@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3218.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -14,8 +16,8 @@ import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
-import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOff;
-import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOn;
+import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearHigh;
+import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleLow;
@@ -40,18 +42,20 @@ public class OI {
 	
 	 
 
-	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
 	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
+	public static XboxController xbox = new XboxController(RobotMap.xboxControllerPort);
 	
-	public static Button button1 = new JoystickButton(joystick,1);
-	public static Button button2 = new JoystickButton(joystick, 2);
-	public static Button button3 = new JoystickButton(joystick,3);
-	public static Button button4 = new JoystickButton(joystick,4);
-	public static Button button5 = new JoystickButton(joystick,5);
-	public static Button button6 = new JoystickButton(joystick,6);
-	public static Button button7 = new JoystickButton(joystick,7);
-	public static Button button8 = new JoystickButton(joystick,8);
-	public static Button button9 = new JoystickButton(joystick,9);
+	public static Button aButton= new JoystickButton(xbox,1);
+	public static Button bButton = new JoystickButton(xbox, 2);
+	public static Button xButton = new JoystickButton(xbox,3);
+	public static Button yButton = new JoystickButton(xbox,4);
+	public static Button leftBumper = new JoystickButton(xbox,5);
+	public static Button rightBumper = new JoystickButton(xbox,6);
+	public static Button backButton = new JoystickButton(xbox,7);
+	public static Button startButton = new JoystickButton(xbox,8);
+	public static Button leftJoyClick = new JoystickButton(xbox,9);
+	public static Button rightJoyClick = new JoystickButton(xbox,10);
+	
 	
 	public static Button liftBottom = new JoystickButton(guitar, 5);
 	public static Button liftSwitch = new JoystickButton(guitar, 3);
@@ -89,16 +93,12 @@ public class OI {
 	 public OI(){
 		 
 
+		leftBumper.whenPressed(new GearShiftLow());
+		rightBumper.whenPressed(new GearShiftHigh());
+		leftJoyClick.toggleWhenPressed(new LiftGearLow());
+		leftJoyClick.toggleWhenPressed(new LiftGearHigh());
 		
-		 button3.toggleWhenActive(new CubeCollectionOn());
-		 button4.whileHeld(new CubeEjectionOn());
-		 
-		 
-		 button5.whenPressed(new GearShiftLow());
-		 button6.whenPressed(new GearShiftHigh());
-		 button8.whenPressed(new ClimbingGearOn());
-		 button9.whenPressed(new ClimbingGearOff());
-		 
+
 		 liftBottom.whileHeld(new SetLiftPositionBottom());
 		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
 		 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
@@ -110,22 +110,26 @@ public class OI {
 	 
 	 
 	 
-	 public static double getJoystickX(){
+	 public static double getXboxControllerLeftY(){
 	
-		 return -joystick.getX();
+		 return -xbox.getY(Hand.kLeft);
 	
 	 }
-	 public static double getJoystickY(){
+	 public static double getXboxControllerLeftZ(){
 			
-			return  -joystick.getY();
+		 return xbox.getX(Hand.kLeft);
 	
 	 }
-	 public static double getJoystickZ(){
+	 public static double getXboxControllerRightY(){
 			
-		 return joystick.getZ();
+		 return xbox.getY(Hand.kRight);
 	
 	 }
-	 
+	 public static double getXboxControllerRightZ(){
+			
+		 return xbox.getX(Hand.kRight);
+	
+	 }
 	
 
 }
