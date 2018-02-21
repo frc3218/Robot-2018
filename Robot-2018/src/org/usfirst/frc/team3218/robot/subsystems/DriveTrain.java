@@ -100,6 +100,7 @@ public class DriveTrain extends Subsystem {
 
     
 	public void driveWithXbox(double y,double z){
+		/*
 		switch((int) y*10){
 		case 4: z *=.6;
 		break;
@@ -116,6 +117,7 @@ public class DriveTrain extends Subsystem {
 		case 10: z *=.1;
 		break;
 		}
+		*/
 		if(Math.abs(y) < .2)  y=0;
 			
 		

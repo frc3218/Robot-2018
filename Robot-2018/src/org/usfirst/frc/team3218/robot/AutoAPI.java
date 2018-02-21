@@ -69,7 +69,16 @@ public class AutoAPI {
  		}
  	    
  	}
-	
+	public static void simpleDrive(int distance){
+		resetDriveTrain();
+		distance *= TICKS_PER_INCH;
+		while((Math.abs(Robot.driveTrain.leftEnc.get()) + Math.abs(Robot.driveTrain.rightEnc.get()))/2 < distance){
+			Robot.driveTrain.drive(.5, 0);
+		}
+		Robot.driveTrain.drive(0, 0);
+		
+		
+	}
  	
 	public static void rotate(int angle, int speed, int acceleration){
 	    resetDriveTrain();

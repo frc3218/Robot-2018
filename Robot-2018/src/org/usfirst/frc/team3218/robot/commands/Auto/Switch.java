@@ -40,7 +40,7 @@ public class Switch extends Command {
     			AutoAPI.moveToHeight(2);
     			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
     			AutoAPI.rotate(90,300,300);
-    			AutoAPI.driveStraight(6,2000,250);
+    			AutoAPI.simpleDrive(6);
     			break;
     			case "3R":
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
@@ -86,6 +86,8 @@ public class Switch extends Command {
     	Robot.lift.liftMaster.set(0);
     	Robot.lift.lift2.set(0);
     	Robot.lift.gearHigh();
+    	Robot.lift.liftMaster.setSelectedSensorPosition(Robot.lift.liftEnc.get(), 0, 0);
+    	
     }
 
     // Called when another command which requires one or more of the same
