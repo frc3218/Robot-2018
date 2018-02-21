@@ -22,7 +22,7 @@ public class SetLiftPositionBottom extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     
-    	Robot.lift.setPosition(Robot.lift.positionArray[1]);
+    	Robot.lift.setPosition(Robot.lift.positionArray[0]);
     	
     	
     	}

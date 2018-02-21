@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
 	public static Command autonomousCommand;
 	//game data returns capital combinations of L or R from that teams perspective
 	public static String gameData;
+	public static boolean breakAuto;
 	CameraServer cameraServer;
 	
 	public static SendableChooser<String> position = new SendableChooser<>();
@@ -106,9 +107,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		lift.gearHigh();
 		compressor.clearAllPCMStickyFaults();
 		AutoAPI.resetDriveTrain();
+		breakAuto = true;
 		
 	}
 
@@ -130,7 +131,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+		breakAuto = false;
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
 		pdp.clearStickyFaults();
@@ -210,8 +211,6 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 			Scheduler.getInstance().run();
 			SmartDashboard.putData(driveTrain);
 		SmartDashboard.putNumber("Angle",driveTrain.gyro.getAngle());
-		//SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
-		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Encoder", lift.liftMaster.getSelectedSensorPosition(0));
@@ -220,11 +219,6 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		SmartDashboard.putNumber("left encoder rate", driveTrain.leftEnc.getRate());
 		SmartDashboard.putNumber("Lift Encoder rate", lift.liftEnc.getRate());
 
-		
-		SmartDashboard.putNumber("6 output", lift.lift2.getMotorOutputPercent());
-		SmartDashboard.putNumber("4 output", lift.liftMaster.getMotorOutputPercent());
-		
-		
 		SmartDashboard.putBoolean("Bottom Limit Switch", lift.bottomSwitch.get());
 	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
 	    

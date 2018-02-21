@@ -97,7 +97,9 @@ public class DriveTrain extends Subsystem {
 	public void drive(double y, double z) {
     	drive.arcadeDrive(y, z*.95);
     }
-
+	public void autoDrive(double y, double z) {
+    	drive.arcadeDrive(y, z, false);
+    }
     
 	public void driveWithXbox(double y,double z){
 		/*

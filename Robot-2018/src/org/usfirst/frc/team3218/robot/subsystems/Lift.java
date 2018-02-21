@@ -43,7 +43,7 @@ public class Lift extends Subsystem {
 	private double MANUAL_DOWN_POWER = -0.1;
 	private static final double TICKS_PER_INCH = 5000/37;
 	private static final int MAX_TICK_HEIGHT = 5300;
-	public int[] positionArray = new int[]{0,0,2000,3500,4400,5100};//array of positions for the lift in ticks 0 index is empty
+	public int[] positionArray = new int[]{0,700,2000,3500,4400,5100};//array of positions for the lift in ticks 0 index is empty
 	
 	
 	public static Solenoid highLiftGear = new Solenoid(1,RobotMap.climbGearPort);

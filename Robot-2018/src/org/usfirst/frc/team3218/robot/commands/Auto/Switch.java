@@ -4,8 +4,11 @@ import javax.swing.text.html.FormSubmitEvent;
 
 import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -30,17 +33,21 @@ public class Switch extends Command {
     			switch(sendableChosenString){
     			case "1L": 
     			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
-    			AutoAPI.rotate(90, 300, 300);
-    			AutoAPI.driveStraight(12,300,300);
+    			AutoAPI.rotate(92, 300, 300);
     			AutoAPI.moveToHeight(2);
+    			AutoAPI.simpleDrive(6);
+    			
     			break;
     			case "1R": 
     			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
-    			AutoAPI.rotate(90, 300, 300);
-    			AutoAPI.moveToHeight(2);
+    			AutoAPI.rotate(92, 300, 300);
+    		
+    			AutoAPI.moveToHeight(1);
     			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
-    			AutoAPI.rotate(90,300,300);
-    			AutoAPI.simpleDrive(6);
+    			AutoAPI.rotate(92,300,300);
+    			AutoAPI.moveToHeight(2);
+    			AutoAPI.simpleDrive(10);
+    			
     			break;
     			case "3R":
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
@@ -83,13 +90,10 @@ public class Switch extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	new CubeEjectionOn().start();
+    	Robot.lift.gearHigh();  
     	Robot.lift.liftMaster.set(0);
     	Robot.lift.lift2.set(0);
-    	Robot.lift.gearHigh();
-    	Robot.lift.liftMaster.setSelectedSensorPosition(Robot.lift.liftEnc.get(), 0, 0);
-    	
     }
-
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
