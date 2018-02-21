@@ -14,9 +14,9 @@ public class RobotMap {
 	
 	
 	// Driver Station USB Ports
-	public static int joyStickPort1 = 0;
 	public static int guitarPort = 1;
 	public static int xboxControllerPort = 3;
+	public static int cameraPort = 0;
 	//CAN bus channels
 	//pdp is 0, pcm is 1
 	public static final int leftBottomDriveID = 8;

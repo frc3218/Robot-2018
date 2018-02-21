@@ -12,16 +12,17 @@ import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
 import org.usfirst.frc.team3218.robot.subsystems.Vision;
+import org.w3c.dom.events.EventException;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -57,6 +58,7 @@ public class Robot extends IterativeRobot {
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
 	public static SendableChooser<String> path = new SendableChooser<>();
+	//public static CameraServer cameraServer;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -64,9 +66,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-
+		try{
+			CameraServer.getInstance().startAutomaticCapture("Camera",RobotMap.cameraPort);
+			
+		}
+		catch(Exception e){
+			
+		}
 		
-
+		driveTrain.compressor.clearAllPCMStickyFaults();
 		driveTrain.leftBottomDrive.setInverted(true);
 		driveTrain.leftMidDrive.setInverted(true);
 		driveTrain.leftTopDrive.setInverted(true);
@@ -170,6 +178,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		driveTrain.compressor.clearAllPCMStickyFaults();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
@@ -188,12 +197,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		if(driveTrain.compressor.getPressureSwitchValue()){
-			driveTrain.compressor.stop();
-		}
-		else{
-			driveTrain.compressor.start();
-		}
+		
+	driveTrain.compressorControl();
 		
 	if(lift.bottomSwitch.get()){
 		lift.liftEnc.reset();
@@ -204,8 +209,6 @@ public class Robot extends IterativeRobot {
 	driveTrain.leftMidDrive.setSelectedSensorPosition( driveTrain.leftEnc.get(), 0, 0);
 			Scheduler.getInstance().run();
 			SmartDashboard.putData(driveTrain);
-		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
-    	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
 		SmartDashboard.putNumber("AngleAverage",driveTrain.gyro.getAngle());
 		//SmartDashboard.putNumber("Sonar Average", driveTrain.sonarA.getAverageVoltage());
 		//SmartDashboard.putNumber("Sonar B Average", driveTrain.sonarB.getAverageVoltage());

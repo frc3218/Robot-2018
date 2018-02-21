@@ -15,16 +15,18 @@ import org.usfirst.frc.team3218.robot.commands.DriveTrain.AutomaticTransmission;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
-import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
-import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
-import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOff;
-import org.usfirst.frc.team3218.robot.commands.Lift.ClimbingGearOn;
+import org.usfirst.frc.team3218.robot.commands.Lift.AbsoluteDown;
+import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearHigh;
+import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleMid;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionSwitch;
+import org.usfirst.frc.team3218.robot.commands.Vision.TurnToTarget;
+import org.usfirst.frc.team3218.robot.subsystems.Lift;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -44,7 +46,6 @@ public class OI {
 	
 	 
 	public static  XboxController xbox = new XboxController(RobotMap.xboxControllerPort);
-	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
 	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
 	
 	public static Button aButton = new JoystickButton(xbox, 1);
@@ -53,18 +54,11 @@ public class OI {
 	public static Button yButton = new JoystickButton(xbox, 4);
 	public static Button leftBumper = new JoystickButton(xbox, 5);
 	public static Button rightBumper = new JoystickButton(xbox, 6);
+	public static Button leftJoyClick = new JoystickButton(xbox,9);
+	public static Button rightJoyClick = new JoystickButton(xbox,10);
+	public static Button backButton = new JoystickButton(xbox,7);
+	public static Button startButton = new JoystickButton(xbox,8);
 	
-	
-	
-	public static Button button1 = new JoystickButton(joystick,1);
-	public static Button button2 = new JoystickButton(joystick, 2);
-	public static Button button3 = new JoystickButton(joystick,3);
-	public static Button button4 = new JoystickButton(joystick,4);
-	public static Button button5 = new JoystickButton(joystick,5);
-	public static Button button6 = new JoystickButton(joystick,6);
-	public static Button button7 = new JoystickButton(joystick,7);
-	public static Button button8 = new JoystickButton(joystick,8);
-	public static Button button9 = new JoystickButton(joystick,9);
 	
 	public static Button liftBottom = new JoystickButton(guitar, 5);
 	public static Button liftSwitch = new JoystickButton(guitar, 3);
@@ -103,14 +97,14 @@ public class OI {
 		 
 		 leftBumper.whenPressed(new GearShiftLow());
 		 rightBumper.whenPressed(new GearShiftHigh());
-		 yButton.toggleWhenActive(new AutomaticTransmission());
-		 button3.toggleWhenActive(new CubeCollectionOn());
-		 button4.whileHeld(new CubeEjectionOn());
-		 button5.whenPressed(new GearShiftLow());
-		 button6.whenPressed(new GearShiftHigh());
-		 button8.whenPressed(new ClimbingGearOn());
-		 button9.whenPressed(new ClimbingGearOff());
-		 
+		 yButton.toggleWhenPressed(new AutomaticTransmission());
+		 leftJoyClick.whenPressed(new LiftGearLow());
+		 rightJoyClick.whenPressed(new LiftGearHigh());
+		 xButton.whileHeld(new SetLiftPositionScaleLow());
+		 bButton.whileHeld(new SetLiftPositionBottom());
+		 aButton.whileHeld(new SetLiftPositionScaleHigh());
+		 backButton.whileHeld(new AbsoluteDown());
+		 startButton.whileHeld(new TurnToTarget());
 		 liftBottom.whileHeld(new SetLiftPositionBottom());
 		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
 		 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
@@ -140,22 +134,6 @@ public class OI {
 			 
 	}
 	
-	public static double getJoystickX(){
-	
-		 return -joystick.getX();
-	
-	 }
-	 public static double getJoystickY(){
-			
-			return  -joystick.getY();
-	
-	 }
-	 public static double getJoystickZ(){
-		 
-		 return joystick.getZ();
-	
-	 }
-	 
-	
+
 
 }

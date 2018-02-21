@@ -43,13 +43,13 @@ public class Lift extends Subsystem {
 	private double MANUAL_DOWN_POWER = -0.5;
 	private static final double TICKS_PER_INCH = 5000/37;
 	private static final int MAX_TICK_HEIGHT = 5300;
-	public int[] positionArray = new int[]{0,0,1500,3500,4400,5500};//array of positions for the lift in ticks 0 index is empty
+	public int[] positionArray = new int[]{0,-300,1500,3500,4400,6300};//array of positions for the lift in ticks 0 index is empty
 	
 	
 	public static Solenoid climbGear = new Solenoid(1, RobotMap.climbGearPort);
 	
-	public  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
-	public  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
+	public static  WPI_TalonSRX liftMaster = new WPI_TalonSRX(RobotMap.lift1ID);
+	public static  WPI_TalonSRX lift2 = new WPI_TalonSRX(RobotMap.lift2ID);
 	public  Encoder liftEnc = new Encoder(RobotMap.liftEncoderPort1, RobotMap.liftEncoderPort2);
 	public static DigitalInput bottomSwitch = new DigitalInput(RobotMap.bottomLiftSwitchPort);
 	public static DigitalInput topSwitch = new DigitalInput(RobotMap.topLiftSwitchPort);
@@ -66,7 +66,7 @@ public class Lift extends Subsystem {
     	liftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     	liftMaster.configMotionCruiseVelocity(CruiseVelocity, 0);
     	liftMaster.configMotionAcceleration(upAcceleration, 0);
-    	liftMaster.setInverted(false);
+    	liftMaster.setInverted(true);
     	lift2.setInverted(true);
     	liftMaster.selectProfileSlot(0, 0);
     	liftMaster.config_kF(0, 1, 0);
@@ -141,6 +141,9 @@ public class Lift extends Subsystem {
    public void gearHigh(){
 	   climbGear.set(true);
    }
-
+   public static void manualDown(){
+	   liftMaster.set(ControlMode.PercentOutput, -.2);
+		lift2.set(ControlMode.PercentOutput, -.2);
+   }
 }
 

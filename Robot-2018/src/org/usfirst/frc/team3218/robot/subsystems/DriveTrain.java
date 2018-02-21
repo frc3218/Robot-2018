@@ -5,7 +5,6 @@ import java.util.EventListenerProxy;
 import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
@@ -112,7 +111,7 @@ public class DriveTrain extends Subsystem {
 	public void drive(double y, double z) {
 	
     	drive.arcadeDrive(y, z*.95);
-    	automaticTransmission();
+    	
     }
     
     public static void lowGear(){
@@ -140,7 +139,22 @@ public class DriveTrain extends Subsystem {
    }
    	
    public void driveWithXbox(double y, double z) {
-	  /*
+	   /*
+	   switch((int)y*10){
+	   case 4: z *= 0.6;
+	   break;
+	   case 5: z *= 0.5;
+	   break;
+	   case 6: z *= 0.4;
+	   break;
+	   case 7: z *= 0.3;
+	   break;
+	   case 8: z *= 0.2;
+	   break;
+	   case 10:z *= 0.1;
+	   break;
+	   }
+	   */
 	   if(Math.abs(y) < 0.2)
 			   y = 0;
 	   
@@ -150,9 +164,16 @@ public class DriveTrain extends Subsystem {
 	   else{
 	   Robot.driveTrain.drive(y,-z);
 	   }
-	   */
-	   drive.arcadeDrive(OI.getXboxControllerLeftY(), OI.getXboxControllerLeftZ());
+	   
+	   
    }
-
+   public void compressorControl(){
+	   if(compressor.getPressureSwitchValue()){
+			compressor.stop();
+		}
+		else{
+			compressor.start();
+		}
+   }
 }
 

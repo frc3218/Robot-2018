@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Pixy extends Command {
+public class Dixy extends Command {
 
-	public static final int MAX_SIGNATURES = 3; //TODO: make constants final
+	public static final int MAX_SIGNATURES = 4; //TODO: make constants final
 	public static final int MAX_OBJECTS = 4;
-	public static final int SAMPLE_COUNT = 10;
+	//spublic static final int SAMPLE_COUNT = 10;
 	float smoothingFactor=0.5f;//figure out the best number for this
 	int maxBytes = 14 * MAX_OBJECTS + 2;
 
@@ -32,9 +32,9 @@ public class Pixy extends Command {
 	
 	//[signature] [sampleCount]
 	//Blob blob = new Blob();
-	public Blob[] blobArray = new Blob[MAX_SIGNATURES];
+	public static Blob[] blobArray = new Blob[MAX_SIGNATURES];
 	
-    public Pixy() {
+    public Dixy() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.vision);
@@ -51,25 +51,30 @@ public class Pixy extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	byte[] pixyValues = new byte[maxBytes];
     	for(int i = 0; i< pixyValues.length;i++){
     		pixyValues[i] = 1;
     	}
     	if(Robot.vision.pixyi2c.readOnly(pixyValues, maxBytes))
-    	//	System.out.println("FailedToRead"); //if this line is running you likely have one of two problems, either your interface (found in pxymon-> configure-> interface-> data output:i2c), or you didn't plug it in right
+    		//System.out.println("FailedToRead"); //if this line is running you likely have one of two problems, either your interface (found in pxymon-> configure-> interface-> data output:i2c), or you didn't plug it in right
     	for(int i = 0; i < pixyValues.length; i++)
     	{
     		//System.out.println(pixyValues[i]);
     	}
-	
+    	
     	
     	// set was updated array to false.
     	for(int i = 0; i<blobArray.length; i++)  
     	{
     		blobArray[i].wasUpdated=false;
+    		
     	}
     	int i = 0;
-    
+    	/*for(byte bite : pixyValues)
+    	{
+    		System.out.println((int)bite);
+    	}*/
     	//checks if data has been put into storage array
     	if(pixyValues!=null)
     	{
@@ -84,40 +89,48 @@ public class Pixy extends Command {
     				break;
     			}
     	}
-	
+    	
     	i+=2;
 	
 	//if there is room for an object's data in the array and an object is found
     	//System.out.println("82");
     	if(i<maxBytes-14 && littleEndianToBigEndian(pixyValues[i],pixyValues[i+1])==0xaa55)
     	{
+    		
     		//segments chunks of object Data
-    		System.out.println("85");
+    		//System.out.println("85");
+    		//System.out.println("YEEEEEEEEEEEEEEEEEEEEEEEET");
     		for(;i < pixyValues.length-14; i+=14)	
     		{
 			//checks for beginning of object
-    			System.out.println("89");
+    			//System.out.println("89");
+    			//System.out.println("YOOOOOOOOOOOOOOOT");
     			if(littleEndianToBigEndian(pixyValues[i],pixyValues[i+1]) == 0xaa55)  
     			{
-    				System.out.println("92");
+    				//System.out.println("92");
     				//sets all variables for current object in for loop
     				currentChecksum = littleEndianToBigEndian(pixyValues[i + 2],pixyValues[i + 3]);
     				currentSig = littleEndianToBigEndian(pixyValues[i + 4],pixyValues[i + 5]);
     				currentX = littleEndianToBigEndian(pixyValues[i + 6],pixyValues[i + 7]);
+    				//System.out.println(currentX);
     				currentY = littleEndianToBigEndian(pixyValues[i + 8],pixyValues[i + 9]);
+    				//System.out.println(currentY);
     				currentWidth = littleEndianToBigEndian(pixyValues[i + 10],pixyValues[i + 11]); 
+    				//System.out.println(currentWidth);
     				currentHeight = littleEndianToBigEndian(pixyValues[i + 12],pixyValues[i + 13]);
+    				//System.out.println(currentHeight);
     				
 				//checksum for one object
+    				//System.out.println("the sum is gonna get checked!");
     				if( currentChecksum == (currentSig + currentX + currentY + currentWidth + currentHeight) && (currentChecksum > 0 )){//make sure data is good		
-    					System.out.println("it ran");
+    					//System.out.println("it ran");
     					int tempInt = currentSig;
-    					/*SmartDashboard.putNumber("sig" , currentSig);   			
+    					SmartDashboard.putNumber("sig" , currentSig);   			
     					SmartDashboard.putNumber("X" +tempInt, blobArray[currentSig].averageX);
     			    	SmartDashboard.putNumber("Y" +tempInt, blobArray[currentSig].averageY);
     			    	SmartDashboard.putNumber("Width"+tempInt, blobArray[currentSig].averageWidth);
     			    	SmartDashboard.putNumber("Height"+tempInt, blobArray[currentSig].averageHeight);
-    					*/
+    					//System.out.println("YOOTED");
     					calculateAverage(currentX, currentY, currentWidth, currentHeight, blobArray[currentSig]);
     					
     				}//checksum if close				
@@ -125,8 +138,7 @@ public class Pixy extends Command {
     		}//for loop that segments object data close
     	}//if that checks for object in data close
     }//if the array has any data check close
-  }//execute close
-
+    }//execute close
 	/**
 	 * this will calculate the average location & size over time of previous blob samples
 	 * @param X: the horizontal position of the blob
@@ -136,6 +148,7 @@ public class Pixy extends Command {
 	 */
 	public void calculateAverage(char X, char Y, char Width, char Height, Blob blob) 
 	{
+		//System.out.println("Calculated Average");
 		if(blob.wasUpdated)
 		{
 			smoothingFactor = (float) SmartDashboard.getNumber("smoothness", 0.5);
@@ -149,10 +162,10 @@ public class Pixy extends Command {
 			blob.averageX = X;
 			blob.averageY = Y;
 		}
-		SmartDashboard.putNumber("X", blob.averageX);
-		SmartDashboard.putNumber("Y", blob.averageY);
-		SmartDashboard.putNumber("W", blob.averageWidth);
-		SmartDashboard.putNumber("H", blob.averageHeight);
+		SmartDashboard.putNumber("PixyX", blob.averageX);
+		SmartDashboard.putNumber("PixyY", blob.averageY);
+		SmartDashboard.putNumber("PixyW", blob.averageWidth);
+		SmartDashboard.putNumber("PixyH", blob.averageHeight);
 	}
 	public void ChangeBrightness(byte Brightness)
 	{

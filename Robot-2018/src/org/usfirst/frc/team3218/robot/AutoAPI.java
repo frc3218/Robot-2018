@@ -95,6 +95,13 @@ public class AutoAPI {
 		}
 		Robot.cubeControl.cubeEjection();
 	}
+	public static void dumbDrive(int distance){
+		resetSonsors();//reset driveTrain
+		distance *=TICKS_PER_INCH;
+		while((Robot.driveTrain.rightEnc.get() + Robot.driveTrain.leftEnc.get())/2 < distance) {
+		Robot.driveTrain.drive(.3, 0);
+		}
+	}
 	
 	public static void resetSonsors()
 	{

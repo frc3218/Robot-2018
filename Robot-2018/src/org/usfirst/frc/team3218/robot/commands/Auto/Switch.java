@@ -88,7 +88,6 @@ public class Switch extends Command {
     protected void end() {
     	Robot.lift.liftMaster.set(0);
     	Robot.lift.lift2.set(0);
-    	Robot.cubeControl.cubeOff();
     }
 
     // Called when another command which requires one or more of the same

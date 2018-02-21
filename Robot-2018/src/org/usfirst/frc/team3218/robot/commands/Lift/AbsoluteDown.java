@@ -1,19 +1,21 @@
-package org.usfirst.frc.team3218.robot.commands.CubeControl;
+package org.usfirst.frc.team3218.robot.commands.Lift;
 
-import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.subsystems.Lift;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CubeControlOff extends Command {
+public class AbsoluteDown extends Command {
 
-    public CubeControlOff() {
+    public AbsoluteDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.cubeControl);
+    	requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -22,13 +24,9 @@ public class CubeControlOff extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!OI.button3.get()){
-    	Robot.cubeControl.cubeOff();
-    	}
-    	else{
-    		Robot.cubeControl.cubeCollection();
-    	}
+    	Lift.manualDown();
     }
+
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
