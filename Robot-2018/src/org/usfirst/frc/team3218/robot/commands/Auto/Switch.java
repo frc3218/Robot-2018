@@ -5,6 +5,8 @@ import javax.swing.text.html.FormSubmitEvent;
 import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlXbox;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
 
@@ -36,18 +38,18 @@ public class Switch extends Command {
     			AutoAPI.rotate(92, 300, 300);
     			AutoAPI.moveToHeight(2);
     			AutoAPI.simpleDrive(6);
-    			
+    			new CubeEjectionOn().start();
+    			AutoAPI.moveToHeight(0);
     			break;
     			case "1R": 
     			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
     			AutoAPI.rotate(92, 300, 300);
-    		
     			AutoAPI.moveToHeight(1);
+    			//reduce by 50
     			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
     			AutoAPI.rotate(92,300,300);
     			AutoAPI.moveToHeight(2);
     			AutoAPI.simpleDrive(10);
-    			
     			break;
     			case "3R":
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
@@ -90,7 +92,7 @@ public class Switch extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	new CubeEjectionOn().start();
-    	Robot.lift.gearHigh();  
+    	Robot.lift.gearLow();  
     	Robot.lift.liftMaster.set(0);
     	Robot.lift.lift2.set(0);
     }

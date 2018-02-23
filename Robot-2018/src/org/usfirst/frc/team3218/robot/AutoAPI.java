@@ -141,7 +141,7 @@ public class AutoAPI {
 		Robot.lift.gearLow();
 		Robot.lift.setPosition(Robot.lift.positionArray[position]);
 		Robot.lift.liftMaster.setSelectedSensorPosition(Robot.lift.liftEnc.get(),0,0);
-		while(Robot.lift.liftMaster.getSelectedSensorPosition(0) < Robot.lift.positionArray[position]-300){
+		while(Robot.lift.liftMaster.getSelectedSensorPosition(0) < Robot.lift.positionArray[position]-300 ||Robot.lift.liftMaster.getSelectedSensorPosition(0) == Robot.lift.positionArray[position]){
 			if(Robot.breakAuto){
  				break;
  			}
