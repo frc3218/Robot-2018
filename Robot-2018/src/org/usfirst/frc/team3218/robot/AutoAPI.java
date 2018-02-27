@@ -64,8 +64,8 @@ public class AutoAPI {
 	    resetSonsors();
 		
 		Robot.driveTrain.rightMidDrive.configSelectedFeedbackSensor(FeedbackDevice.SoftwareEmulatedSensor, 0, 0);
- 		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(-speed, 0);
- 		Robot.driveTrain.rightMidDrive.configMotionAcceleration(-acceleration, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
+ 		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
  		
  		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, angle);
  		Robot.driveTrain.rightTopDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);

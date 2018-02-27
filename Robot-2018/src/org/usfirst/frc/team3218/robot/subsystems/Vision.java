@@ -26,6 +26,7 @@ public class Vision extends Subsystem {
 	public int tapeMinX = 130;
 	public int tapeMaxX = 190;
 	public int tapeRangeX = tapeMaxX - tapeMinX;
+	static double ratioToCenter;
 	//Relay lightSpike = new Relay(RobotMap.lightsPort);
 	
 	public void lightsOn(){
@@ -37,16 +38,26 @@ public class Vision extends Subsystem {
 	static public void turnToTarget()
 	{ 
 		for(int i = 0; i < Dixy.blobArray.length; i++){
-			System.out.println(i + ": " + Dixy.blobArray[i].averageX);
+			//System.out.println(i + ": " + Dixy.blobArray[i].averageX);
 		}
-		System.out.println();
+	//	System.out.println();
+		
 		Blob blob = Dixy.blobArray[1];
 		SmartDashboard.putNumber("Important", blob.averageX);
 		SmartDashboard.putBoolean("YEEEEEEEEET", blob.wasUpdated);
 		SmartDashboard.putBoolean("YOOOOOOOOOT", Dixy.blobArray[0].wasUpdated);
-		Robot.driveTrain.drive(OI.getXboxControllerLeftY(), blob.averageX>160 ? 0.6 : -0.6);
+		ratioToCenter = (160-blob.averageX)/160;
+		//if(Dixy.blobArray[]){
+		if(ratioToCenter >.15){
+		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(),ratioToCenter);
 	}
-
+	
+		
+	else{
+		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(),0);
+	}
+	
+	}
 	public void lightsOut(){
 		
 	//	lightSpike.set(Value.kOff);

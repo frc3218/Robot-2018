@@ -97,14 +97,14 @@ public class OI {
 		 
 		 leftBumper.whenPressed(new GearShiftLow());
 		 rightBumper.whenPressed(new GearShiftHigh());
-		 yButton.toggleWhenPressed(new AutomaticTransmission());
+		 yButton.toggleWhenPressed(new TurnToTarget());
 		 leftJoyClick.whenPressed(new LiftGearLow());
 		 rightJoyClick.whenPressed(new LiftGearHigh());
 		 xButton.whileHeld(new SetLiftPositionScaleLow());
 		 bButton.whileHeld(new SetLiftPositionBottom());
 		 aButton.whileHeld(new SetLiftPositionScaleHigh());
 		 backButton.whileHeld(new AbsoluteDown());
-		 startButton.whileHeld(new TurnToTarget());
+		
 		 liftBottom.whileHeld(new SetLiftPositionBottom());
 		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
 		 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
