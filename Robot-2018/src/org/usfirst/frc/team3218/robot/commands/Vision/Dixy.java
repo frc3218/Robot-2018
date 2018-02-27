@@ -67,8 +67,7 @@ public class Dixy extends Command {
     	// set was updated array to false.
     	for(int i = 0; i<blobArray.length; i++)  
     	{
-    		blobArray[i].wasUpdated=false;
-    		
+    		blobArray[i].wasUpdated=false;    		
     	}
     	int i = 0;
     	/*for(byte bite : pixyValues)
@@ -96,15 +95,8 @@ public class Dixy extends Command {
     	//System.out.println("82");
     	if(i<maxBytes-14 && littleEndianToBigEndian(pixyValues[i],pixyValues[i+1])==0xaa55)
     	{
-    		
-    		//segments chunks of object Data
-    		//System.out.println("85");
-    		//System.out.println("YEEEEEEEEEEEEEEEEEEEEEEEET");
     		for(;i < pixyValues.length-14; i+=14)	
     		{
-			//checks for beginning of object
-    			//System.out.println("89");
-    			//System.out.println("YOOOOOOOOOOOOOOOT");
     			if(littleEndianToBigEndian(pixyValues[i],pixyValues[i+1]) == 0xaa55)  
     			{
     				//System.out.println("92");
@@ -130,9 +122,11 @@ public class Dixy extends Command {
     			    	SmartDashboard.putNumber("Y" +tempInt, blobArray[currentSig].averageY);
     			    	SmartDashboard.putNumber("Width"+tempInt, blobArray[currentSig].averageWidth);
     			    	SmartDashboard.putNumber("Height"+tempInt, blobArray[currentSig].averageHeight);
-    					//System.out.println("YOOTED");
     					calculateAverage(currentX, currentY, currentWidth, currentHeight, blobArray[currentSig]);
-    					
+    					for(int j = 0; j<blobArray.length; j++)  
+    			    	{
+    			    		blobArray[i].wasUpdatedLastFrame=blobArray[i].wasUpdated;    		
+    			    	}
     				}//checksum if close				
     			}//check for object and successful parse if close
     		}//for loop that segments object data close
@@ -161,6 +155,7 @@ public class Dixy extends Command {
 			blob.averageWidth = Width;
 			blob.averageX = X;
 			blob.averageY = Y;
+			blob.wasUpdated=true;
 		}
 		SmartDashboard.putNumber("PixyX", blob.averageX);
 		SmartDashboard.putNumber("PixyY", blob.averageY);

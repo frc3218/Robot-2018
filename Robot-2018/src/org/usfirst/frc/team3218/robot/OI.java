@@ -104,7 +104,6 @@ public class OI {
 		 bButton.whileHeld(new SetLiftPositionBottom());
 		 aButton.whileHeld(new SetLiftPositionScaleHigh());
 		 backButton.whileHeld(new AbsoluteDown());
-		
 		 liftBottom.whileHeld(new SetLiftPositionBottom());
 		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
 		 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());

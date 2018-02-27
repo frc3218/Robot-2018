@@ -43,12 +43,9 @@ public class Vision extends Subsystem {
 	//	System.out.println();
 		
 		Blob blob = Dixy.blobArray[1];
-		SmartDashboard.putNumber("Important", blob.averageX);
-		SmartDashboard.putBoolean("YEEEEEEEEET", blob.wasUpdated);
-		SmartDashboard.putBoolean("YOOOOOOOOOT", Dixy.blobArray[0].wasUpdated);
 		ratioToCenter = (160-blob.averageX)/160;
 		//if(Dixy.blobArray[]){
-		if(ratioToCenter >.15){
+		if(ratioToCenter >.15 ){
 		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(),ratioToCenter);
 	}
 	
@@ -56,6 +53,7 @@ public class Vision extends Subsystem {
 	else{
 		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(),0);
 	}
+		
 	
 	}
 	public void lightsOut(){
