@@ -28,8 +28,7 @@ public class AutoAPI {
  * @param distance in inches, positive forwards, negative, backwards
  * @param speed in ticks, 0<s<1
  */
- 	public static void driveStraight(int distance, int speed, int acceleration){
- 		
+ public static void driveStraight(int distance, int speed, int acceleration){		
  		distance *= TICKS_PER_INCH;
  		//speed *= Math.signum(distance);// may not be needed
  		Robot.driveTrain.rightMidDrive.setSensorPhase(false);
@@ -49,7 +48,7 @@ public class AutoAPI {
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		
  		while(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0) < distance &&
- 			  Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0) < distance){
+ 			Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0) < distance){
  			Robot.driveTrain.rightMidDrive.setSelectedSensorPosition( Robot.driveTrain.rightEnc.get(), 0, 0);
  			Robot.driveTrain.leftMidDrive.setSelectedSensorPosition( Robot.driveTrain.leftEnc.get(), 0, 0);
  			

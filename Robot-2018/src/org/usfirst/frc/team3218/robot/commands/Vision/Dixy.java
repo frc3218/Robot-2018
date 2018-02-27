@@ -125,7 +125,7 @@ public class Dixy extends Command {
     					calculateAverage(currentX, currentY, currentWidth, currentHeight, blobArray[currentSig]);
     					for(int j = 0; j<blobArray.length; j++)  
     			    	{
-    			    		blobArray[i].wasUpdatedLastFrame=blobArray[i].wasUpdated;    		
+    			    		blobArray[j].wasUpdatedLastFrame=blobArray[j].wasUpdated;    		
     			    	}
     				}//checksum if close				
     			}//check for object and successful parse if close
@@ -143,13 +143,14 @@ public class Dixy extends Command {
 	public void calculateAverage(char X, char Y, char Width, char Height, Blob blob) 
 	{
 		//System.out.println("Calculated Average");
-		if(blob.wasUpdated)
+		if(blob.wasUpdatedLastFrame)
 		{
 			smoothingFactor = (float) SmartDashboard.getNumber("smoothness", 0.5);
 			blob.averageHeight = (smoothingFactor*(float)Height*(1-smoothingFactor)*blob.averageHeight-1);
 			blob.averageWidth = (smoothingFactor*(float)Height*(1-smoothingFactor)*blob.averageWidth-1);
 			blob.averageX = (smoothingFactor*(float)Height*(1-smoothingFactor)*blob.averageX-1);
-			blob.averageY = (smoothingFactor*(float)Height*(1-smoothingFactor)*blob.averageY-1);	
+			blob.averageY = (smoothingFactor*(float)Height*(1-smoothingFactor)*blob.averageY-1);
+			blob.wasUpdated=true;
 		} else {
 			blob.averageHeight = Height;
 			blob.averageWidth = Width;

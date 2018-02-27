@@ -45,7 +45,7 @@ public class Vision extends Subsystem {
 		Blob blob = Dixy.blobArray[1];
 		ratioToCenter = (160-blob.averageX)/160;
 		//if(Dixy.blobArray[]){
-		if(ratioToCenter >.15 ){
+		if(ratioToCenter >.15 && blob.wasUpdated){
 		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(),ratioToCenter);
 	}
 	
