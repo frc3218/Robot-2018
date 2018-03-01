@@ -113,7 +113,11 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(y, z*.95);
     	
     }
-    
+	public void autoDrive(double y, double z) {
+		
+    	drive.arcadeDrive(y, z, false);
+    	
+    }
     public static void lowGear(){
     	leftHighGearShift.set(true);
     	leftLowGearShift.set(false);
