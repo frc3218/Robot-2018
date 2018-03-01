@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3218.robot.commands.Auto;
 
-import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,13 +20,12 @@ public class Scale extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    String sendableChosenString = Robot.position.getSelected()+Robot.path.getSelected()+Robot.gameData.substring(1,2);
+    	/*
+    	String sendableChosenString = Robot.position.getSelected()
+    			+Robot.path.getSelected()+Robot.gameData;
     			switch(sendableChosenString){
-    			case "1closeR": 
-    			AutoAPI.driveStraight(AutoAPI.MID_LINE, 4000, 4000);;
+    			case "1CloseLeft": methodCall;
     			break;
-    			/*
     			case "1FarLeft": methodCall;
     			break;
     			case "1CloseRight": methodCall;
@@ -50,10 +48,9 @@ public class Scale extends Command {
     			break;
     			case "3FarRight": methodCall;
     			break;
-    			*/
-    			default:;
+    			default:nothing;
     			}
-    
+    */
     }
 
     // Make this return true when this Command no longer needs to run execute()
