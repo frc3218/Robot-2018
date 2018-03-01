@@ -24,61 +24,55 @@ public class Switch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    
-    	String sendableChosenString = Robot.position.getSelected()
-    			+Robot.path.getSelected()+Robot.gameData.substring(0,1);
-    			switch(sendableChosenString){
-    			case "1CloseL": 
-    			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 0, 0);
-    			AutoAPI.rotate(90, 0, 0);
-    			AutoAPI.driveStraight(0,0,0);//drive to switch horizontal
-    			AutoAPI.moveToHeight(2);
-    			break;
-    			case "1FarL":
-    			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 0, 0);
-        		AutoAPI.rotate(90, 0, 0);
-        		AutoAPI.driveStraight(0,0,0);//drive to switch horizontal
-        		AutoAPI.moveToHeight(2);
-    			break;
-    			case "1CloseR": 
-    			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH_CHANNEL,0,0);
-    			AutoAPI.rotate(90, 0, 0);
-    			AutoAPI.driveStraight(0,0,0);//drive across field
-    			AutoAPI.rotate(-90,0,0);
-    			AutoAPI.driveStraight(0,0,0);//drive to switch vertical
-    			AutoAPI.moveToHeight(2);
-    			break;
-    			case "1FarR":
-    			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL,0,0);
-    			AutoAPI.rotate(90,0,0);
-    			AutoAPI.driveStraight(0,0,0);//drive across field
-    			AutoAPI.rotate(90,0,0);
-    			AutoAPI.driveStraight(0,0,0);//drive to switch vertical (backward)
-    			AutoAPI.moveToHeight(2);
-    			break;
-    			/* "2CloseLeft": methodCall;
-    			break;
-    			case "2FarLeft": methodCall;
-    			break;
-    			case "2CloseRight": methodCall;
-    			break;
-    			case "2FarRight": methodCall;
-    			break;
-    			case "3CloseLeft": methodCall;
-    			break;
-    			case "3FarLeft": methodCall;
-    			break;
-    			case "3CloseRight": methodCall;
-    			break;
-    			case "3FarRight": methodCall;
-    			break;
-    			default:nothing;*/
-    			}
-    	
-    	
-    
+    	String sendableChosenString = Robot.position.getSelected() + Robot.gameData.substring(0,1);
+		switch(sendableChosenString){
+		case "1L": 
+		AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
+		AutoAPI.rotate(92, 300, 300);
+		AutoAPI.moveToHeight(2);
+		AutoAPI.simpleDrive(6);
+		new CubeEjectionOn().start();
+		AutoAPI.moveToHeight(0);
+		break;
+		case "1R": 
+		AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+		AutoAPI.rotate(92, 300, 300);
+		AutoAPI.moveToHeight(1);
+		//reduce by 50
+		AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
+		AutoAPI.rotate(92,300,300);
+		AutoAPI.moveToHeight(2);
+		AutoAPI.simpleDrive(10);
+		break;
+		case "3R":
+			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
+			AutoAPI.rotate(-90, 300, 300);
+			AutoAPI.driveStraight(12,300,300);
+			AutoAPI.moveToHeight(2);
+		break;
+		case "3L":
+			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+			AutoAPI.rotate(-90, 300, 300);
+			AutoAPI.moveToHeight(2);
+			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
+			AutoAPI.rotate(-95,300,300);
+			AutoAPI.driveStraight(4,2000,250);
+		break;
+		/* "2CloseLeft": methodCall;
+		break;
+		case "2FarLeft": methodCall;
+		break;
+		case "2CloseRight": methodCall;
+		break;
+		case "2FarRight": methodCall;
+		break;
+		case "3CloseLeft": methodCall;
+		break;
+		case "3FarLeft": methodCall;
+		break;
+		default:nothing;*/
+		}
     }
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;
