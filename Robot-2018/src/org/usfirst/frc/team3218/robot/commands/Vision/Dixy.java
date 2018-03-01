@@ -147,9 +147,9 @@ public class Dixy extends Command {
 		{
 			smoothingFactor = (float) SmartDashboard.getNumber("smoothness", 0.5);
 			blob.averageHeight = (smoothingFactor*(float)Height+(1-smoothingFactor)*blob.averageHeight-1);
-			blob.averageWidth = (smoothingFactor*(float)Height+(1-smoothingFactor)*blob.averageWidth-1);
-			blob.averageX = (smoothingFactor*(float)Height+(1-smoothingFactor)*blob.averageX-1);
-			blob.averageY = (smoothingFactor*(float)Height+(1-smoothingFactor)*blob.averageY-1);
+			blob.averageWidth = (smoothingFactor*(float)Width+(1-smoothingFactor)*blob.averageWidth-1);
+			blob.averageX = (smoothingFactor*(float)X+(1-smoothingFactor)*blob.averageX-1);
+			blob.averageY = (smoothingFactor*(float)Y+(1-smoothingFactor)*blob.averageY-1);
 			blob.wasUpdated=true;
 		} else {
 			blob.averageHeight = Height;

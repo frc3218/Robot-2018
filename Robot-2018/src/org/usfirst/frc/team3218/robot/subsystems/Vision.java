@@ -38,15 +38,16 @@ public class Vision extends Subsystem {
 	static public void turnToTarget()
 	{ 
 		for(int i = 0; i < Dixy.blobArray.length; i++){
-			//System.out.println(i + ": " + Dixy.blobArray[i].averageX);
+			//System.out.
+		//	println(i + ": " + Dixy.blobArray[i].averageX);
 		}
 	//	System.out.println();
 		
 		Blob blob = Dixy.blobArray[1];
-		ratioToCenter = (160-blob.averageX)/160;
+		ratioToCenter = (blob.averageX-160)/160;
 		//if(Dixy.blobArray[]){
-		if(ratioToCenter >.15 && blob.wasUpdated){
-		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(),ratioToCenter);
+		if(/*Math.abs(ratioToCenter) >.15 &&*/ blob.wasUpdated && blob.averageWidth < 260){
+		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(), ratioToCenter*1.6);
 	}
 	
 		
