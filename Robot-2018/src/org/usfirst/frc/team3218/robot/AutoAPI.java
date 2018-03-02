@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.nio.DoubleBuffer;
+
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 
 import com.ctre.phoenix.motorcontrol.*;
@@ -25,7 +27,8 @@ public class AutoAPI {
 	 public static double[] averages = new double[6];
 	 static double[][] sensorValues = new double [6][200];
 	 static double rateDelta;
-		static int autoPhase = 0;
+	 static int autoPhase = 0;
+	 public static  double ejectionTime;
 	 /**
 	 * @param distance in inches, positive forwards, negative, backwards
 	 * @param speed in ticks, 0<s<1
@@ -87,9 +90,9 @@ public class AutoAPI {
 			SmartDashboard.putString("autoState", "simple");
 			autoPhase++;
 			distance *= TICKS_PER_INCH;
-			while((Math.abs(Robot.driveTrain.leftEnc.get()) + Math.abs(Robot.driveTrain.rightEnc.get()))/2 < distance){
+			while((Math.abs(Robot.driveTrain.leftEnc.get()) + Math.abs(Robot.driveTrain.rightEnc.get()))/2 < Math.abs(distance)){
 		
-				Robot.driveTrain.drive(.5, 0);
+				Robot.driveTrain.drive(.5*Math.signum(distance), 0);
 			}
 			Robot.driveTrain.drive(0, 0);
 			

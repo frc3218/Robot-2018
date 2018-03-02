@@ -93,13 +93,13 @@ public class DriveTrain extends Subsystem {
 		rightMidDrive.setSelectedSensorPosition(0, 0, 0);
 		
 		leftMidDrive.selectProfileSlot(0, 0);
-		leftMidDrive.config_kF(0, 6, 0);
+		leftMidDrive.config_kF(0, 7, 0);
 		leftMidDrive.config_kP(0, 0, 0);
 		leftMidDrive.config_kI(0, 0, 0);
 		leftMidDrive.config_kD(0, 0, 0);
     	
     	rightMidDrive.selectProfileSlot(0, 0);
-    	rightMidDrive.config_kF(0, 6, 0);
+    	rightMidDrive.config_kF(0, 7, 0);
     	rightMidDrive.config_kP(0, 0, 0);
     	rightMidDrive.config_kI(0, 0, 0);
     	rightMidDrive.config_kD(0, 0, 0);

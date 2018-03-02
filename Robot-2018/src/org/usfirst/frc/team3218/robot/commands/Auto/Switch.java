@@ -4,8 +4,11 @@ import javax.swing.text.html.FormSubmitEvent;
 
 import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlXbox;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionAuto;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -16,6 +19,8 @@ public class Switch extends Command {
     public Switch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.driveTrain);
+    	requires(Robot.cubeControl);
     }
 
     // Called just before this Command runs the first time
@@ -27,12 +32,19 @@ public class Switch extends Command {
     	String sendableChosenString = Robot.position.getSelected() + Robot.gameData.substring(0,1);
 		switch(sendableChosenString){
 		case "1L": 
+		
 		AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
 		AutoAPI.rotate(92, 300, 300);
 		AutoAPI.moveToHeight(2);
 		AutoAPI.simpleDrive(6);
-		new CubeEjectionOn().start();
+		Robot.cubeControl.cubeEjection();
+		Timer.delay(4);
+		Robot.cubeControl.cubeOff();
+		AutoAPI.simpleDrive(-36);
 		AutoAPI.moveToHeight(0);
+		
+	
+		//AutoAPI.moveToHeight(0);
 		break;
 		case "1R": 
 		AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
@@ -80,6 +92,8 @@ public class Switch extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    //	new CubeControlXbox().start();
+    	Robot.lift.gearLow();  
     	Robot.lift.liftMaster.set(0);
     	Robot.lift.lift2.set(0);
     }

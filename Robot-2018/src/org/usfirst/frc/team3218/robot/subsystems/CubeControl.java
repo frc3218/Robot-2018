@@ -38,7 +38,10 @@ public double ejectionSpeed = -1;
 		leftWheels.set(ejectionSpeed);
 		rightWheels.set(ejectionSpeed);
 	}
-	
+	public void cubeOff(){
+		leftWheels.set(0);
+		rightWheels.set(0);
+	}
 	public void cubeControlXbox(){
 		if(Robot.oi.getXboxControllerRightY()>=0.7){
 			
