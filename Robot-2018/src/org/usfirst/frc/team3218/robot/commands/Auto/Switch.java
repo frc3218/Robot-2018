@@ -33,42 +33,59 @@ public class Switch extends Command {
 		switch(sendableChosenString){
 		case "1L": 
 		
-		AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
-		AutoAPI.rotate(92, 300, 300);
-		AutoAPI.moveToHeight(2);
-		AutoAPI.simpleDrive(6);
-		Robot.cubeControl.cubeEjection();
-		Timer.delay(4);
-		Robot.cubeControl.cubeOff();
-		AutoAPI.simpleDrive(-36);
-		AutoAPI.moveToHeight(0);
-		
+			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+			AutoAPI.rotate(90, 900, 700);
+			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE-122,2000,250);//drive across field
+			AutoAPI.rotate(90,900,700);
+			AutoAPI.moveToHeight(2);
+			AutoAPI.simpleDrive(12);
+			Robot.cubeControl.cubeEjection();
+			Timer.delay(1);
+			Robot.cubeControl.cubeOff();
+			AutoAPI.simpleDrive(-18);
+			AutoAPI.moveToHeight(0);
 	
-		//AutoAPI.moveToHeight(0);
 		break;
 		case "1R": 
 		AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
-		AutoAPI.rotate(92, 300, 300);
+		AutoAPI.rotate(90, 700, 700);
 		AutoAPI.moveToHeight(1);
-		//reduce by 50
 		AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
-		AutoAPI.rotate(92,300,300);
+		AutoAPI.rotate(90,700,700);
 		AutoAPI.moveToHeight(2);
-		AutoAPI.simpleDrive(10);
+		AutoAPI.simpleDrive(12);
+		Robot.cubeControl.cubeEjection();
+		Timer.delay(1);
+		Robot.cubeControl.cubeOff();
+		AutoAPI.simpleDrive(-18);
+		AutoAPI.moveToHeight(0);
 		break;
 		case "3R":
-			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
-			AutoAPI.rotate(-90, 300, 300);
-			AutoAPI.driveStraight(12,300,300);
+			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+			AutoAPI.rotate(90, 300, 300);
+			AutoAPI.moveToHeight(1);
+			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
+			AutoAPI.rotate(90,300,300);
 			AutoAPI.moveToHeight(2);
+			AutoAPI.simpleDrive(12);
+			Robot.cubeControl.cubeEjection();
+			Timer.delay(1.5);
+			Robot.cubeControl.cubeOff();
+			AutoAPI.simpleDrive(-18);
+			AutoAPI.moveToHeight(0);
 		break;
 		case "3L":
 			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
 			AutoAPI.rotate(-90, 300, 300);
+			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE-108,2000,250);//drive across field
+			AutoAPI.rotate(-90,300,300);
 			AutoAPI.moveToHeight(2);
-			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
-			AutoAPI.rotate(-95,300,300);
-			AutoAPI.driveStraight(4,2000,250);
+			AutoAPI.simpleDrive(12);
+			Robot.cubeControl.cubeEjection();
+			Timer.delay(1.5);
+			Robot.cubeControl.cubeOff();
+			AutoAPI.simpleDrive(-18);
+			AutoAPI.moveToHeight(0);
 		break;
 		/* "2CloseLeft": methodCall;
 		break;

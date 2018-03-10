@@ -7,11 +7,14 @@ import javax.print.attribute.standard.MediaSize.Other;
 
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.Auto.AutoGroup;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
+import org.usfirst.frc.team3218.robot.commands.Lift.ManualLiftControl;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
@@ -111,6 +114,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		lift.gearHigh();
+		AutoAPI.breakAuto = true;
 		
 	}
 
@@ -132,10 +136,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+	
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
 		driveTrain.drivePIDConfig();
 		pdp.clearStickyFaults();
+		AutoAPI.breakAuto = false;
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -150,7 +156,7 @@ public class Robot extends IterativeRobot {
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
 			case "Scale": autonomousCommand = new Scale(); break;
-			case "SwitchScale": autonomousCommand = new SwitchScale(); break;
+			case "SwitchScale": autonomousCommand = new AutoGroup(); break;
 			}
 		
 			
@@ -180,6 +186,15 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		AutoAPI.breakAuto = true;
+		new CrossLine().cancel();
+		new Nothing().cancel();
+		new AutoGroup().cancel();
+		new Scale().cancel();
+		new Switch().cancel();
+		new SwitchScale().cancel();
+		new DriveWithXbox().start();
+		new ManualLiftControl().start();
 		driveTrain.compressor.clearAllPCMStickyFaults();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

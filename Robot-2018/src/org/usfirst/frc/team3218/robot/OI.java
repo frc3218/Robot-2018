@@ -97,7 +97,10 @@ public class OI {
 		 
 		 leftBumper.whenPressed(new GearShiftLow());
 		 rightBumper.whenPressed(new GearShiftHigh());
-		 yButton.toggleWhenPressed(new TurnToTarget());
+		 
+		// yButton.toggleWhenPressed(new TurnToTarget());
+		
+		 
 		 leftJoyClick.whenPressed(new LiftGearLow());
 		 rightJoyClick.whenPressed(new LiftGearHigh());
 		 xButton.whileHeld(new SetLiftPositionScaleLow());

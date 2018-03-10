@@ -50,7 +50,7 @@ public class Dixy extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    public void execute() {
     	
     	byte[] pixyValues = new byte[maxBytes];
     	for(int i = 0; i< pixyValues.length;i++){

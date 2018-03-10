@@ -26,7 +26,7 @@ public class Vision extends Subsystem {
 	public int tapeMinX = 130;
 	public int tapeMaxX = 190;
 	public int tapeRangeX = tapeMaxX - tapeMinX;
-	static double ratioToCenter;
+	public static double ratioToCenter;
 	//Relay lightSpike = new Relay(RobotMap.lightsPort);
 	
 	public void lightsOn(){

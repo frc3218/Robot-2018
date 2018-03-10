@@ -2,8 +2,10 @@ package org.usfirst.frc.team3218.robot.commands.DriveTrain;
 
 import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.commands.Vision.TurnToTarget;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,7 +31,9 @@ public class DriveWithXbox extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//encoderFinal = (Robot.driveTrain.leftEnc.getRate()-Robot.driveTrain.rightEnc.getRate()/maxDif);
+    	 if(Robot.oi.xbox.getTriggerAxis(Hand.kRight) > .9){
+			 new TurnToTarget().start();
+		 }
     	Robot.driveTrain.driveWithXbox(Robot.oi.getXboxControllerLeftY(), Robot.oi.getXboxControllerLeftZ());    	
     }
 
