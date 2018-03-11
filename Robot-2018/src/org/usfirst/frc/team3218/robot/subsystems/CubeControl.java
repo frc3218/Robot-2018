@@ -55,4 +55,12 @@ public double ejectionSpeed = -1;
 		
 		
 	}
+	public void cubeControlFile(double y){
+		
+		
+		cubeCollect.arcadeDrive(y,0);
+		
+		
+	}
+	
 }

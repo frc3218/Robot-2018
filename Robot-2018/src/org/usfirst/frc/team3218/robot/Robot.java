@@ -1,5 +1,10 @@
 package org.usfirst.frc.team3218.robot;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.PublicKey;
 
 import javax.print.attribute.standard.Compression;
@@ -62,6 +67,7 @@ public class Robot extends IterativeRobot {
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
 	public static SendableChooser<String> path = new SendableChooser<>();
+	public static SendableChooser<String> autoFile = new SendableChooser<>();
 	//public static CameraServer cameraServer;
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -98,8 +104,25 @@ public class Robot extends IterativeRobot {
 		
 		path.addDefault("Close", "close");
 		path.addObject("Far", "far");
+	Path autoFeeles = Paths.get("/U/AutoFiles");
+	try {
 		
+		Files.createDirectories(autoFeeles);
+		System.out.println("made autofeels");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		autoFile.addDefault("closeSwitch", "/U/AutoFiles/closeSwitch/");
+		autoFile.addObject("farSwitch","/U/AutoFiles/farSwitch/");
+		autoFile.addObject("closeScale", "/U/AutoFiles/closeScale/");
+		autoFile.addObject("farScale", "/U/AutoFiles/farScale/");
+		autoFile.addObject("closeScaleToSwitch", "/U/AutoFiles/closeScaleToSwitch/");
+		autoFile.addObject("farScaleToSwitch", "/U/AutoFiles/farScaleToSwitch/");
+		autoFile.addObject("closeScaleFarSwitch", "/U/AutoFiles/closeScaleFarSwitch/");
+		autoFile.addObject("closeSwitchFarScale", "/U/AutoFiles/closeSwitchFarScale/");
 		
+		SmartDashboard.putData("autoFile",autoFile);
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("path",path);
@@ -246,6 +269,7 @@ public class Robot extends IterativeRobot {
 	    SmartDashboard.putNumber("Xbox Z Right Joy", Robot.oi.getXboxControllerLeftZ());
 	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kLeft));
 	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kRight));
+
 	}
 
 	/**
