@@ -38,18 +38,22 @@ public class DriveWithFile extends Command {
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    }
-
+  	requires(Robot.driveTrain);
+	requires(Robot.lift);
+	requires(Robot.cubeControl);
+	}
+	
     // Called just before this Command runs the first time
     protected void initialize() {
     	setter=false;
-    	folder = new File(Robot.autoFile.getSelected());
+
+	folder = new File(Robot.autoFile.getSelected());
     	System.out.println("FOLDER IS : " +Robot.autoFile.getSelected());
     	yValues = new File(folder.getAbsolutePath()+"/yValues.txt");
         zValues = new File(folder.getAbsolutePath()+"/zValues.txt");
         collectionValues = new File(folder.getAbsolutePath()+"/collectionValues.txt");
         liftValues = new File(folder.getAbsolutePath()+"/liftValues.txt");
-       if(zValues.exists()){
+        if(zValues.exists()){
    	   System.out.println("file exists");
       }
       
@@ -101,6 +105,7 @@ public class DriveWithFile extends Command {
 			
 			}	
 			else{
+				System.out.println("values went to null");
 				setter=true;
 			}
 		} catch (NumberFormatException | IOException e) {
