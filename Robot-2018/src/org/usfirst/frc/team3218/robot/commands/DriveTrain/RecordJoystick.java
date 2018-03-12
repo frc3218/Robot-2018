@@ -46,7 +46,7 @@ public class RecordJoystick extends Command {
         // eg. requires(chassis);
 		setTimeout(15);
 	}
-
+	
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("FOLDER IS : " +Robot.autoFile.getSelected());
@@ -63,8 +63,14 @@ public class RecordJoystick extends Command {
     	}
     	else if(Robot.oi.liftSwitch.get()){
     		joystickValues[3][i] = 2;
-
     	}
+    		else if(Robot.oi.liftScaleLow.get()){
+    			joystickValues[3][i] = 3;
+    		}
+    		else if(Robot.oi.liftScaleMid.get()){
+    			joystickValues[3][i] = 4;
+    		}
+    	
     	else if(Robot.oi.liftScaleHigh.get()){
     		joystickValues[3][i] = 5;
 
@@ -80,7 +86,7 @@ public class RecordJoystick extends Command {
     	joystickValues[1][i] = Robot.oi.getXboxControllerLeftZ();
     	joystickValues[2][i] = Robot.oi.getXboxControllerRightY();
     	
-    	
+    	System.out.println(i);
     	i++;
     	}
     	catch(Exception e){

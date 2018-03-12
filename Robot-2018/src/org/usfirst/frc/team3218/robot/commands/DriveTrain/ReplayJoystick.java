@@ -92,7 +92,7 @@ public class ReplayJoystick extends Command {
 					SmartDashboard.putNumber("z value", (Double.parseDouble(numberZ)));
 					
 					SmartDashboard.putNumber("collect value", (Double.parseDouble(numberCollect)));
-					SmartDashboard.putNumber("lift value",Integer.parseInt(numberLift));
+					SmartDashboard.putNumber("lift value",Double.parseDouble(numberLift));
 					
 					
 					

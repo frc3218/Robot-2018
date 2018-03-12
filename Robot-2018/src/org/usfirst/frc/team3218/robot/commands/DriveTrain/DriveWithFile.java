@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
-
+import java.text.DecimalFormat; 
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveWithFile extends Command {
 	boolean setter = false;
 	private File folder;
-	private DecimalFormat format = new DecimalFormat("#.##");
+	private DecimalFormat format = new DecimalFormat("#");
 	private File yValues;
 	private File zValues;
 	private File collectionValues;
@@ -38,7 +38,10 @@ public class DriveWithFile extends Command {
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    }
+		requires(Robot.driveTrain);
+		requires(Robot.lift);
+		requires(Robot.cubeControl);
+	}
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -94,11 +97,8 @@ public class DriveWithFile extends Command {
 					
 					Robot.cubeControl.cubeControlFile(Double.parseDouble(numberCollect));
 					
-					Robot.lift.setPosition((int)Double.parseDouble(numberLift));
+					Robot.lift.setPosition(Robot.lift.positionArray[(int)Double.parseDouble(numberLift)]);
 					
-					
-					
-			
 			}	
 			else{
 				setter=true;
