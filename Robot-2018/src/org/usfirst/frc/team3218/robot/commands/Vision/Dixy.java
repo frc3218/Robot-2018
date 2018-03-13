@@ -81,7 +81,6 @@ public class Dixy extends Command {
     		while(littleEndianToBigEndian(pixyValues[i],pixyValues[i+1])!=0xaa55)
     		{
     			i++;
-    			
 			//if no object is found within the data exit the loop
     			if (i>maxBytes-2)
     			{
