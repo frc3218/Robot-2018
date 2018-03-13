@@ -86,7 +86,7 @@ public class RecordJoystick extends Command {
     	joystickValues[1][i] = Robot.oi.getXboxControllerLeftZ();
     	joystickValues[2][i] = Robot.oi.getXboxControllerRightY();
     	
-    	System.out.println(i);
+    	
     	i++;
     	}
     	catch(Exception e){
@@ -164,7 +164,7 @@ public class RecordJoystick extends Command {
     catch(IOException e){
     	e.printStackTrace();
     }
-    System.out.println("couldnt make bufwriters");
+    
      bufWriteY = new BufferedWriter(writerY);
      bufWriteZ = new BufferedWriter(writerZ);
      bufWriteCollection = new BufferedWriter(writerCollection);
@@ -174,13 +174,13 @@ public class RecordJoystick extends Command {
     for(double i: joystickValues[0]){
     	
     	try {
-			bufWriteY.write(String.valueOf(joystickValues[0][h])+"\n");
+    		bufWriteY.write(String.valueOf(joystickValues[0][h])+"\n");
 			
 			bufWriteZ.write(String.valueOf(joystickValues[1][h])+"\n");
 			
-			bufWriteCollection.write(String.valueOf(joystickValues[2][h])+"\n");
+			//bufWriteCollection.write(String.valueOf(joystickValues[2][h])+"\n");
 			
-			bufWriteLift.write(String.valueOf(joystickValues[3][h])+"\n");
+			//bufWriteLift.write(String.valueOf(joystickValues[3][h])+"\n");
 			
 			h++;
     	} catch (IOException e) {
@@ -201,8 +201,8 @@ public class RecordJoystick extends Command {
     }
     System.out.println(joystickValues[0][749]);
     	System.out.println(joystickValues[1][749]);
-    	System.out.println(joystickValues[2][749]);
-    	System.out.println(joystickValues[3][749]);
+    	//System.out.println(joystickValues[2][749]);
+    	//System.out.println(joystickValues[3][749]);
     	System.out.println("went to ");
 	}
     

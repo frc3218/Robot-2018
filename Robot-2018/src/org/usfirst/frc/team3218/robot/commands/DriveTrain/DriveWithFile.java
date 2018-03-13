@@ -88,25 +88,30 @@ public class DriveWithFile extends Command {
     	
 
 		try {
-			if((numberY=bufReadY.readLine())!=null &&(numberZ=bufReadZ.readLine())!=null
-			&&(numberCollect=bufReadCollection.readLine())!=null&&(numberLift=bufReadLift.readLine())!=null){
+			numberY = bufReadY.readLine();
+			numberZ = bufReadZ.readLine();
+			if(numberY !=null && numberZ != null){
 			
 			
 					
-					Robot.driveTrain.drive(Double.parseDouble(numberY), Double.parseDouble(numberZ));
+					Robot.driveTrain.driveWithXbox(Double.parseDouble(numberY), Double.parseDouble(numberZ));
 					
-					Robot.cubeControl.cubeControlFile(Double.parseDouble(numberCollect));
 					
-					Robot.lift.setPosition(Robot.lift.positionArray[(int)Double.parseDouble(numberLift)]);
+					//Robot.cubeControl.cubeControlFile(Double.parseDouble(numberCollect));
+					
+					//Robot.lift.setPosition(Robot.lift.positionArray[(int)Double.parseDouble(numberLift)]);
 					
 			}	
 			else{
+				System.out.println("didnt pass if");
 				setter=true;
+				
 			}
 		} catch (NumberFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			setter=true;
+			
 		}
 		
     
@@ -124,6 +129,7 @@ public class DriveWithFile extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	 
     	 
         
     }

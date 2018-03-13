@@ -106,6 +106,7 @@ public class OI {
 		 leftJoyClick.whenPressed(new RecordJoystick());
 		 leftJoyClick.whenPressed(new LiftGearLow());
 		 rightJoyClick.whenPressed(new LiftGearHigh());
+		 rightJoyClick.whenPressed(new ReplayJoystick());
 		 xButton.whileHeld(new SetLiftPositionScaleLow());
 		 bButton.whileHeld(new SetLiftPositionBottom());
 		 aButton.whileHeld(new SetLiftPositionScaleHigh());

@@ -266,7 +266,7 @@ public class Robot extends IterativeRobot {
 	    
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
 	    SmartDashboard.putNumber("Xbox Y Left Joy", Robot.oi.getXboxControllerLeftY());
-	    SmartDashboard.putNumber("Xbox Z Right Joy", Robot.oi.getXboxControllerLeftZ());
+	    SmartDashboard.putNumber("Xbox Z Left Joy", Robot.oi.getXboxControllerLeftZ());
 	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kLeft));
 	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kRight));
 
