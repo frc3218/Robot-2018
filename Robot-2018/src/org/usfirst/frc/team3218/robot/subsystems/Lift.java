@@ -43,7 +43,7 @@ public class Lift extends Subsystem {
 	private double MANUAL_DOWN_POWER = -0.5;
 	private static final double TICKS_PER_INCH = 5000/37;
 	private static final int MAX_TICK_HEIGHT = 5300;
-	public int[] positionArray = new int[]{0,-300,1500,3500,4400,5300};//array of positions for the lift in ticks 0 index is empty
+	public int[] positionArray = new int[]{0,1000,1500,3500,4400,5200};//array of positions for the lift in ticks 0 index is empty
 	
 	
 	public static Solenoid climbGear = new Solenoid(1, RobotMap.climbGearPort);
@@ -77,6 +77,9 @@ public class Lift extends Subsystem {
     }
     
     public  void setPosition(int position){
+    	if(Robot.lift.bottomSwitch.get()){
+			Robot.lift.liftEnc.reset();
+		}
     		Robot.lift.liftMaster.setSelectedSensorPosition(liftEnc.get(),0,0);
     		liftMaster.set(ControlMode.MotionMagic, position);
     		lift2.set(ControlMode.Follower, RobotMap.lift1ID);

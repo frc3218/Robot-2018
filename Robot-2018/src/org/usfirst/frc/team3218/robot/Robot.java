@@ -1,5 +1,10 @@
 package org.usfirst.frc.team3218.robot;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.PublicKey;
 
 import javax.print.attribute.standard.Compression;
@@ -7,11 +12,14 @@ import javax.print.attribute.standard.MediaSize.Other;
 
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.Auto.AutoGroup;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.SwitchScale;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
+import org.usfirst.frc.team3218.robot.commands.Lift.ManualLiftControl;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
@@ -28,6 +36,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -58,6 +67,7 @@ public class Robot extends IterativeRobot {
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
 	public static SendableChooser<String> path = new SendableChooser<>();
+	public static SendableChooser<String> autoFile = new SendableChooser<>();
 	//public static CameraServer cameraServer;
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -94,8 +104,25 @@ public class Robot extends IterativeRobot {
 		
 		path.addDefault("Close", "close");
 		path.addObject("Far", "far");
+	Path autoFeeles = Paths.get("/U/AutoFiles");
+	try {
 		
+		Files.createDirectories(autoFeeles);
+		System.out.println("made autofeels");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		autoFile.addDefault("closeSwitch", "/U/AutoFiles/closeSwitch/");
+		autoFile.addObject("farSwitch","/U/AutoFiles/farSwitch/");
+		autoFile.addObject("closeScale", "/U/AutoFiles/closeScale/");
+		autoFile.addObject("farScale", "/U/AutoFiles/farScale/");
+		autoFile.addObject("closeScaleToSwitch", "/U/AutoFiles/closeScaleToSwitch/");
+		autoFile.addObject("farScaleToSwitch", "/U/AutoFiles/farScaleToSwitch/");
+		autoFile.addObject("closeScaleFarSwitch", "/U/AutoFiles/closeScaleFarSwitch/");
+		autoFile.addObject("closeSwitchFarScale", "/U/AutoFiles/closeSwitchFarScale/");
 		
+		SmartDashboard.putData("autoFile",autoFile);
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("path",path);
@@ -110,6 +137,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		lift.gearHigh();
+		AutoAPI.breakAuto = true;
 		
 	}
 
@@ -131,10 +159,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+	
 		driveTrain.gyro.reset();
 		lift.liftPIDConfig();
 		driveTrain.drivePIDConfig();
 		pdp.clearStickyFaults();
+		AutoAPI.breakAuto = false;
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -149,7 +179,7 @@ public class Robot extends IterativeRobot {
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
 			case "Scale": autonomousCommand = new Scale(); break;
-			case "SwitchScale": autonomousCommand = new SwitchScale(); break;
+			case "SwitchScale": autonomousCommand = new AutoGroup(); break;
 			}
 		
 			
@@ -165,6 +195,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putData(driveTrain);
+		SmartDashboard.putNumber("timer", Timer.getFPGATimestamp());
 		SmartDashboard.putNumber("left Drivetrain Power", Robot.driveTrain.leftMidDrive.getMotorOutputPercent());
 		SmartDashboard.putNumber("right Drivetrain Power", Robot.driveTrain.rightMidDrive.getMotorOutputPercent());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
@@ -178,6 +209,15 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		AutoAPI.breakAuto = true;
+		new CrossLine().cancel();
+		new Nothing().cancel();
+		new AutoGroup().cancel();
+		new Scale().cancel();
+		new Switch().cancel();
+		new SwitchScale().cancel();
+		new DriveWithXbox().start();
+		new ManualLiftControl().start();
 		driveTrain.compressor.clearAllPCMStickyFaults();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -226,9 +266,10 @@ public class Robot extends IterativeRobot {
 	    
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", driveTrain.compressor.getPressureSwitchValue());
 	    SmartDashboard.putNumber("Xbox Y Left Joy", Robot.oi.getXboxControllerLeftY());
-	    SmartDashboard.putNumber("Xbox Z Right Joy", Robot.oi.getXboxControllerLeftZ());
+	    SmartDashboard.putNumber("Xbox Z Left Joy", Robot.oi.getXboxControllerLeftZ());
 	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kLeft));
 	    SmartDashboard.putNumber("Xbox Left Trigger Axis", Robot.oi.xbox.getTriggerAxis(Hand.kRight));
+
 	}
 
 	/**

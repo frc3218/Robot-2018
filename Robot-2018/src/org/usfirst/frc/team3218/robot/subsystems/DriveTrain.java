@@ -93,13 +93,13 @@ public class DriveTrain extends Subsystem {
 		rightMidDrive.setSelectedSensorPosition(0, 0, 0);
 		
 		leftMidDrive.selectProfileSlot(0, 0);
-		leftMidDrive.config_kF(0, 6, 0);
+		leftMidDrive.config_kF(0, 7, 0);
 		leftMidDrive.config_kP(0, 0, 0);
 		leftMidDrive.config_kI(0, 0, 0);
 		leftMidDrive.config_kD(0, 0, 0);
     	
     	rightMidDrive.selectProfileSlot(0, 0);
-    	rightMidDrive.config_kF(0, 6, 0);
+    	rightMidDrive.config_kF(0, 7, 0);
     	rightMidDrive.config_kP(0, 0, 0);
     	rightMidDrive.config_kI(0, 0, 0);
     	rightMidDrive.config_kD(0, 0, 0);
@@ -113,7 +113,11 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(y, z*.95);
     	
     }
-    
+	public void autoDrive(double y, double z) {
+		
+    	drive.arcadeDrive(y, z, false);
+    	
+    }
     public static void lowGear(){
     	leftHighGearShift.set(true);
     	leftLowGearShift.set(false);

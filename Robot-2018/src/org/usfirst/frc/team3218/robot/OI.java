@@ -12,8 +12,11 @@ import java.lang.invoke.SwitchPoint;
 
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.AutomaticTransmission;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithFile;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.RecordJoystick;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.ReplayJoystick;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.Lift.AbsoluteDown;
 import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearHigh;
@@ -97,9 +100,13 @@ public class OI {
 		 
 		 leftBumper.whenPressed(new GearShiftLow());
 		 rightBumper.whenPressed(new GearShiftHigh());
+		 startButton.whenPressed(new ReplayJoystick());
 		 yButton.toggleWhenPressed(new TurnToTarget());
+		 rightJoyClick.whenPressed(new DriveWithFile());
+		 leftJoyClick.whenPressed(new RecordJoystick());
 		 leftJoyClick.whenPressed(new LiftGearLow());
 		 rightJoyClick.whenPressed(new LiftGearHigh());
+		 rightJoyClick.whenPressed(new ReplayJoystick());
 		 xButton.whileHeld(new SetLiftPositionScaleLow());
 		 bButton.whileHeld(new SetLiftPositionBottom());
 		 aButton.whileHeld(new SetLiftPositionScaleHigh());
@@ -133,6 +140,5 @@ public class OI {
 			 
 	}
 	
-
-
+	
 }

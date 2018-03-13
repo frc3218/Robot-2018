@@ -1,7 +1,9 @@
 package org.usfirst.frc.team3218.robot.commands.Auto;
 
+import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -20,17 +22,40 @@ public class Scale extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*
+    	
     	String sendableChosenString = Robot.position.getSelected()
-    			+Robot.path.getSelected()+Robot.gameData;
+    			+Robot.gameData.substring(0,1);
     			switch(sendableChosenString){
-    			case "1CloseLeft": methodCall;
+    			case "1L": 
+    			AutoAPI.driveStraight(AutoAPI.MID_LINE, 2000, 250);
+    			AutoAPI.rotate(90, 700, 700);
+    			AutoAPI.moveToHeight(5);
+    			Robot.cubeControl.cubeEjection();
+    			Timer.delay(1);
+    			Robot.cubeControl.cubeOff();
+    			AutoAPI.moveToHeight(0);
+    			AutoAPI.rotate(70, 700, 700);
     			break;
-    			case "1FarLeft": methodCall;
+
+    			case "1R": 
+    			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+    			AutoAPI.rotate(90, 700, 700);
+    			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE+18, 2000, 250);
+    			AutoAPI.rotate(-90,700,700);
+    			AutoAPI.driveStraight(AutoAPI.MID_LINE-AutoAPI.WALL_TO_PLATFORM_CHANNEL-43,2000,250);
+    			AutoAPI.simpleDrive(0);
+    			AutoAPI.moveToHeight(5);
+    			//AutoAPI.simpleDrive(6);
+    			Robot.cubeControl.cubeEjection();
+    			Timer.delay(1);
+    			Robot.cubeControl.cubeOff();
+    			AutoAPI.simpleDrive(-6);
+    			AutoAPI.moveToHeight(0);
+    			AutoAPI.rotate(45, 700, 700);
     			break;
-    			case "1CloseRight": methodCall;
-    			break;
-    			case "1FarRight": methodCall;
+    			}
+    			
+    			/*case "1FarRight": methodCall;
     			break;
     			case "2CloseLeft": methodCall;
     			break;

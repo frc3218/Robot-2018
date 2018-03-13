@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwitchScale extends Command {
+public class ScaleSwitch extends Command {
 
-    public SwitchScale() {
+    public ScaleSwitch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
@@ -39,7 +39,7 @@ public class SwitchScale extends Command {
 			AutoAPI.rotate(90, 700, 700);
 			AutoAPI.moveToHeight(5);
 			Robot.cubeControl.cubeEjection();
-			Timer.delay(1.5);
+			Timer.delay(1);
 			Robot.cubeControl.cubeOff();
 			AutoAPI.moveToHeight(0);
 		}
