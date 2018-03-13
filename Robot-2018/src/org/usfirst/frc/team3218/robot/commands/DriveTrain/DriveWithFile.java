@@ -38,10 +38,12 @@ public class DriveWithFile extends Command {
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+
 		requires(Robot.driveTrain);
 		requires(Robot.lift);
 		requires(Robot.cubeControl);
 	}
+
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -104,7 +106,9 @@ public class DriveWithFile extends Command {
 					
 			}	
 			else{
+
 				System.out.println("didnt pass if");
+
 				System.out.println("values went to null");
 				setter=true;
 				
