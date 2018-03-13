@@ -1,7 +1,9 @@
 package org.usfirst.frc.team3218.robot.commands.DriveTrain;
 
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.commands.Vision.TurnToTarget;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -21,8 +23,11 @@ public class DriveWithXbox extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveWithXbox(Robot.oi.getXboxControllerLeftY(),Robot.oi.getXboxControllerLeftZ());
-    }
+    	
+    	 if(Robot.oi.xbox.getTriggerAxis(Hand.kRight) > .9){
+			 new TurnToTarget().start();
+		 }
+    	Robot.driveTrain.driveWithXbox(Robot.oi.getXboxControllerLeftY(), Robot.oi.getXboxControllerLeftZ());    	    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

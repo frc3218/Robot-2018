@@ -11,5 +11,6 @@ public class Blob {
 	public float averageWidth = 0;
 	public float averageHeight = 0;
 	public boolean wasUpdated = false;//this allows you to tell if this blob was updated in the most recent frame
+	public boolean wasUpdatedLastFrame = false;
 	public int lastIndex = 0;
 }

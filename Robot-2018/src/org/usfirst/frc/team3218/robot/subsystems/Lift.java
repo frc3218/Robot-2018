@@ -77,6 +77,9 @@ public class Lift extends Subsystem {
     }
     
     public  void setPosition(int position){
+    	if(Robot.lift.bottomSwitch.get()){
+			Robot.lift.liftEnc.reset();
+		}
     		Robot.lift.liftMaster.setSelectedSensorPosition(liftEnc.get(),0,0);
     		liftMaster.set(ControlMode.MotionMagic, position);
     		lift2.set(ControlMode.Follower, RobotMap.lift1ID);

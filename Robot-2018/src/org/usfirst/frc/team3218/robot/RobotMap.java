@@ -30,6 +30,7 @@ public class RobotMap {
 	public static final int lift2ID= 6;
 	public static final int leftCollectionID = 10;
 	public static final int rightCollectionID = 9;
+	public static int beltID;
 	
 	//PWM Channels
 
@@ -56,6 +57,7 @@ public class RobotMap {
 	public static int leftHighGearShiftPort = 2;
 	public static int leftLowGearShiftPort = 3;
 	public static int climbGearPort = 4;
+	
 
 	
 }

@@ -12,6 +12,7 @@ import org.usfirst.frc.team3218.robot.subsystems.Lift;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -22,6 +23,9 @@ public class Switch extends Command {
     public Switch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.driveTrain);
+    	requires(Robot.cubeControl);
+    	requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -34,50 +38,58 @@ public class Switch extends Command {
     	String sendableChosenString = Robot.position.getSelected() + Robot.gameData.substring(0,1);
     			switch(sendableChosenString){
     			case "1L": 
-    			AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
-    			AutoAPI.rotate(92, 300, 300);
-    			AutoAPI.moveToHeight(2);
-    			AutoAPI.simpleDrive(6);
-    			new CubeEjectionOn().start();
-    			AutoAPI.moveToHeight(0);
+    				AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+    				AutoAPI.rotate(90, 900, 700);
+    				AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE-122,2000,250);//drive across field
+    				AutoAPI.rotate(90,900,700);
+    				AutoAPI.moveToHeight(2);
+    				AutoAPI.simpleDrive(12);
+    				Robot.cubeControl.cubeEjection();
+    				Timer.delay(1);
+    				Robot.cubeControl.cubeOff();
+    				AutoAPI.simpleDrive(-18);
+    				AutoAPI.moveToHeight(0);
     			break;
     			case "1R": 
-    			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
-    			AutoAPI.rotate(92, 300, 300);
-    			AutoAPI.moveToHeight(1);
-    			//reduce by 50
-    			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
-    			AutoAPI.rotate(92,300,300);
-    			AutoAPI.moveToHeight(2);
-    			AutoAPI.simpleDrive(10);
+    				AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+    				AutoAPI.rotate(90, 300, 300);
+    				AutoAPI.moveToHeight(1);
+    				AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
+    				AutoAPI.rotate(90,300,300);
+    				AutoAPI.moveToHeight(2);
+    				AutoAPI.simpleDrive(12);
+    				Robot.cubeControl.cubeEjection();
+    				Timer.delay(1);
+    				Robot.cubeControl.cubeOff();
+    				AutoAPI.simpleDrive(-18);
+    				AutoAPI.moveToHeight(0);
     			break;
     			case "3R":
-    				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH, 2000, 250);
-        			AutoAPI.rotate(-90, 300, 300);
-        			AutoAPI.driveStraight(12,300,300);
-        			AutoAPI.moveToHeight(2);
-    			break;
+    				AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+    				AutoAPI.rotate(-90, 900, 700);
+    				AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE-122,2000,250);//drive across field
+    				AutoAPI.rotate(-90,900,700);
+    				AutoAPI.moveToHeight(2);
+    				AutoAPI.simpleDrive(12);
+    				Robot.cubeControl.cubeEjection();
+    				Timer.delay(1);
+    				Robot.cubeControl.cubeOff();
+    				AutoAPI.simpleDrive(-18);
+    				AutoAPI.moveToHeight(0);;
     			case "3L":
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
-        			AutoAPI.rotate(-90, 300, 300);
-        			AutoAPI.moveToHeight(2);
-        			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
-        			AutoAPI.rotate(-95,300,300);
-        			AutoAPI.driveStraight(4,2000,250);
+    				AutoAPI.rotate(-90, 300, 300);
+    				AutoAPI.moveToHeight(1);
+    				AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE,2000,250);//drive across field
+    				AutoAPI.rotate(-90,300,300);
+    				AutoAPI.moveToHeight(2);
+    				AutoAPI.simpleDrive(12);
+    				Robot.cubeControl.cubeEjection();
+    				Timer.delay(1);
+    				Robot.cubeControl.cubeOff();
+    				AutoAPI.simpleDrive(-18);
+    				AutoAPI.moveToHeight(0);
     			break;
-    			/* "2CloseLeft": methodCall;
-    			break;
-    			case "2FarLeft": methodCall;
-    			break;
-    			case "2CloseRight": methodCall;
-    			break;
-    			case "2FarRight": methodCall;
-    			break;
-    			case "3CloseLeft": methodCall;
-    			break;
-    			case "3FarLeft": methodCall;
-    			break;
-    			default:nothing;*/
     			}
     	
     	
@@ -91,7 +103,6 @@ public class Switch extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	new CubeEjectionOn().start();
     	Robot.lift.gearLow();  
     	Robot.lift.liftMaster.set(0);
     	Robot.lift.lift2.set(0);

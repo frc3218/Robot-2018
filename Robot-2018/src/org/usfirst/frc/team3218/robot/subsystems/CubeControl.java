@@ -26,6 +26,8 @@ public double ejectionSpeed = 1;
     // here. Call these from Commands.
 	public static  WPI_TalonSRX leftWheels = new WPI_TalonSRX(RobotMap.leftCollectionID);
 	public static WPI_TalonSRX rightWheels = new WPI_TalonSRX(RobotMap.rightCollectionID);
+	public static WPI_TalonSRX belt = new WPI_TalonSRX(RobotMap.beltID);
+	public DifferentialDrive cubeCollect = new DifferentialDrive(leftWheels, rightWheels);
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -50,17 +52,12 @@ public double ejectionSpeed = 1;
 		    leftWheels.set(0);
 		    rightWheels.set(0);
 	}
-	public void cubeControlXbox(int POV){
-		if(POV == -1){
-			cubeOff();
-	}
-	else if(POV == 315 || POV == 45 || POV == 0){
-			cubeEjection();
-	}
-	else{
-		cubeCollection();
+	public void cubeControlXbox(){
+		
+		cubeCollect.arcadeDrive(Robot.oi.getXboxControllerRightY(),0);
+		belt.set(Robot.oi.getXboxControllerRightZ());
 	}
 	
 	
-}
+
 }

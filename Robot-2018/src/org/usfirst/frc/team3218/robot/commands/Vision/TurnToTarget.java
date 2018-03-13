@@ -1,19 +1,24 @@
-package org.usfirst.frc.team3218.robot.commands.CubeControl;
+package org.usfirst.frc.team3218.robot.commands.Vision;
 
 import org.usfirst.frc.team3218.robot.Robot;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlXbox;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
+import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CubeControlXbox extends Command {
+public class TurnToTarget extends Command {
 
-    public CubeControlXbox() {
+    public TurnToTarget() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.cubeControl);
-    }
+    	requires(Robot.driveTrain);
+    	
+    	}
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -21,9 +26,11 @@ public class CubeControlXbox extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cubeControl.cubeControlXbox();
-    		
-    	
+    	 if(Robot.oi.xbox.getTriggerAxis(Hand.kRight) < .9){
+			 new TurnToTarget().cancel();
+			 new DriveWithXbox().start();
+		 }
+    	Vision.turnToTarget();
     }
 
     // Make this return true when this Command no longer needs to run execute()

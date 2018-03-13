@@ -102,24 +102,7 @@ public class DriveTrain extends Subsystem {
     }
     
 	public void driveWithXbox(double y,double z){
-		/*
-		switch((int) y*10){
-		case 4: z *=.6;
-		break;
-		case 5: z *=.5;
-		break;
-		case 6: z *=.4;
-		break;
-		case 7: z *=.3;
-		break;
-		case 8: z *=.2;
-		break;
-		case 9: z *=.15;
-		break;
-		case 10: z *=.1;
-		break;
-		}
-		*/
+		
 		if(Math.abs(y) < .2)  y=0;
 			
 		

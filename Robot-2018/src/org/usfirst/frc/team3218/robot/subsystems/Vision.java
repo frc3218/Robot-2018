@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3218.robot.subsystems;
 
+import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.RobotMap;
 import org.usfirst.frc.team3218.robot.commands.Vision.Pixy;
 //import org.usfirst.frc.team3218.robot.commands.Vision.LightsOut;
@@ -24,20 +25,32 @@ public class Vision extends Subsystem {
 	public int tapeMinX = 130;
 	public int tapeMaxX = 190;
 	public int tapeRangeX = tapeMaxX - tapeMinX;
+	public static double ratioToCenter;
 	//Relay lightSpike = new Relay(RobotMap.lightsPort);
 	
-	public void lightsOn(){
+	static public void turnToTarget()
+	{ 
+		for(int i = 0; i < Pixy.blobArray.length; i++){
+			//System.out.
+		//	println(i + ": " + Dixy.blobArray[i].averageX);
+		}
+	//	System.out.println();
 		
-	//	lightSpike.set(Value.kOn);
-		
-	}
-
-	public void lightsOut(){
-		
-	//	lightSpike.set(Value.kOff);
-		
+		Blob blob = Pixy.blobArray[1];
+		ratioToCenter = (blob.averageX-160)/160;
+		//if(Dixy.blobArray[]){
+		if(/*Math.abs(ratioToCenter) >.15 &&*/ blob.wasUpdated && blob.averageWidth < 260){
+		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(), ratioToCenter*1.6);
 	}
 	
+		
+	else{
+		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(),0);
+	}
+		
+	
+	}
+
 
     public void initDefaultCommand() {
     	
