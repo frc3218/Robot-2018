@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class CubeControl extends Subsystem {
 public double collectionSpeed = 1;
-public double ejectionSpeed = 1;
+public double ejectionSpeed = 0.5;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public static  WPI_TalonSRX leftWheels = new WPI_TalonSRX(RobotMap.leftCollectionID);
@@ -43,19 +43,25 @@ public double ejectionSpeed = 1;
 	
 		
 	}
-	public void cubeEjection(){
-	    	leftWheels.set(ejectionSpeed);
-	    	rightWheels.set(-ejectionSpeed);
+	public void cubeEjection(double power){
+	    	leftWheels.set(power);
+	    	rightWheels.set(-power);
 	    	
 	}
 	public void cubeOff(){
 		    leftWheels.set(0);
 		    rightWheels.set(0);
+		    belt.set(0);
 	}
-	public void cubeControlXbox(){
-		
-		cubeCollect.arcadeDrive(Robot.oi.getXboxControllerRightY(),0);
-		belt.set(Robot.oi.getXboxControllerRightZ());
+	public void beltOn(double power){
+		belt.set(power);
+	}
+	
+	public void cubeControlXbox(double y, double z){
+		if(Robot.breakAuto){
+		cubeCollect.arcadeDrive(-y,y<-.1 ?.4:0);
+		belt.set(z);
+		}
 	}
 	
 	

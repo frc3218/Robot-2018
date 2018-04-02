@@ -31,19 +31,22 @@ public class Lift extends Subsystem {
     // here. Call these from Commands.
 	
 	//these values need testing
-	private int CruiseVelocity=1760; //encoderticks per 100ms
-	private int upAcceleration=1760;
-	private int downAcceleration=200;
+	private int upCruiseVelocity=3000;
+	private int downCruiseVelocity=2000; //encoderticks per 100ms
+	private int upAcceleration=2500;
+	private int downAcceleration=600;
+	private double upD = 0;
+	private double downD = 1;
 	//encoderticks per 100ms per second
-	private double HOLD_POSITION_POWER = .1; //power required for arm to stay at position
+	private double HOLD_POSITION_POWER = 0; //power required for arm to stay at position
 	private static final int GUITAR_MANUAL_UP = 0;
 	private static final int GUITAR_MANUAL_DOWN = 180;
 	
 	private static final double MANUAL_UP_POWER = .5;
-	private double MANUAL_DOWN_POWER = -0.1;
+	private double MANUAL_DOWN_POWER = -.1;
 	private static final double TICKS_PER_INCH = 5000/37;
 	private static final int MAX_TICK_HEIGHT = 5300;
-	public int[] positionArray = new int[]{0,700,2000,3500,4400,5100};//array of positions for the lift in ticks 0 index is empty
+	public int[] positionArray = new int[]{0,700,2000,3500,4400,5325};//array of positions for the lift in ticks 0 index is empty
 	
 	
 	public static Solenoid highLiftGear = new Solenoid(1,RobotMap.climbGearPort);
@@ -64,7 +67,7 @@ public class Lift extends Subsystem {
     	//timeouts and PIDidx are 0
     	gearHigh();
     	liftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    	liftMaster.configMotionCruiseVelocity(CruiseVelocity, 0);
+    	liftMaster.configMotionCruiseVelocity(upCruiseVelocity, 0);
     	liftMaster.configMotionAcceleration(upAcceleration, 0);
     	liftMaster.setInverted(false);
     	lift2.setInverted(true);
@@ -80,11 +83,17 @@ public class Lift extends Subsystem {
     	if(Robot.lift.bottomSwitch.get()){
 			Robot.lift.liftEnc.reset();
 		}
+    	if(position == 0 && liftEnc.get() < 750){
+    		liftMaster.configMotionAcceleration( downAcceleration/3, 0);
+    	}else{
+    		liftMaster.configMotionAcceleration(position < liftEnc.get()? downAcceleration:upAcceleration, 0);
+    	}
     		Robot.lift.liftMaster.setSelectedSensorPosition(liftEnc.get(),0,0);
     		liftMaster.set(ControlMode.MotionMagic, position);
     		lift2.set(ControlMode.Follower, RobotMap.lift1ID);
-    		liftMaster.configMotionAcceleration(position < liftEnc.get()? downAcceleration:upAcceleration, 0);
-    		
+    	
+    		liftMaster.configMotionCruiseVelocity(position < liftEnc.get()? downCruiseVelocity:upCruiseVelocity, 0);
+    		liftMaster.config_kD(0,position < liftEnc.get()? downD:upD, 0);
     		
     }
     
@@ -98,14 +107,10 @@ public class Lift extends Subsystem {
 		switch (Robot.oi.guitar.getPOV()) {
 
 		case GUITAR_MANUAL_UP:
-			if(liftEnc.get() < MAX_TICK_HEIGHT && !topSwitch.get()){
-			liftMaster.set(ControlMode.PercentOutput,MANUAL_UP_POWER);
 			
+			liftMaster.set(ControlMode.PercentOutput,MANUAL_UP_POWER);
 			lift2.set(ControlMode.PercentOutput,MANUAL_UP_POWER);
-			}else{
-				liftMaster.set(ControlMode.PercentOutput,HOLD_POSITION_POWER);
-				lift2.set(ControlMode.PercentOutput,HOLD_POSITION_POWER);
-			}
+		
 			break;
 
 		case GUITAR_MANUAL_DOWN:

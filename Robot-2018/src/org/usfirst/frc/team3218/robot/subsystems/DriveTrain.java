@@ -95,18 +95,30 @@ public class DriveTrain extends Subsystem {
 		leftEnc.setReverseDirection(false);
 	}
 	public void drive(double y, double z) {
+		if(Robot.pdp.getVoltage()>8){
     	drive.arcadeDrive(y, z*.95);
+		}
+		else{
+			drive.arcadeDrive(y/2, z*.95/2);
+		}
     }
 	public void autoDrive(double y, double z) {
-    	drive.arcadeDrive(y, z, false);
+	//	if(Robot.pdp.getVoltage()>8){
+			
+	    	drive.arcadeDrive(y, z,false);
+	    	
+		//	}
+		//	else{
+	//			
+		//		drive.arcadeDrive(y/2, z/2,false);
+		//	}
     }
     
 	public void driveWithXbox(double y,double z){
 		
 		if(Math.abs(y) < .2)  y=0;
-			
 		
-		if(Math.abs(y) == y){
+		if(y>-0.3){
 			Robot.driveTrain.drive(y,z);
 		}else{
 			Robot.driveTrain.drive(y,-z);
@@ -119,7 +131,6 @@ public class DriveTrain extends Subsystem {
     	leftLowGearShift.set(false);
     	rightHighGearShift.set(false);
     	rightLowGearShift.set(true);
-    
     }
     
     public void highGear(){
@@ -127,6 +138,7 @@ public class DriveTrain extends Subsystem {
     	leftLowGearShift.set(true);
     	rightHighGearShift.set(true);
     	rightLowGearShift.set(false);
+    
     }
    public void automaticTransmission(){
 	   if(Math.abs((leftEnc.getRate()+rightEnc.getRate())/2) > SHIFT_UP_SPEED){

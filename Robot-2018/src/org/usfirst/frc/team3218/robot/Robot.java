@@ -12,7 +12,10 @@ import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.Auto.ScaleSwitch;
+import org.usfirst.frc.team3218.robot.commands.Auto.SideSwitch;
+import org.usfirst.frc.team3218.robot.commands.Auto.SimpleSwitch;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlXbox;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
 import org.usfirst.frc.team3218.robot.commands.Lift.ManualLiftControl;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
@@ -52,13 +55,14 @@ public class Robot extends IterativeRobot {
 	public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
 	
-	PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+	public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
 	public  Compressor compressor = new Compressor(1);
 	public static Command autonomousCommand;
 	//game data returns capital combinations of L or R from that teams perspective
 	public static String gameData;
 	public static boolean breakAuto;
 	CameraServer cameraServer;
+	CameraServer cameraServer2;
 	
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
@@ -74,6 +78,8 @@ public class Robot extends IterativeRobot {
 		try{
 	   		 cameraServer = CameraServer.getInstance(); 
 	   		 cameraServer.startAutomaticCapture("USB Camera", RobotMap.cameraPort);
+	   		 cameraServer2 = CameraServer.getInstance(); 
+	   		 cameraServer2.startAutomaticCapture("USB Camera2", RobotMap.cameraPort2);
 	   	}catch(Exception e){
 	   	}	
 	
@@ -93,6 +99,8 @@ public class Robot extends IterativeRobot {
 		objective.addObject("Switch", "Switch");
 		objective.addObject("Scale", "Scale");
 		objective.addObject("SwitchScale", "SwitchScale");
+		objective.addObject("SideSwitch", "SideSwitch");
+		objective.addObject("SimpleSwitch" , "SimpleSwitch");
 		
 		path.addDefault("Close", "close");
 		path.addObject("Far", "far");
@@ -120,6 +128,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		breakAuto = true;
 	}
 
 	/**
@@ -140,6 +149,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.drivePIDConfig();
 		pdp.clearStickyFaults();
 		AutoAPI.breakAuto = false;
+		lift.gearHigh();
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -154,7 +164,9 @@ public class Robot extends IterativeRobot {
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
 			case "Scale": autonomousCommand = new Scale(); break;
-			case "SwitchScale": autonomousCommand = new AutoGroup(); break;
+			//case "SwitchScale": autonomousCommand = new AutoGroup(); break;
+		//	case "SideSwitch": autonomousCommand = new SideSwitch(); break;
+			case "SimpleSwitch": autonomousCommand = new SimpleSwitch(); break;
 			}
 		
 			
@@ -176,6 +188,7 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		SmartDashboard.putNumber("right Drivetrain Power", Robot.driveTrain.rightMidDrive.getMotorOutputPercent());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Lift Encoder", lift.liftMaster.getSelectedSensorPosition(0));
 	
 	}
 
@@ -191,9 +204,12 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		new AutoGroup().cancel();
 		new Scale().cancel();
 		new Switch().cancel();
+		new SideSwitch().cancel();
 		new ScaleSwitch().cancel();
+		new SimpleSwitch().cancel();		
 		new DriveWithXbox().start();
 		new ManualLiftControl().start();
+		new CubeControlXbox().start();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		driveTrain.gyro.reset();
@@ -201,7 +217,6 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		pdp.clearStickyFaults();
 		driveTrain.drivePIDConfig();
 		lift.gearHigh();
-		cubeControl.setDefaultCommand(new CubeControlOff());
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("path",path);
@@ -216,7 +231,7 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 	if(lift.bottomSwitch.get()){
 		lift.liftEnc.reset();
 	}
-	
+	AutoAPI.breakAuto = true;
 	lift.liftMaster.setSelectedSensorPosition(lift.liftEnc.get(), 0, 0);
 	driveTrain.rightMidDrive.setSelectedSensorPosition( driveTrain.rightEnc.get(), 0, 0);
 	driveTrain.leftMidDrive.setSelectedSensorPosition( driveTrain.leftEnc.get(), 0, 0);
@@ -235,7 +250,7 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 	    SmartDashboard.putBoolean("Top Limit Switch", lift.topSwitch.get());
 	    
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", compressor.getPressureSwitchValue());
-	 
+	    SmartDashboard.putNumber("Right stick y", oi.getXboxControllerRightY());
 	}
 
 	/**

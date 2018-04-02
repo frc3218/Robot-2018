@@ -17,6 +17,7 @@ import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
+import org.usfirst.frc.team3218.robot.commands.Lift.DriverDown;
 import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
@@ -97,12 +98,12 @@ public class OI {
 		leftBumper.whenPressed(new GearShiftLow());
 		rightBumper.whenPressed(new GearShiftHigh());
 		leftJoyClick.toggleWhenPressed(new LiftGearLow());
-		leftJoyClick.toggleWhenPressed(new LiftGearHigh());
+		rightJoyClick.toggleWhenPressed(new LiftGearHigh());
+		startButton.whileHeld(new DriverDown());
 		
-
 		 liftBottom.whileHeld(new SetLiftPositionBottom());
 		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
-		 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
+	//	 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
 		 liftScaleMid.whileHeld(new SetLiftPositionScaleMid());
 		 liftScaleHigh.whileHeld(new SetLiftPositionScaleHigh());
 

@@ -18,6 +18,7 @@ public class RobotMap {
 	public static int xboxControllerPort = 3;
 	
 	public static int cameraPort = 0;
+	public static int cameraPort2 = 1;
 	//CAN bus channels
 	//pdp is 0, pcm is 1
 	public static final int leftBottomDriveID = 8;
@@ -30,7 +31,7 @@ public class RobotMap {
 	public static final int lift2ID= 6;
 	public static final int leftCollectionID = 10;
 	public static final int rightCollectionID = 9;
-	public static int beltID;
+	public static int beltID =12;
 	
 	//PWM Channels
 

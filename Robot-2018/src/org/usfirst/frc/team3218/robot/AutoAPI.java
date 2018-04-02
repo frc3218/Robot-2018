@@ -20,8 +20,8 @@ public class AutoAPI {
 
  //distances in inches
 	public final static int WALL_TO_SWITCH_CHANNEL = 67;
-	 public final static int AUTOLINE = 84;
-	 public final static int WALL_TO_SWITCH = 134;
+	 public final static int AUTOLINE = 120;
+	 public final static int WALL_TO_SWITCH = 150;
 	 public final static int WALL_TO_PLATFORM_CHANNEL = 210;
 	 
 	 public final static int MID_LINE = 240+5*12;
@@ -68,15 +68,17 @@ public class AutoAPI {
 
  		while( Math.abs(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0)) < distance &&
  			  Math.abs(Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0)) < distance 
- 			  && !breakAuto && 15-Timer.getMatchTime()<15){
+ 			  && !breakAuto && Math.abs(15-Timer.getMatchTime())<15){
  			double z =  -Robot.driveTrain.gyro.getAngle()/50;
  			double y = 5500/speed;
+ 		//	Robot.driveTrain.automaticTransmission();
  			SmartDashboard.putNumber("timer", 15-Timer.getMatchTime());
  			Robot.driveTrain.rightMidDrive.setSelectedSensorPosition( Robot.driveTrain.rightEnc.get(), 0, 0);
  			Robot.driveTrain.leftMidDrive.setSelectedSensorPosition( Robot.driveTrain.leftEnc.get(), 0, 0);
  			Robot.driveTrain.autoDrive(y, z);
  			
  		}
+ 		resetDriveTrain();
  	}
 	public static void simpleDrive(int distance){
 		resetDriveTrain();
@@ -84,7 +86,7 @@ public class AutoAPI {
 		autoPhase++;
 		distance *= TICKS_PER_INCH;
 		while((Math.abs(Robot.driveTrain.leftEnc.get()) + Math.abs(Robot.driveTrain.rightEnc.get()))/2 < distance
-				&& !breakAuto && 15-Timer.getMatchTime()<15){
+				&& !breakAuto && Math.abs(15-Timer.getMatchTime())<15){
 		
 			Robot.driveTrain.drive(.5, 0);
 		}
@@ -116,37 +118,46 @@ public class AutoAPI {
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		
  		while(Math.abs(Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0)) <Math.abs(angle)
- 				&& !breakAuto && 15-Timer.getMatchTime()<15){
- 			
+ 				&& !breakAuto && Math.abs(15-Timer.getMatchTime())<15){
+ 		
  			SmartDashboard.putNumber("timer", 15-Timer.getMatchTime());
  	 		Robot.driveTrain.rightMidDrive.setSelectedSensorPosition((int) Robot.driveTrain.gyro.getAngle(), 0, 0);
  	 		Robot.driveTrain.leftMidDrive.setSelectedSensorPosition((int) Robot.driveTrain.gyro.getAngle(), 0, 0);
  	 		}
- 		
+ 		/*
+ 		if(Math.abs(Robot.driveTrain.leftEnc.get()) > 300 && Math.abs(Robot.driveTrain.rightEnc.get()) > 300){
+				breakAuto = true;
+			}
+ 		*/
 	}
 
 	public static void moveToHeight(int position){
 		SmartDashboard.putString("autoState", "lift");
 		resetDriveTrain();
 		autoPhase++;
-		Robot.lift.gearLow();
+	//	Robot.lift.gearLow();
 		Robot.lift.setPosition(Robot.lift.positionArray[position]);
 		
 		if(Robot.lift.positionArray[position] > Robot.lift.liftMaster.getSelectedSensorPosition(0)){
 			
 			while(Robot.lift.liftMaster.getSelectedSensorPosition(0) < Robot.lift.positionArray[position]-300  
-				&& !breakAuto && Timer.getMatchTime()-15<15){
+				&& !breakAuto && Math.abs(Timer.getMatchTime())-15<15){
 			
 				SmartDashboard.putNumber("timer", 15-Timer.getMatchTime());
 				Robot.lift.setPosition(Robot.lift.positionArray[position]);
 				SmartDashboard.putNumber("Lift Encoder", Robot.lift.liftMaster.getSelectedSensorPosition(0));
+				if(Robot.lift.bottomSwitch.get()){
+					Robot.lift.liftEnc.reset();
+				}
 		}
 	
 		
 		}else{
 			while(Robot.lift.liftMaster.getSelectedSensorPosition(0) > Robot.lift.positionArray[position]
-					&& !breakAuto && Timer.getMatchTime()-15<15){
-				
+					&& !breakAuto && Math.abs(Timer.getMatchTime())-15<15){
+				if(Robot.lift.bottomSwitch.get()){
+					Robot.lift.liftEnc.reset();
+				}
 					SmartDashboard.putNumber("timer", 15-Timer.getMatchTime());
 					Robot.lift.setPosition(Robot.lift.positionArray[position]);
 					SmartDashboard.putNumber("Lift Encoder", Robot.lift.liftMaster.getSelectedSensorPosition(0));	

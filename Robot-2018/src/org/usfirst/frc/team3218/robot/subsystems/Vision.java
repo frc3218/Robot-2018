@@ -40,7 +40,7 @@ public class Vision extends Subsystem {
 		ratioToCenter = (blob.averageX-160)/160;
 		//if(Dixy.blobArray[]){
 		if(/*Math.abs(ratioToCenter) >.15 &&*/ blob.wasUpdated && blob.averageWidth < 260){
-		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(), ratioToCenter*1.6);
+		Robot.driveTrain.drive(Robot.oi.getXboxControllerLeftY(), ratioToCenter*1.8);
 	}
 	
 		

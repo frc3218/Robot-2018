@@ -38,7 +38,7 @@ public class ScaleSwitch extends Command {
 			AutoAPI.driveStraight(AutoAPI.MID_LINE-AutoAPI.WALL_TO_PLATFORM_CHANNEL-12,2000,250);
 			AutoAPI.rotate(90, 700, 700);
 			AutoAPI.moveToHeight(5);
-			Robot.cubeControl.cubeEjection();
+			Robot.cubeControl.cubeEjection(1);
 			Timer.delay(1);
 			Robot.cubeControl.cubeOff();
 			AutoAPI.moveToHeight(0);
@@ -54,7 +54,7 @@ public class ScaleSwitch extends Command {
 			AutoAPI.driveStraight(AutoAPI.MID_LINE-AutoAPI.WALL_TO_PLATFORM_CHANNEL-12,2000,250);
 			AutoAPI.rotate(90, 700, 700);
 			AutoAPI.moveToHeight(5);
-			Robot.cubeControl.cubeEjection();
+			Robot.cubeControl.cubeEjection(1);
 			Timer.delay(1);
 			Robot.cubeControl.cubeOff();
 			AutoAPI.moveToHeight(0);
