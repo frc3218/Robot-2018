@@ -31,34 +31,30 @@ public class Scale extends Command {
     			switch(sendableChosenString){
     			case "1L":
     				AutoAPI.driveStraight(AutoAPI.MID_LINE, 2000, 250);
-        			AutoAPI.rotate(90, 1000, 1000);
+        			AutoAPI.rotate(90, 1200, 1200);
         			AutoAPI.moveToHeight(5);
         			Robot.cubeControl.cubeEjection(1);
         			new CubeEjectionOn().start();
         			/*
         			 * AutoAPI.driveStraight(AutoAPI.MID_LINE-36, 2000, 250);
-        			 * AutoAPI.rotate(40,700,700);
+        			 * AutoAPI.rotate(45,700,700);
         			 * AutoAPI.movetoHeight(5);
         			 * Robot.cubeControl.cubeEjection();
         			   new CubeEjectionOn().start();
         			 */
-        			
         			break;
 
         			case "1R": 
-        		/*
         				AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
-            			AutoAPI.rotate(90, 700, 700);
+            			AutoAPI.rotate(90, 1200, 1200);
             			AutoAPI.moveToHeight(1);
-            			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE+24, 2000, 250);
-            			AutoAPI.rotate(-90,700,700);
+            			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE+30, 2000, 250);
+            			AutoAPI.rotate(-90,1200,1200);
             			AutoAPI.simpleDrive(2);
             			AutoAPI.moveToHeight(5);
-            			Robot.cubeControl.cubeEjection(1);
+            			AutoAPI.simpleDrive(15);
+            			Robot.cubeControl.cubeEjection(.085);
             			new CubeEjectionOn().start();
-            			
-            			*/
-        				AutoAPI.driveStraight(AutoAPI.AUTOLINE-36, 2000, 250);
         			break;
         			
         			case "3R": 
@@ -69,7 +65,7 @@ public class Scale extends Command {
 	            			new CubeEjectionOn().start();
             			/*
             			 * AutoAPI.driveStraight(AutoAPI.MID_LINE-36, 2000, 250);
-            			 * AutoAPI.rotate(-40,700,700);
+            			 * AutoAPI.rotate(-45,700,700);
             			 * AutoAPI.movetoHeight(5);
             			 * Robot.cubeControl.cubeEjection();
             			   new CubeEjectionOn().start();

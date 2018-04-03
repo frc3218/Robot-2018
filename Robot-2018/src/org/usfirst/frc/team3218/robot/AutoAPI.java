@@ -28,6 +28,7 @@ public class AutoAPI {
 	 public final static int HORIZONTAL_FAR_SIDE = 162;
 	 final static float TICKS_PER_INCH = 72; 
 	
+	 static double time ;
 	 public static double cubeDistance;
 	 public static double[] averages = new double[6];
 	 static double[][] sensorValues = new double [6][200];
@@ -47,8 +48,8 @@ public class AutoAPI {
  		resetDriveTrain();
 		SmartDashboard.putString("autoState", "drive");
  		distance *= TICKS_PER_INCH;
- 		//speed *= Math.signum(distance);// may not be needed
  		autoPhase++;
+ 		time = 15 - Timer.getMatchTime();
  		Robot.driveTrain.rightMidDrive.setSensorPhase(true);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
@@ -66,12 +67,20 @@ public class AutoAPI {
  		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
  		
 
- 		while( Math.abs(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0)) < distance &&
- 			  Math.abs(Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0)) < distance 
+ 		while( Math.abs(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0)) < Math.abs(distance) &&
+ 			  Math.abs(Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0)) < Math.abs(distance) 
  			  && !breakAuto && Math.abs(15-Timer.getMatchTime())<15){
- 			double z =  -Robot.driveTrain.gyro.getAngle()/50;
+ 			
+ 		
+ 			double z =  (-Robot.driveTrain.gyro.getAngle()/50)*Math.signum(speed);
  			double y = 5500/speed;
- 		//	Robot.driveTrain.automaticTransmission();
+ 			
+ 			if(Robot.objective.getSelected() != "Switch"){
+ 			Robot.driveTrain.automaticTransmission();
+ 			}
+ 				if(time < 15-Timer.getMatchTime()){
+ 				y=(15-Timer.getMatchTime()-time)*Math.signum(speed);
+ 			}
  			SmartDashboard.putNumber("timer", 15-Timer.getMatchTime());
  			Robot.driveTrain.rightMidDrive.setSelectedSensorPosition( Robot.driveTrain.rightEnc.get(), 0, 0);
  			Robot.driveTrain.leftMidDrive.setSelectedSensorPosition( Robot.driveTrain.leftEnc.get(), 0, 0);
@@ -79,6 +88,7 @@ public class AutoAPI {
  			
  		}
  		resetDriveTrain();
+ 		Robot.driveTrain.lowGear();
  	}
 	public static void simpleDrive(int distance){
 		resetDriveTrain();
@@ -135,7 +145,7 @@ public class AutoAPI {
 		SmartDashboard.putString("autoState", "lift");
 		resetDriveTrain();
 		autoPhase++;
-	//	Robot.lift.gearLow();
+	Robot.lift.gearHigh();
 		Robot.lift.setPosition(Robot.lift.positionArray[position]);
 		
 		if(Robot.lift.positionArray[position] > Robot.lift.liftMaster.getSelectedSensorPosition(0)){
