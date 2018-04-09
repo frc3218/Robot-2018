@@ -7,11 +7,9 @@ import javax.print.attribute.standard.Compression;
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
-<<<<<<< Updated upstream
-import org.usfirst.frc.team3218.robot.commands.Auto.DoubleScale;
-=======
+
 import org.usfirst.frc.team3218.robot.commands.Auto.DoubleSwitch;
->>>>>>> Stashed changes
+
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
@@ -102,14 +100,10 @@ public class Robot extends IterativeRobot {
 		objective.addObject("Line", "Line");
 		objective.addObject("Switch", "Switch");
 		objective.addObject("Scale", "Scale");
-<<<<<<< Updated upstream
-		objective.addObject("DoubleScale", "DoubleScale");
-		
-		path.addDefault("Close", "close");
-		path.addObject("Far", "far");
-=======
+
+	
 		objective.addObject("DoubleSwitch", "DoubleSwitch");
->>>>>>> Stashed changes
+
 		
 		Gear.addDefault("Low", false);
 		Gear.addObject("High", true);
@@ -173,7 +167,7 @@ public class Robot extends IterativeRobot {
 			case "Switch": autonomousCommand = new Switch(); break;
 			case "DoubleSwitch": autonomousCommand = new DoubleSwitch(); break;
 			case "Scale": autonomousCommand = new Scale(); break;
-			case "DoubleScale": autonomousCommand = new DoubleScale(); break;
+			
 			}
 		
 			
@@ -208,7 +202,7 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		AutoAPI.breakAuto = true;
 		new CrossLine().cancel();
 		new Nothing().cancel();
-		new DoubleScale().cancel();
+		new DoubleSwitch().cancel();
 		new Scale().cancel();
 		new Switch().cancel();		
 		new DriveWithXbox().start();

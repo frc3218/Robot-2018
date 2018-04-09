@@ -36,7 +36,7 @@ public class AutoAPI {
 	 static double[][] sensorValues = new double [6][200];
 	 static double rateDelta;
 	 static int autoPhase = 0;
-	 static double time;
+
 	 
 	 
 	static int position;
@@ -53,11 +53,9 @@ public class AutoAPI {
 		SmartDashboard.putString("autoState", "drive");
  		distance *= TICKS_PER_INCH;
  		autoPhase++;
-<<<<<<< Updated upstream
+
  		time = 15 - Timer.getMatchTime();
-=======
- 		time = 15-Timer.getMatchTime();
->>>>>>> Stashed changes
+
  		Robot.driveTrain.rightMidDrive.setSensorPhase(true);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
@@ -83,19 +81,16 @@ public class AutoAPI {
  			double z =  (-Robot.driveTrain.gyro.getAngle()/50)*Math.signum(speed);
  			double y = 5500/speed;
  			
-<<<<<<< Updated upstream
- 			if(Robot.objective.getSelected() != "Switch"){
- 			Robot.driveTrain.automaticTransmission();
- 			}
+
  				if(time < 15-Timer.getMatchTime()){
  				y=(15-Timer.getMatchTime()-time)*Math.signum(speed);
  			}
-=======
+
  			
  	if(Robot.Gear.getSelected() && Robot.objective.getSelected()!= "Switch"){
  		Robot.driveTrain.automaticTransmission();
  	}
->>>>>>> Stashed changes
+
  			SmartDashboard.putNumber("timer", 15-Timer.getMatchTime());
  			Robot.driveTrain.rightMidDrive.setSelectedSensorPosition( Robot.driveTrain.rightEnc.get(), 0, 0);
  			Robot.driveTrain.leftMidDrive.setSelectedSensorPosition( Robot.driveTrain.leftEnc.get(), 0, 0);
