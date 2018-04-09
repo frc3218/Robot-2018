@@ -1,48 +1,36 @@
-package org.usfirst.frc.team3218.robot.commands.Auto;
+package org.usfirst.frc.team3218.robot.commands.CubeControl;
 
-import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
-import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CrossLine extends Command {
+public class PlopCube extends Command {
 
-    public CrossLine() {
+    public PlopCube() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.cubeControl);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	AutoAPI.driveStraight(AutoAPI.AUTOLINE, 2000, 250);
-
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-   
+    	Robot.cubeControl.cubeEjection(.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    //	Robot.autonomousCommand.cancel();
-    	/*
-    	Robot.lift.setPosition(Robot.lift.positionArray[0]);
-    	Robot.driveTrain.rightMidDrive.set(0);
-    	Robot.driveTrain.leftMidDrive.set(0);
-    	
-    	*/
-    
     }
 
     // Called when another command which requires one or more of the same

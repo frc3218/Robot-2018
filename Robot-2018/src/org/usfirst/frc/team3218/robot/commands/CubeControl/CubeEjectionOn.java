@@ -33,7 +33,6 @@ public class CubeEjectionOn extends Command {
     // Called once after isFinished returns true
     protected void end() {
     
-    	Robot.cubeControl.cubeCollection();
   
     }
 

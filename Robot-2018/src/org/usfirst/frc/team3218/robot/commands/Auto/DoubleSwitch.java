@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Switch extends Command {
+public class DoubleSwitch extends Command {
 
-    public Switch() {
+    public DoubleSwitch() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
@@ -41,18 +41,41 @@ public class Switch extends Command {
     				AutoAPI.moveToHeight(2);
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH-50, 2000, 250);//which distance should this be
     				Robot.cubeControl.cubeEjection(.6);
-    				new CubeEjectionOn();
+    				Timer.delay(.3);
+    				Robot.cubeControl.cubeOff();
+    				AutoAPI.driveStraight(12, -2000, 250);
+    				AutoAPI.moveToHeight(0);
+    				AutoAPI.rotate(-80, 1200,1200);
+    				Robot.cubeControl.cubeCollection();
+    				AutoAPI.driveStraight(16, 2000, 250);
+    				Timer.delay(.5);
+    				AutoAPI.driveStraight(16, -2000, 250);
+    				AutoAPI.rotate(80, 1200,1200);
+    				AutoAPI.moveToHeight(2);
+    				AutoAPI.driveStraight(12, 2000, 250);
+    				Robot.cubeControl.cubeEjection(.6);
     			break;
     			case"2L":
     				AutoAPI.driveStraight((AutoAPI.WALL_TO_SWITCH/2-36), 2000, 250);
-    				AutoAPI.rotate(-90, 1700, 1700);
-    				AutoAPI.turnCheck(-90);
+    				AutoAPI.rotate(-90, 1200, 1200);
     				AutoAPI.driveStraight(102, 2000, 250);
-    				AutoAPI.rotate(90, 1700, 1700);
+    				AutoAPI.rotate(90, 1200, 1200);
     				AutoAPI.moveToHeight(2);
     				AutoAPI.driveStraight((AutoAPI.WALL_TO_SWITCH/2-36), 2000, 250);
     				Robot.cubeControl.cubeEjection(.6);
-    				new CubeEjectionOn();
+    				Timer.delay(.3);
+    				Robot.cubeControl.cubeOff();
+    				AutoAPI.driveStraight(12, -2000, 250);
+    				AutoAPI.moveToHeight(0);
+    				AutoAPI.rotate(80, 1200,1200);
+    				Robot.cubeControl.cubeCollection();
+    				AutoAPI.driveStraight(16, 2000, 250);
+    				Timer.delay(.5);
+    				AutoAPI.driveStraight(16, -2000, 250);
+    				AutoAPI.rotate(-80, 1200,1200);
+    				AutoAPI.moveToHeight(2);
+    				AutoAPI.driveStraight(12, 2000, 250);
+    				Robot.cubeControl.cubeEjection(.6);
     				
     			break;
     			case "1L": 

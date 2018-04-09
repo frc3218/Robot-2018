@@ -17,6 +17,9 @@ import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.FarEject;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.MedEject;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.PlopCube;
 import org.usfirst.frc.team3218.robot.commands.Lift.DriverDown;
 import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearLow;
@@ -100,13 +103,15 @@ public class OI {
 		leftJoyClick.toggleWhenPressed(new LiftGearLow());
 		rightJoyClick.toggleWhenPressed(new LiftGearHigh());
 		startButton.whileHeld(new DriverDown());
-		
+		xButton.whileHeld(new PlopCube());
+		aButton.whileHeld(new MedEject());
+		bButton.whileHeld(new FarEject());
 		 liftBottom.whileHeld(new SetLiftPositionBottom());
 		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
 	//	 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
 		 liftScaleMid.whileHeld(new SetLiftPositionScaleMid());
 		 liftScaleHigh.whileHeld(new SetLiftPositionScaleHigh());
-
+		 
 	 }
 	 
 	 

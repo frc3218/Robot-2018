@@ -5,9 +5,11 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.Vision.Pixy;
 import org.usfirst.frc.team3218.robot.subsystems.Blob;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
@@ -34,6 +36,8 @@ public class AutoAPI {
 	 static double[][] sensorValues = new double [6][200];
 	 static double rateDelta;
 	 static int autoPhase = 0;
+	 static double time;
+	 
 	 
 	static int position;
 	 
@@ -49,7 +53,11 @@ public class AutoAPI {
 		SmartDashboard.putString("autoState", "drive");
  		distance *= TICKS_PER_INCH;
  		autoPhase++;
+<<<<<<< Updated upstream
  		time = 15 - Timer.getMatchTime();
+=======
+ 		time = 15-Timer.getMatchTime();
+>>>>>>> Stashed changes
  		Robot.driveTrain.rightMidDrive.setSensorPhase(true);
  		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
  		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
@@ -75,15 +83,25 @@ public class AutoAPI {
  			double z =  (-Robot.driveTrain.gyro.getAngle()/50)*Math.signum(speed);
  			double y = 5500/speed;
  			
+<<<<<<< Updated upstream
  			if(Robot.objective.getSelected() != "Switch"){
  			Robot.driveTrain.automaticTransmission();
  			}
  				if(time < 15-Timer.getMatchTime()){
  				y=(15-Timer.getMatchTime()-time)*Math.signum(speed);
  			}
+=======
+ 			
+ 	if(Robot.Gear.getSelected() && Robot.objective.getSelected()!= "Switch"){
+ 		Robot.driveTrain.automaticTransmission();
+ 	}
+>>>>>>> Stashed changes
  			SmartDashboard.putNumber("timer", 15-Timer.getMatchTime());
  			Robot.driveTrain.rightMidDrive.setSelectedSensorPosition( Robot.driveTrain.rightEnc.get(), 0, 0);
  			Robot.driveTrain.leftMidDrive.setSelectedSensorPosition( Robot.driveTrain.leftEnc.get(), 0, 0);
+ 			if(time < 15 - Timer.getMatchTime()) y = 15 - Timer.getMatchTime() - time;
+ 				
+ 			
  			Robot.driveTrain.autoDrive(y, z);
  			
  		}
@@ -95,7 +113,7 @@ public class AutoAPI {
 		SmartDashboard.putString("autoState", "simple");
 		autoPhase++;
 		distance *= TICKS_PER_INCH;
-		while((Math.abs(Robot.driveTrain.leftEnc.get()) + Math.abs(Robot.driveTrain.rightEnc.get()))/2 < distance
+		while((Math.abs(Robot.driveTrain.leftEnc.get()) + Math.abs(Robot.driveTrain.rightEnc.get()))/2 < Math.abs(distance)
 				&& !breakAuto && Math.abs(15-Timer.getMatchTime())<15){
 		
 			Robot.driveTrain.drive(.5, 0);
@@ -139,6 +157,12 @@ public class AutoAPI {
 				breakAuto = true;
 			}
  		*/
+	}
+	public static void turnCheck(int degree){
+		double error = Math.abs(degree) - Math.abs(Robot.driveTrain.gyro.getAngle());
+		if(error > 10 || error < -10){
+		rotate(degree-(int) Robot.driveTrain.gyro.getAngle(), 1200, 1200);
+		}
 	}
 
 	public static void moveToHeight(int position){

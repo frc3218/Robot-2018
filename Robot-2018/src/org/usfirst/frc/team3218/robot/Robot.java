@@ -7,13 +7,18 @@ import javax.print.attribute.standard.Compression;
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
+<<<<<<< Updated upstream
 import org.usfirst.frc.team3218.robot.commands.Auto.DoubleScale;
+=======
+import org.usfirst.frc.team3218.robot.commands.Auto.DoubleSwitch;
+>>>>>>> Stashed changes
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlXbox;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.ManualLiftControl;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
@@ -32,6 +37,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -64,6 +70,7 @@ public class Robot extends IterativeRobot {
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
 	public static SendableChooser<String> path = new SendableChooser<>();
+	public static SendableChooser<Boolean> Gear = new SendableChooser<>();
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -95,16 +102,22 @@ public class Robot extends IterativeRobot {
 		objective.addObject("Line", "Line");
 		objective.addObject("Switch", "Switch");
 		objective.addObject("Scale", "Scale");
+<<<<<<< Updated upstream
 		objective.addObject("DoubleScale", "DoubleScale");
 		
 		path.addDefault("Close", "close");
 		path.addObject("Far", "far");
+=======
+		objective.addObject("DoubleSwitch", "DoubleSwitch");
+>>>>>>> Stashed changes
 		
+		Gear.addDefault("Low", false);
+		Gear.addObject("High", true);
 		
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
-		SmartDashboard.putData("path",path);
-
+		SmartDashboard.putData("Gear", Gear);
+		
 	}
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -158,6 +171,7 @@ public class Robot extends IterativeRobot {
 			case "Nothing": autonomousCommand = new Nothing(); break; 
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
+			case "DoubleSwitch": autonomousCommand = new DoubleSwitch(); break;
 			case "Scale": autonomousCommand = new Scale(); break;
 			case "DoubleScale": autonomousCommand = new DoubleScale(); break;
 			}
@@ -202,10 +216,13 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		new CubeControlXbox().start();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
 		driveTrain.gyro.reset();
+		
 		lift.liftPIDConfig();
 		pdp.clearStickyFaults();
 		driveTrain.drivePIDConfig();
+		
 		lift.gearHigh();
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
@@ -222,6 +239,7 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		lift.liftEnc.reset();
 	}
 	AutoAPI.breakAuto = true;
+
 	lift.liftMaster.setSelectedSensorPosition(lift.liftEnc.get(), 0, 0);
 	driveTrain.rightMidDrive.setSelectedSensorPosition( driveTrain.rightEnc.get(), 0, 0);
 	driveTrain.leftMidDrive.setSelectedSensorPosition( driveTrain.leftEnc.get(), 0, 0);

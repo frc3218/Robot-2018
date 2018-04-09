@@ -45,21 +45,37 @@ public class Scale extends Command {
         			break;
 
         			case "1R": 
+<<<<<<< Updated upstream
         				AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
             			AutoAPI.rotate(90, 1200, 1200);
             			AutoAPI.moveToHeight(1);
+=======
+        		
+        				AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
+            			AutoAPI.rotate(90, 1200, 1200);
+            			AutoAPI.turnCheck(90);
+            		//	AutoAPI.moveToHeight(1);
+>>>>>>> Stashed changes
             			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE+30, 2000, 250);
             			AutoAPI.rotate(-90,1200,1200);
             			AutoAPI.simpleDrive(2);
             			AutoAPI.moveToHeight(5);
             			AutoAPI.simpleDrive(15);
+<<<<<<< Updated upstream
             			Robot.cubeControl.cubeEjection(.085);
             			new CubeEjectionOn().start();
+=======
+            			Robot.cubeControl.cubeEjection(.05);
+            			new CubeEjectionOn().start();
+            			
+            			
+>>>>>>> Stashed changes
         			break;
         			
         			case "3R": 
 	        				AutoAPI.driveStraight(AutoAPI.MID_LINE, 2000, 250);
-	            			AutoAPI.rotate(-90, 1200, 1200);
+	            			AutoAPI.rotate(-90, 1700, 1700);
+	            			AutoAPI.driveStraight(-4, -2000, 250);
 	            			AutoAPI.moveToHeight(5);
 	            			Robot.cubeControl.cubeEjection(1);
 	            			new CubeEjectionOn().start();
@@ -77,13 +93,14 @@ public class Scale extends Command {
         				
             			AutoAPI.driveStraight(AutoAPI.WALL_TO_PLATFORM_CHANNEL, 2000, 250);
             			AutoAPI.rotate(-90, 1200, 1200);
+            			AutoAPI.turnCheck(-90);
             			AutoAPI.moveToHeight(1);
-            			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE+30, 2000, 250);
-            			AutoAPI.rotate(90,1200,1200);
+            			AutoAPI.driveStraight(AutoAPI.HORIZONTAL_FAR_SIDE+33, 2000, 250);
+            			AutoAPI.rotate(90,1700,1700);
             			AutoAPI.simpleDrive(2);
             			AutoAPI.moveToHeight(5);
             			AutoAPI.simpleDrive(15);
-            			Robot.cubeControl.cubeEjection(.085);
+            			Robot.cubeControl.cubeEjection(.05);
             			new CubeEjectionOn().start();
             			
         				//AutoAPI.driveStraight(AutoAPI.AUTOLINE-36, 2000, 250);

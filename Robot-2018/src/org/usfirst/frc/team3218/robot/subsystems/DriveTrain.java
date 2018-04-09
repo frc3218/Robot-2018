@@ -40,7 +40,7 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX rightMidDrive = new WPI_TalonSRX(RobotMap.rightMidDriveID);
 	public WPI_TalonSRX rightTopDrive = new WPI_TalonSRX(RobotMap.rightTopDriveID);
 	
-	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
+	
 	//public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 	//public AnalogInput sonarB = new AnalogInput(RobotMap.sonarBPort);
 	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
@@ -95,12 +95,11 @@ public class DriveTrain extends Subsystem {
 		leftEnc.setReverseDirection(false);
 	}
 	public void drive(double y, double z) {
-		if(Robot.pdp.getVoltage()>8){
-    	drive.arcadeDrive(y, z*.95);
-		}
-		else{
-			drive.arcadeDrive(y/2, z*.95/2);
-		}
+	
+		drive.arcadeDrive(y, z*.95);
+    	
+
+		
     }
 	public void autoDrive(double y, double z) {
 	//	if(Robot.pdp.getVoltage()>8){
