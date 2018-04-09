@@ -7,22 +7,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import java.lang.invoke.SwitchPoint;
 
-import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeControlOff;
-import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeCollectionOn;
-import org.usfirst.frc.team3218.robot.CubeControl.commands.CubeEjectionOn;
-import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
-import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollection;
-import org.usfirst.frc.team3218.robot.commands.DriveTrain.SonarTest;
-import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionBottom;
-import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleHigh;
-import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleLow;
-import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleMid;
-import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionSwitch;
-import org.usfirst.frc.team3218.robot.commands.Vision.VisionExample;
-
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -42,22 +26,7 @@ public class OI {
 	 
 
 	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
-	public static Joystick guitar = new Joystick(RobotMap.guitarPort);
 	
-	public static Button button1 = new JoystickButton(joystick,1);
-	public static Button button2 = new JoystickButton(joystick, 2);
-	public static Button button3 = new JoystickButton(joystick,3);
-	public static Button button4 = new JoystickButton(joystick,4);
-	public static Button button5 = new JoystickButton(joystick,5);
-	public static Button button6 = new JoystickButton(joystick,6);
-	public static Button button7 = new JoystickButton(joystick,7);
-	public static Button button8 = new JoystickButton(joystick,8);
-	public static Button button9 = new JoystickButton(joystick,9);
-	public static Button liftBottom = new JoystickButton(guitar, 5);
-	public static Button liftSwitch = new JoystickButton(guitar, 3);
-	public static Button liftScaleLow = new JoystickButton(guitar, 4);
-	public static Button liftScaleMid= new JoystickButton(guitar, 2);
-	public static Button liftScaleHigh =  new JoystickButton(guitar, 1);
 	
 	 
 	
@@ -89,20 +58,7 @@ public class OI {
 	 public OI(){
 		 
 
-		 button2.toggleWhenPressed(new SonarTest());
-		 //button1.whileHeld(new VisionExample()/*new CubeCollectionOn()*/);
-		 button3.whileHeld(new CubeEjectionOn());
-
-		 button2.whileHeld(new SonarTest());
-		 button2.whileHeld(new CubeCollection());
-		 button5.whenPressed(new GearShiftLow());
-		 button6.whenPressed(new GearShiftHigh());
-		 liftBottom.whenPressed(new SetLiftPositionBottom());
-		 liftSwitch.whenPressed(new SetLiftPositionSwitch());
-		 liftScaleLow.whenPressed(new SetLiftPositionScaleLow());
-		 liftScaleMid.whenPressed(new SetLiftPositionScaleMid());
-		 liftScaleHigh.whenPressed(new SetLiftPositionScaleHigh());
-
+		
 	 }
 	 
 	 
@@ -114,7 +70,6 @@ public class OI {
 	
 	 }
 	 public static double getJoystickY(){
-		 
 			
 			return  -joystick.getY();
 	
