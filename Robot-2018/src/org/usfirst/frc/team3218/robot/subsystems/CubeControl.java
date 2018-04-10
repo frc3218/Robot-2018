@@ -63,6 +63,11 @@ public double ejectionSpeed = 0.5;
 		belt.set(z);
 		}
 	}
+
+	public void cubeControlFile(double parseDouble) {
+		cubeCollect.arcadeDrive(parseDouble,0);
+		
+	}
 	
 	
 

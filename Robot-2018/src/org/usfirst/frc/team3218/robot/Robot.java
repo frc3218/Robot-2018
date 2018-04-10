@@ -15,6 +15,7 @@ import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlXbox;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithFile;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.ManualLiftControl;
@@ -64,7 +65,7 @@ public class Robot extends IterativeRobot {
 	public static boolean breakAuto;
 	CameraServer cameraServer;
 	CameraServer cameraServer2;
-	
+	public static String autoFile;
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
 	public static SendableChooser<String> path = new SendableChooser<>();
@@ -100,10 +101,10 @@ public class Robot extends IterativeRobot {
 		objective.addObject("Line", "Line");
 		objective.addObject("Switch", "Switch");
 		objective.addObject("Scale", "Scale");
-
+		
 	
 		objective.addObject("DoubleSwitch", "DoubleSwitch");
-
+		
 		
 		Gear.addDefault("Low", false);
 		Gear.addObject("High", true);
@@ -160,21 +161,23 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
+		
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 			switch(objective.getSelected()){
 			case "Nothing": autonomousCommand = new Nothing(); break; 
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
-			case "DoubleSwitch": autonomousCommand = new DoubleSwitch(); break;
+			case "DoubleSwitch": autonomousCommand = new DriveWithFile(); break;
 			case "Scale": autonomousCommand = new Scale(); break;
 			
 			}
 		
 			
+		autoFile=position.getSelected()+objective.getSelected()+gameData;
 		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-SmartDashboard.putString("autoString",  position.getSelected() + path.getSelected() + Robot.gameData);
+SmartDashboard.putString("autoString",  autoFile);
 	
 	}
 	/**
