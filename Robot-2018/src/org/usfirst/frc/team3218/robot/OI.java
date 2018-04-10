@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3218.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -25,8 +27,8 @@ public class OI {
 	
 	 
 
-	public static Joystick joystick = new Joystick(RobotMap.joyStickPort1);
 	
+	public static XboxController xbox = new XboxController(RobotMap.joyStickPort1);
 	
 	 
 	
@@ -63,20 +65,26 @@ public class OI {
 	 
 	 
 	 
+
+	 public static double getRightJoystickY(){
+			
+			return  -xbox.getY(Hand.kRight);
+	
+	 }
+	 public static double getRightJoystickZ(){
+			
+		 return xbox.getX(Hand.kRight);
+	
+	 }
 	 
-	 public static double getJoystickX(){
-	
-		 return -joystick.getX();
+	 public static double getLeftJoystickY(){
+			
+			return  -xbox.getY(Hand.kLeft);
 	
 	 }
-	 public static double getJoystickY(){
+	 public static double getLeftJoystickZ(){
 			
-			return  -joystick.getY();
-	
-	 }
-	 public static double getJoystickZ(){
-			
-		 return joystick.getZ();
+		 return xbox.getX(Hand.kLeft);
 	
 	 }
 	 

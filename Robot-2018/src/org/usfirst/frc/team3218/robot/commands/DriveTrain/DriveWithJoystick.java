@@ -31,7 +31,7 @@ public class DriveWithJoystick extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//encoderFinal = (Robot.driveTrain.leftEnc.getRate()-Robot.driveTrain.rightEnc.getRate()/maxDif);
-    	Robot.driveTrain.drive(OI.getJoystickY(), OI.getJoystickZ());
+    	Robot.driveTrain.drive(OI.getLeftJoystickY(), OI.getLeftJoystickZ());
     	
     }
 
