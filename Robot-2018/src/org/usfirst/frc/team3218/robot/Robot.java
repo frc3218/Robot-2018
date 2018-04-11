@@ -8,8 +8,7 @@ import javax.print.attribute.standard.Compression;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
-
-
+import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 import org.usfirst.frc.team3218.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 
@@ -35,10 +34,13 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final CubeControl cubeControl = new CubeControl();
 	//public static final CubeControl cubeControl = new CubeControl();
 	public static OI oi;
-	
-	
+	SendableChooser<String> objective = new SendableChooser();
+	SendableChooser<String> position = new SendableChooser();
+	public static String autofile;
+	public static String gameData;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -47,10 +49,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		
-		
-		
-	}
+			position.addDefault("2", "2");
+			objective.addDefault("DoubleSwitch", "DoubleSwitch");
+		}
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -80,7 +81,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -89,6 +90,9 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
+	
+	
+		autofile = position.getSelected()+objective.getSelected()+gameData;
 	}
 
 	/**
@@ -125,8 +129,8 @@ public class Robot extends IterativeRobot {
 		
 		
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("joystickY", OI.getJoystickY());
-    	SmartDashboard.putNumber("joystickZ", OI.getJoystickZ());
+		SmartDashboard.putNumber("joystickY", OI.getXboxControllerLeftY());
+    	SmartDashboard.putNumber("joystickZ", OI.getXboxControllerLeftZ());
 	}
 	/**
 	 * This function is called periodically during test mode

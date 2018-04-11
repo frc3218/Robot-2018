@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3218.robot.subsystems;
 
 import org.usfirst.frc.team3218.robot.RobotMap;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithJoystick;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -21,16 +22,14 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 /**
  *
  */
-public class DriveTrain extends Subsystem {
+public class CubeControl extends Subsystem {
 	
-	public SpeedController leftTopDrive = new WPI_TalonSRX(RobotMap.leftTopDriveID);
-	public SpeedController leftBottomDrive = new WPI_TalonSRX(RobotMap.leftBottomDriveID);
-	public SpeedController rightTopDrive = new WPI_TalonSRX(RobotMap.rightTopDriveID);
-	public SpeedController rightBottomDrive = new WPI_TalonSRX(RobotMap.rightBottomDriveID);
+	public SpeedController leftWheels = new Talon(RobotMap.leftCubeControlID);
+	public SpeedController rightWheels = new Talon(RobotMap.rightCubeControlID);
+	
 	//Grouping Together Drives
-	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftTopDrive);
-	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightTopDrive);
-	DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
+	
+	DifferentialDrive cubeDrive = new DifferentialDrive(leftWheels, rightWheels);
 	
 	//Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -38,18 +37,42 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new DriveWithJoystick());
+		setDefaultCommand(new CubeControlOff());
 	}
 
-	public void xboxDrive(double y, double z) {
-		if(y<-0.4)
-			z*=-1;
-		if(Math.abs(y)<0.3)
-			y=0;
-    	drive.arcadeDrive(y, z);
-		
-    }
     
-    
+    	public void cubeControlOff(){
+    	leftWheels.set(0);
+    	rightWheels.set(0);
+    	}
+   
+
+	public void cubeEject(double ejectPower){
+	leftWheels.set(ejectPower);
+	rightWheels.set(ejectPower);
+	
+	}
+
+	public void cubeCollect(double collectPower){
+	leftWheels.set(collectPower);
+	rightWheels.set(collectPower);
+	
+	
+	}
+	
+	public void cubeControlXbox(double y, double z){
+		cubeDrive.arcadeDrive(y*0.75,0);
+	
+	}
+	
+	public void cubeControlFile(double power){
+	cubeDrive.arcadeDrive(power,0);
+	
+	}
+
+
 }
+
+
+
 

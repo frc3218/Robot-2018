@@ -34,6 +34,8 @@ public class ReplayJoystick extends Command {
 	private String numberZ;
 	private String numberCollect;
 	private String numberLift;
+	private String startingLoc = "/home/lvuser/";
+	private String finalLoc;
 	public ReplayJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -42,11 +44,11 @@ public class ReplayJoystick extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	setter=false;
-    	folder = new File(Robot.autoFile.getSelected());
-    	yValues = new File(folder.getAbsolutePath()+"/yValues.txt");
-        zValues = new File(folder.getAbsolutePath()+"/zValues.txt");
-        collectionValues = new File(folder.getAbsolutePath()+"/collectionValues.txt");
-        liftValues = new File(folder.getAbsolutePath()+"/liftValues.txt");
+    	finalLoc=startingLoc+Robot.autofile;
+    	yValues = new File(finalLoc+"/yValues.txt");
+        zValues = new File(finalLoc+"/zValues.txt");
+        collectionValues = new File(finalLoc+"/collectionValues.txt");
+        liftValues = new File(finalLoc+"/liftValues.txt");
        if(zValues.exists()){
    	   System.out.println("file exists");
       }

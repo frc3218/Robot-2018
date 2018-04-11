@@ -35,12 +35,14 @@ public class DriveWithFile extends Command {
 	private double numberZ;
 	private String numberCollect;
 	private String numberLift;
+	private String startingLoc="/home/lvuser/";
+	private String finalLoc;
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 
 		requires(Robot.driveTrain);
-		requires(Robot.lift);
+		
 		requires(Robot.cubeControl);
 	}
 
@@ -48,13 +50,12 @@ public class DriveWithFile extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	setter=false;
-
-	folder = new File(Robot.autoFile.getSelected());
-    	System.out.println("FOLDER IS : " +Robot.autoFile.getSelected());
-    	yValues = new File(folder.getAbsolutePath()+"/yValues.txt");
-        zValues = new File(folder.getAbsolutePath()+"/zValues.txt");
-        collectionValues = new File(folder.getAbsolutePath()+"/collectionValues.txt");
-        liftValues = new File(folder.getAbsolutePath()+"/liftValues.txt");
+    	
+    	finalLoc=startingLoc+Robot.autofile;
+    	yValues = new File(finalLoc+"/yValues.txt");
+        zValues = new File(finalLoc+"/zValues.txt");
+        collectionValues = new File(finalLoc+"/collectionValues.txt");
+        liftValues = new File(finalLoc+"/liftValues.txt");
         if(zValues.exists()){
    	   System.out.println("file exists");
       }
@@ -96,11 +97,11 @@ public class DriveWithFile extends Command {
 			
 					
 					
-					Robot.driveTrain.driveWithXbox(numberY,numberZ);
+					Robot.driveTrain.xboxDrive(numberY,numberZ);
 					
 					Robot.cubeControl.cubeControlFile(Double.parseDouble(numberCollect));
 					
-					Robot.lift.setPosition(Robot.lift.positionArray[(int)Double.parseDouble(numberLift)]);
+					//Robot.lift.setPosition(Robot.lift.positionArray[(int)Double.parseDouble(numberLift)]);
 					
 			
 			

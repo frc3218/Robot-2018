@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.usfirst.frc.team3218.robot.Robot;
-import org.usfirst.frc.team3218.robot.subsystems.Lift;
+
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -40,6 +40,8 @@ public class RecordJoystick extends Command {
 	private File zValues;
 	private File collectionValues;
 	private File liftValues;
+	private String startingLoc="/home/lvuser/";
+	private String finalLoc;
 	public RecordJoystick() {
 		
         // Use requires() here to declare subsystem dependencies
@@ -49,8 +51,9 @@ public class RecordJoystick extends Command {
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("FOLDER IS : " +Robot.autoFile.getSelected());
-    folder = new File(Robot.autoFile.getSelected());
+    	finalLoc=startingLoc+Robot.autofile;
+    	System.out.println("FOLDER IS : " +finalLoc);
+    
     	setter=false;
     	i=0;
     }
@@ -64,9 +67,7 @@ public class RecordJoystick extends Command {
     	else if(Robot.oi.liftSwitch.get()){
     		joystickValues[3][i] = 2;
     	}
-    		else if(Robot.oi.liftScaleLow.get()){
-    			joystickValues[3][i] = 3;
-    		}
+    		
     		else if(Robot.oi.liftScaleMid.get()){
     			joystickValues[3][i] = 4;
     		}
@@ -105,10 +106,10 @@ public class RecordJoystick extends Command {
     // Called once after isFinished returns true
     protected void end() {
     
-    yValues = new File(folder.getAbsolutePath()+"/yValues.txt");
-     zValues = new File(folder.getAbsolutePath()+"/zValues.txt");
-     collectionValues = new File(folder.getAbsolutePath()+"/collectionValues.txt");
-     liftValues = new File(folder.getAbsolutePath()+"/liftValues.txt");
+    yValues = new File(finalLoc+"/yValues.txt");
+     zValues = new File(finalLoc+"/zValues.txt");
+     collectionValues = new File(finalLoc+"/collectionValues.txt");
+     liftValues = new File(finalLoc+"/liftValues.txt");
     System.out.println("files new files");
     
     if(!zValues.exists()){

@@ -30,10 +30,10 @@ public class OI {
 	
 	public static XboxController xbox = new XboxController(RobotMap.joyStickPort1);
 	
-	 
-	
-
-
+	public static Button liftBottom = new JoystickButton(xbox,1);
+	public static Button liftSwitch = new JoystickButton(xbox,1);
+	public static Button liftScaleMid = new JoystickButton(xbox,1);
+	public static Button liftScaleHigh = new JoystickButton(xbox,1);
 
 	// Button button = new Joysti0ckButton(stick, buttonNumber);
 
@@ -66,25 +66,25 @@ public class OI {
 	 
 	 
 
-	 public static double getRightJoystickY(){
-			
-			return  -xbox.getY(Hand.kRight);
-	
-	 }
-	 public static double getRightJoystickZ(){
-			
-		 return xbox.getX(Hand.kRight);
-	
-	 }
-	 
-	 public static double getLeftJoystickY(){
+	 public static double getXboxControllerLeftY(){
 			
 			return  -xbox.getY(Hand.kLeft);
 	
 	 }
-	 public static double getLeftJoystickZ(){
+	 public static double getXboxControllerLeftZ(){
 			
 		 return xbox.getX(Hand.kLeft);
+	
+	 }
+	 
+	 public static double getXboxControllerRightY(){
+			
+			return  -xbox.getY(Hand.kRight);
+	
+	 }
+	 public static double getXboxControllerRightZ(){
+			
+		 return xbox.getX(Hand.kRight);
 	
 	 }
 	 

@@ -1,38 +1,27 @@
-package org.usfirst.frc.team3218.robot.commands.DriveTrain;
+package org.usfirst.frc.team3218.robot.commands.CubeControl;
 
-import org.usfirst.frc.team3218.robot.OI;
 import org.usfirst.frc.team3218.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
+public class CubeControlOff extends Command {
 
-
-public class DriveWithJoystick extends Command {
-
-// Difference Commands
-	double maxDif;
-	double encoderFinal;
-	
-    public DriveWithJoystick() {
+    public CubeControlOff() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.cubeControl);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//encoderFinal = (Robot.driveTrain.leftEnc.getRate()-Robot.driveTrain.rightEnc.getRate()/maxDif);
-    	Robot.driveTrain.xboxDrive(OI.getXboxControllerLeftY(), OI.getXboxControllerLeftZ());
-    	
+    	Robot.cubeControl.cubeControlOff();
     }
 
     // Make this return true when this Command no longer needs to run execute()

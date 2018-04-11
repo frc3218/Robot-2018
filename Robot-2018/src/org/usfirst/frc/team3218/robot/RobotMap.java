@@ -19,7 +19,8 @@ public class RobotMap {
 	public static final int rightTopDriveID = 0;
 	
 	//PWM Channels
-
+	public static final int leftCubeControlID = 1;
+	public static final int rightCubeControlID = 0;
 	//Digital Channels
 	
 	//Analog Channels
