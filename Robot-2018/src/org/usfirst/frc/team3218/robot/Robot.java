@@ -163,6 +163,7 @@ public class Robot extends IterativeRobot {
 		 */
 		
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
+			autoFile=position.getSelected()+objective.getSelected()+gameData.substring(1,2);
 			switch(objective.getSelected()){
 			case "Nothing": autonomousCommand = new Nothing(); break; 
 			case "Line": autonomousCommand = new CrossLine(); break;
@@ -171,13 +172,10 @@ public class Robot extends IterativeRobot {
 			case "Scale": autonomousCommand = new Scale(); break;
 			
 			}
-		
-			
-		autoFile=position.getSelected()+objective.getSelected()+gameData;
-		
+
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-SmartDashboard.putString("autoString",  autoFile);
+		SmartDashboard.putString("autoString",  autoFile);
 	
 	}
 	/**
