@@ -40,20 +40,17 @@ public class DoubleSwitch extends Command {
     			case"2R":
     				AutoAPI.moveToHeight(2);
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH-50, 2000, 250);//which distance should this be
-    				Robot.cubeControl.cubeEjection(.6);
-    				Timer.delay(.3);
-    				Robot.cubeControl.cubeOff();
-    				AutoAPI.driveStraight(12, -2000, 250);
+    				AutoAPI.AutoEject(.5, .5);
+    				AutoAPI.driveStraight(24, -2000, 250);//2 feet
     				AutoAPI.moveToHeight(0);
-    				AutoAPI.rotate(-80, 1200,1200);
-    				Robot.cubeControl.cubeCollection();
+    				AutoAPI.rotate(-30, 1200,1200);//30 degree
     				AutoAPI.driveStraight(16, 2000, 250);
-    				Timer.delay(.5);
+    				AutoAPI.AutoCollect(.5);
     				AutoAPI.driveStraight(16, -2000, 250);
-    				AutoAPI.rotate(80, 1200,1200);
+    				AutoAPI.rotate(30, 1200,1200);
     				AutoAPI.moveToHeight(2);
-    				AutoAPI.driveStraight(12, 2000, 250);
-    				Robot.cubeControl.cubeEjection(.6);
+    				AutoAPI.driveStraight(24, 2000, 250);
+    				AutoAPI.AutoEject(.5,.5);
     			break;
     			case"2L":
     				AutoAPI.driveStraight((AutoAPI.WALL_TO_SWITCH/2-36), 2000, 250);
@@ -62,19 +59,16 @@ public class DoubleSwitch extends Command {
     				AutoAPI.rotate(90, 1200, 1200);
     				AutoAPI.moveToHeight(2);
     				AutoAPI.driveStraight((AutoAPI.WALL_TO_SWITCH/2-36), 2000, 250);
-    				Robot.cubeControl.cubeEjection(.6);
-    				Timer.delay(.3);
-    				Robot.cubeControl.cubeOff();
-    				AutoAPI.driveStraight(12, -2000, 250);
+    				AutoAPI.AutoEject(.5,.5);
+    				AutoAPI.driveStraight(24, -2000, 250);
     				AutoAPI.moveToHeight(0);
-    				AutoAPI.rotate(80, 1200,1200);
-    				Robot.cubeControl.cubeCollection();
+    				AutoAPI.rotate(30, 1200,1200);
     				AutoAPI.driveStraight(16, 2000, 250);
-    				Timer.delay(.5);
+    				AutoAPI.AutoCollect(.5);
     				AutoAPI.driveStraight(16, -2000, 250);
     				AutoAPI.rotate(-80, 1200,1200);
     				AutoAPI.moveToHeight(2);
-    				AutoAPI.driveStraight(12, 2000, 250);
+    				AutoAPI.driveStraight(24, 2000, 250);
     				Robot.cubeControl.cubeEjection(.6);
     				
     			break;

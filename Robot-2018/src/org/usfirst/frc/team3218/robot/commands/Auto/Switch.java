@@ -40,7 +40,7 @@ public class Switch extends Command {
     			case"2R":
     				AutoAPI.moveToHeight(2);
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH-50, 2000, 250);//which distance should this be
-    				Robot.cubeControl.cubeEjection(.6);
+    				Robot.cubeControl.cubeEjection(.5);
     				new CubeEjectionOn();
     			break;
     			case"2L":
@@ -51,7 +51,7 @@ public class Switch extends Command {
     				AutoAPI.rotate(90, 1700, 1700);
     				AutoAPI.moveToHeight(2);
     				AutoAPI.driveStraight((AutoAPI.WALL_TO_SWITCH/2-36), 2000, 250);
-    				Robot.cubeControl.cubeEjection(.6);
+    				Robot.cubeControl.cubeEjection(.5);
     				new CubeEjectionOn();
     				
     			break;

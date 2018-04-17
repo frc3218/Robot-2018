@@ -155,8 +155,8 @@ public class AutoAPI {
 	}
 	public static void turnCheck(int degree){
 		double error = Math.abs(degree) - Math.abs(Robot.driveTrain.gyro.getAngle());
-		if(error > 10 || error < -10){
-		rotate(degree-(int) Robot.driveTrain.gyro.getAngle(), 1200, 1200);
+		if(error > 20 || error < -20){
+		rotate(degree - (int) Robot.driveTrain.gyro.getAngle(), 1200, 1200);
 		}
 	}
 
@@ -229,9 +229,24 @@ public class AutoAPI {
 	
 	//methods specific to this year
 	
+	public static void AutoEject(double ejectTime, double power){
+		time = 15-Timer.getMatchTime();
+		
+		while((15-Timer.getMatchTime() - time) < ejectionTime){
+			Robot.cubeControl.cubeEjection(power);
+			
+		}
+		Robot.cubeControl.cubeOff();
+	}
 	
-	
-	
+	public static void AutoCollect(double ejectTime){
+		time = 15-Timer.getMatchTime();
+		
+		while((15-Timer.getMatchTime() - time) < ejectionTime){
+			Robot.cubeControl.cubeCollection();
+		}
+		Robot.cubeControl.cubeOff();
+	}
 	
 	
 	
