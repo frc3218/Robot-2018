@@ -34,7 +34,7 @@ public class ReplayJoystick extends Command {
 	private String numberZ;
 	private String numberCollect;
 	private String numberLift;
-	private String startingLoc = "/home/lvuser";
+	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
 	public ReplayJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

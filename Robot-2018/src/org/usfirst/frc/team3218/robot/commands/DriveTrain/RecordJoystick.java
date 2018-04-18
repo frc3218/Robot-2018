@@ -40,7 +40,7 @@ public class RecordJoystick extends Command {
 	private File zValues;
 	private File collectionValues;
 	private File liftValues;
-	private String startingLoc = "/home/lvuser";
+	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
 	
 	public RecordJoystick() {
 		

@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
 	public static String autoFile;
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
-	public static SendableChooser<String> path = new SendableChooser<>();
+	//public static SendableChooser<String> path = new SendableChooser<>();
 	public static SendableChooser<Boolean> Gear = new SendableChooser<>();
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -221,7 +221,7 @@ public class Robot extends IterativeRobot {
 		lift.gearHigh();
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
-		SmartDashboard.putData("path",path);
+		//SmartDashboard.putData("path",path);
 	}
 	
 	/**
