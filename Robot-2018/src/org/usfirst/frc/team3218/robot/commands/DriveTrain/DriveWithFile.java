@@ -35,7 +35,7 @@ public class DriveWithFile extends Command {
 	private double numberZ;
 	private String numberCollect;
 	private String numberLift;
-	private String startingLoc = "/home/lvuser";
+	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
 	private int i = 0;
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
