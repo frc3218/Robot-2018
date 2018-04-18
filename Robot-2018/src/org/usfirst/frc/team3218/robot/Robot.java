@@ -172,7 +172,7 @@ public class Robot extends IterativeRobot {
 			case "Scale": autonomousCommand = new Scale(); break;
 			
 			}
-
+			
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 		SmartDashboard.putString("autoString",  autoFile);
