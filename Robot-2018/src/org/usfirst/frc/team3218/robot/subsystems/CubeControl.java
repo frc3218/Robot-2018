@@ -64,8 +64,8 @@ public double ejectionSpeed = 0.5;
 		}
 	}
 
-	public void cubeControlFile(double parseDouble) {
-		cubeCollect.arcadeDrive(parseDouble,0);
+	public void cubeControlFile(double y) {
+		cubeCollect.arcadeDrive(-y * 0.75,y<-.1 ?.4:0);
 		
 	}
 	

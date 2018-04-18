@@ -40,7 +40,8 @@ public class RecordJoystick extends Command {
 	private File zValues;
 	private File collectionValues;
 	private File liftValues;
-	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
+	private String startingLoc = "/home/lvuser";
+	
 	public RecordJoystick() {
 		
         // Use requires() here to declare subsystem dependencies
@@ -52,6 +53,7 @@ public class RecordJoystick extends Command {
     protected void initialize() {
     	setter=false;
     	i=0;
+    	System.out.println("init");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -79,6 +81,12 @@ public class RecordJoystick extends Command {
     		joystickValues[3][i] = 0;
     		
     	}
+    	System.out.println(i);
+    	
+    	if(i==600){
+			System.out.println("LIFT ENC: " +Robot.lift.liftEnc.get());
+			
+		}
     	joystickValues[0][i] = Robot.oi.getXboxControllerLeftY();
     	joystickValues[1][i] = Robot.oi.getXboxControllerLeftZ();
     	joystickValues[2][i] = Robot.oi.getXboxControllerRightY();
@@ -93,6 +101,7 @@ public class RecordJoystick extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if(setter){
+        	System.out.println("finished");
         	return true;
         }
         else{
@@ -200,6 +209,10 @@ public class RecordJoystick extends Command {
     	//System.out.println(joystickValues[2][749]);
     	//System.out.println(joystickValues[3][749]);
     	System.out.println("went to ");
+    	
+    System.out.println(Robot.driveTrain.rightEnc.get());
+    System.out.println(Robot.driveTrain.leftEnc.get());
+    i=0;
 	}
     
     

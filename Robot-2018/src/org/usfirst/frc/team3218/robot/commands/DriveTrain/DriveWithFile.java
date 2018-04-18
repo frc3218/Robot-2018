@@ -35,7 +35,8 @@ public class DriveWithFile extends Command {
 	private double numberZ;
 	private String numberCollect;
 	private String numberLift;
-	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
+	private String startingLoc = "/home/lvuser";
+	private int i = 0;
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -64,23 +65,24 @@ public class DriveWithFile extends Command {
          collectionReader = null;
         liftReader = null;
        
-       System.out.println("made readers & files");
+       System.out.println("init readers & files");
        try{
        	yReader = new FileReader(yValues);
        	zReader = new FileReader(zValues);
        	collectionReader = new FileReader(collectionValues);
        	liftReader = new FileReader(liftValues);
-       
+       System.out.println("made readers");
        }
        catch(IOException e){
        	e.printStackTrace();
+       	System.out.println("didnt make readers");
        }
         bufReadY = new BufferedReader(yReader);
         bufReadZ = new BufferedReader(zReader);
         bufReadCollection = new BufferedReader(collectionReader);
         bufReadLift = new BufferedReader(liftReader);
        
-       
+       System.out.println("Finished init");
 }
 
     // Called repeatedly when this Command is scheduled to run
@@ -92,10 +94,12 @@ public class DriveWithFile extends Command {
 			numberZ = Double.parseDouble(bufReadZ.readLine());
 			numberCollect = bufReadCollection.readLine();
 			numberLift = bufReadLift.readLine();
-			
-			
+			System.out.println(i);
+			i++;
 					
-					
+			if(i==600){
+				System.out.println("LIFT ENC: " +Robot.lift.liftEnc.get());
+			}
 					Robot.driveTrain.driveWithXbox(numberY,numberZ);
 					
 					Robot.cubeControl.cubeControlFile(Double.parseDouble(numberCollect));
@@ -109,6 +113,8 @@ public class DriveWithFile extends Command {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			setter=true;
+			   System.out.println(Robot.driveTrain.rightEnc.get());
+			    System.out.println(Robot.driveTrain.leftEnc.get());
 			System.out.println("values went to null");
 		}
 		
@@ -128,7 +134,7 @@ public class DriveWithFile extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	 
-    	 
+    	 i=0;
         
     }
 
