@@ -3,6 +3,8 @@ package org.usfirst.frc.team3218.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -229,15 +231,29 @@ public class AutoAPI {
 	
 	//methods specific to this year
 	
+	public static void sideDrive(double speed, SpeedControllerGroup motors){
+		
+		SmartDashboard.putString("autoState", "sideDrive");
+		
+		
+		if (!breakAuto && Math.abs(15-Timer.getMatchTime())<15){
+			motors.set(speed);
+	
+		}
+	
+		
+		
+	
+	
+	}
+
+
+
+}	
 	
 	
 	
-	
-	
-	
-	
-	
-}
+
 
 
 

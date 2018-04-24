@@ -55,8 +55,8 @@ public class DriveTrain extends Subsystem {
 	// Grouping Together Drives
 	
 	
-	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
-	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
+	public SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
+	public SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
 	
 	
 	DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);

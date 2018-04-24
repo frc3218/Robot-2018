@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.DecimalFormat; 
+import java.text.DecimalFormat;
+
+import org.usfirst.frc.team3218.robot.AutoAPI;
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.subsystems.CubeControl;
 
@@ -37,6 +39,9 @@ public class DriveWithFile extends Command {
 	private String numberLift;
 	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
 	private int i = 0;
+	private double speedLeft = 0;
+	private double speedRight = 0;
+	private int encPerPer = 0;
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -100,8 +105,11 @@ public class DriveWithFile extends Command {
 			if(i==600){
 				System.out.println("LIFT ENC: " +Robot.lift.liftEnc.get());
 			}
-					Robot.driveTrain.driveWithXbox(numberY,numberZ);
 					
+			speedLeft = (numberY-Robot.driveTrain.leftEnc.get())/encPerPer;
+			speedRight = (numberZ-Robot.driveTrain.rightEnc.get())/encPerPer;
+					AutoAPI.sideDrive(speedLeft, Robot.driveTrain.leftDrive);
+					AutoAPI.sideDrive(speedRight, Robot.driveTrain.rightDrive);
 					Robot.cubeControl.cubeControlFile(Double.parseDouble(numberCollect));
 					
 					Robot.lift.setPosition(Robot.lift.positionArray[(int)Double.parseDouble(numberLift)]);
