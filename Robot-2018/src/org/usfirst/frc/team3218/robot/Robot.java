@@ -68,8 +68,9 @@ public class Robot extends IterativeRobot {
 	public static String autoFile;
 	public static SendableChooser<String> position = new SendableChooser<>();
 	public static SendableChooser<String> objective = new SendableChooser<>();
-	//public static SendableChooser<String> path = new SendableChooser<>();
 	public static SendableChooser<Boolean> Gear = new SendableChooser<>();
+	public static SendableChooser<Boolean> Record = new SendableChooser<>();
+	/**
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -102,17 +103,20 @@ public class Robot extends IterativeRobot {
 		objective.addObject("Switch", "Switch");
 		objective.addObject("Scale", "Scale");
 		
-	
+		objective.addObject("DoubleScale", "DoubleScale");
 		objective.addObject("DoubleSwitch", "DoubleSwitch");
-		
+		objective.addObject("TripleSwitch", "TripleSwitch");
 		
 		Gear.addDefault("Low", false);
 		Gear.addObject("High", true);
 		
+		Record.addDefault("Dont Record", false);
+		Record.addObject("Record", true);
+		
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		SmartDashboard.putData("Gear", Gear);
-		
+		SmartDashboard.putData("record", Record);
 	}
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -153,6 +157,9 @@ public class Robot extends IterativeRobot {
 		pdp.clearStickyFaults();
 		AutoAPI.breakAuto = false;
 		lift.gearHigh();
+		
+		
+		
 		//autonomousCommand = chooser.getSelected();
 		
 		/*
@@ -163,12 +170,15 @@ public class Robot extends IterativeRobot {
 		 */
 		
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-			autoFile=position.getSelected()+objective.getSelected()+gameData.substring(1,2);
+			autoFile=position.getSelected()+objective.getSelected()+gameData.substring(0,1);
 			switch(objective.getSelected()){
 			case "Nothing": autonomousCommand = new Nothing(); break; 
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
 			case "DoubleSwitch": autonomousCommand = new DriveWithFile(); break;
+			case "DoubleScale": autonomousCommand = new DriveWithFile(); break;
+			case "TripleSwitch": autonomousCommand = new DriveWithFile();break;
+			case "TripleScale" : autonomousCommand = new DriveWithFile();break;
 			case "Scale": autonomousCommand = new Scale(); break;
 			
 			}
@@ -200,6 +210,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
 		AutoAPI.breakAuto = true;
 		new CrossLine().cancel();
 		new Nothing().cancel();
@@ -229,7 +240,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		autoFile=position.getSelected()+objective.getSelected()+gameData.substring(0,1);
 	if(lift.bottomSwitch.get()){
 		lift.liftEnc.reset();
 	}

@@ -44,10 +44,10 @@ public class ReplayJoystick extends Command {
     protected void initialize() {
     	setter=false;
     	System.out.println("ReplayStartingLoc = " + startingLoc);
-    	yValues = new File(startingLoc+"/yValues.txt");
-        zValues = new File(startingLoc+"/zValues.txt");
-        collectionValues = new File(startingLoc+"/collectionValues.txt");
-        liftValues = new File(startingLoc+"/liftValues.txt");
+    	yValues = new File(startingLoc+"yValues.txt");
+        zValues = new File(startingLoc+"zValues.txt");
+        collectionValues = new File(startingLoc+"collectionValues.txt");
+        liftValues = new File(startingLoc+"liftValues.txt");
        if(zValues.exists()){
    	   System.out.println("file exists");
       }

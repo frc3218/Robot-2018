@@ -59,13 +59,13 @@ public double ejectionSpeed = 0.5;
 	
 	public void cubeControlXbox(double y, double z){
 		if(Robot.breakAuto){
-		cubeCollect.arcadeDrive(-y * 0.75,y<-.1 ?.4:0);
+		cubeCollect.arcadeDrive(-y ,y>.1 ?.4:0);
 		belt.set(z);
 		}
 	}
 
 	public void cubeControlFile(double y) {
-		cubeCollect.arcadeDrive(-y * 0.75,y<-.1 ?.4:0);
+		cubeCollect.arcadeDrive(-y,y<-.1 ?.4:0);
 		
 	}
 	

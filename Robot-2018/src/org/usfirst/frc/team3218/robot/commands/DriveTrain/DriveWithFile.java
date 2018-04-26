@@ -35,7 +35,7 @@ public class DriveWithFile extends Command {
 	private double numberZ;
 	private String numberCollect;
 	private String numberLift;
-	private String startingLoc = "/home/lvuser";
+	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
 	private int i = 0;
 	public DriveWithFile() {
         // Use requires() here to declare subsystem dependencies
@@ -52,10 +52,10 @@ public class DriveWithFile extends Command {
     	setter=false;
 
     	System.out.println("DriveStartingLoc = " + startingLoc);
-    	yValues = new File(startingLoc+"/yValues.txt");
-        zValues = new File(startingLoc+"/zValues.txt");
-        collectionValues = new File(startingLoc+"/collectionValues.txt");
-        liftValues = new File(startingLoc+"/liftValues.txt");
+    	yValues = new File(startingLoc+"yValues.txt");
+        zValues = new File(startingLoc+"zValues.txt");
+        collectionValues = new File(startingLoc+"collectionValues.txt");
+        liftValues = new File(startingLoc+"liftValues.txt");
         if(zValues.exists()){
    	   System.out.println("file exists");
       }
@@ -96,7 +96,6 @@ public class DriveWithFile extends Command {
 			numberLift = bufReadLift.readLine();
 			System.out.println(i);
 			i++;
-					
 			if(i==600){
 				System.out.println("LIFT ENC: " +Robot.lift.liftEnc.get());
 			}

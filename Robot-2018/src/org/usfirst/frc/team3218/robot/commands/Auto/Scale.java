@@ -32,16 +32,11 @@ public class Scale extends Command {
     			case "1L":
     				AutoAPI.driveStraight(AutoAPI.MID_LINE, 2000, 250);
         			AutoAPI.rotate(90, 1200, 1200);
+        			AutoAPI.simpleDrive(-8);
         			AutoAPI.moveToHeight(5);
         			Robot.cubeControl.cubeEjection(1);
         			new CubeEjectionOn().start();
-        			/*
-        			 * AutoAPI.driveStraight(AutoAPI.MID_LINE-36, 2000, 250);
-        			 * AutoAPI.rotate(45,700,700);
-        			 * AutoAPI.movetoHeight(5);
-        			 * Robot.cubeControl.cubeEjection();
-        			   new CubeEjectionOn().start();
-        			 */
+        			
         			break;
 
         			case "1R": 
@@ -63,7 +58,7 @@ public class Scale extends Command {
         			case "3R": 
 	        				AutoAPI.driveStraight(AutoAPI.MID_LINE, 2000, 250);
 	            			AutoAPI.rotate(-90, 1700, 1700);
-	            			AutoAPI.driveStraight(-4, -2000, 250);
+	            			AutoAPI.simpleDrive(-8);
 	            			AutoAPI.moveToHeight(5);
 	            			Robot.cubeControl.cubeEjection(1);
 	            			new CubeEjectionOn().start();
