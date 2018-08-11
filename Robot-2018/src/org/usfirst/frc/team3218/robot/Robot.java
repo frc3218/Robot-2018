@@ -213,12 +213,11 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		
 		driveTrain.gyro.reset();
-		
+		lift.gearHigh();
 		lift.liftPIDConfig();
 		pdp.clearStickyFaults();
 		driveTrain.drivePIDConfig();
 		
-		lift.gearHigh();
 		SmartDashboard.putData("position",position);
 		SmartDashboard.putData("objective",objective);
 		//SmartDashboard.putData("path",path);
