@@ -111,7 +111,7 @@ public class AutoAPI {
 		while((Math.abs(Robot.driveTrain.leftEnc.get()) + Math.abs(Robot.driveTrain.rightEnc.get()))/2 < Math.abs(distance)
 				&& !breakAuto && Math.abs(15-Timer.getMatchTime())<15){
 		
-			Robot.driveTrain.drive(.5, 0);
+			Robot.driveTrain.drive(.5*Math.signum(distance), 0);
 		}
 		Robot.driveTrain.drive(0, 0);
 		
@@ -155,7 +155,7 @@ public class AutoAPI {
 	}
 	public static void turnCheck(int degree){
 		double error = Math.abs(degree) - Math.abs(Robot.driveTrain.gyro.getAngle());
-		if(error > 10 || error < -10){
+		if(error > 20 || error < -20){
 		rotate(degree-(int) Robot.driveTrain.gyro.getAngle(), 1200, 1200);
 		}
 	}

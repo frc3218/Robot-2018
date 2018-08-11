@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import org.usfirst.frc.team3218.robot.Robot;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -40,7 +41,7 @@ public class RecordJoystick extends Command {
 	private File zValues;
 	private File collectionValues;
 	private File liftValues;
-	private String startingLoc = "/home/lvuser/"+Robot.autoFile;
+	private String startingLoc;
 	
 	public RecordJoystick() {
 		
@@ -54,13 +55,22 @@ public class RecordJoystick extends Command {
     	setter=false;
     	i=0;
     	System.out.println("init");
+    	
+    	Robot.gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if(Robot.objective.getSelected() =="DoubleScale"||Robot.objective.getSelected()=="TripleScale"){
+    	Robot.autoFile=Robot.position.getSelected()+Robot.objective.getSelected()+Robot.gameData.substring(1,2);
+		}else{
+   	Robot.autoFile=Robot.position.getSelected()+Robot.objective.getSelected()+Robot.gameData.substring(0,1);
+
+   }
+    	startingLoc = "/home/lvuser/"+Robot.autoFile;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	try{
     	if(Robot.oi.liftBottom.get()){
-    		joystickValues[3][i] = 1;
+    		joystickValues[3][i] = 0;
     	}
     	else if(Robot.oi.liftSwitch.get()){
     		joystickValues[3][i] = 2;
@@ -113,10 +123,10 @@ public class RecordJoystick extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	System.out.println("RecordStartingLoc = " + startingLoc);
-    	yValues = new File(startingLoc+"/yValues.txt");
-        zValues = new File(startingLoc+"/zValues.txt");
-        collectionValues = new File(startingLoc+"/collectionValues.txt");
-        liftValues = new File(startingLoc+"/liftValues.txt");
+    	yValues = new File(startingLoc+"yValues.txt");
+        zValues = new File(startingLoc+"zValues.txt");
+        collectionValues = new File(startingLoc+"collectionValues.txt");
+        liftValues = new File(startingLoc+"liftValues.txt");
 
     System.out.println("files new files");
     

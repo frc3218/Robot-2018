@@ -12,6 +12,7 @@ import java.util.function.DoubleToLongFunction;
 
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithFile;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.DriveWithXbox;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.RecordJoystick;
@@ -31,6 +32,8 @@ import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleLow;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionScaleMid;
 import org.usfirst.frc.team3218.robot.commands.Lift.SetLiftPositionSwitch;
+
+import com.ctre.phoenix.motorcontrol.IFollower;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -106,8 +109,8 @@ public class OI {
 		leftJoyClick.toggleWhenPressed(new LiftGearLow());
 		rightJoyClick.toggleWhenPressed(new LiftGearHigh());
 		startButton.whenPressed(new DriveWithFile());
-		backButton.whenPressed(new RecordJoystick());
-		yButton.whenPressed(new ReplayJoystick());
+		backButton.whenPressed( new RecordJoystick());
+		yButton.whenPressed(new DriverDown());
 		xButton.whileHeld(new PlopCube());
 		aButton.whileHeld(new MedEject());
 		bButton.whileHeld(new FarEject());
