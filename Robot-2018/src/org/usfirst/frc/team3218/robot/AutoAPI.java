@@ -19,7 +19,7 @@ public class AutoAPI {
 
 
  //distances in inches
-	public final static int WALL_TO_SWITCH_CHANNEL = 67;
+	 public final static int WALL_TO_SWITCH_CHANNEL = 67;
 	 public final static int AUTOLINE = 120;
 	 public final static int WALL_TO_SWITCH = 150;
 	 public final static int WALL_TO_PLATFORM_CHANNEL = 210;
@@ -39,6 +39,7 @@ public class AutoAPI {
 	 public static  double ejectionTime;
 	 public static Blob autoBlob;
 	 public static boolean breakAuto = false;
+	 
  /**
  * @param distance in inches, positive forwards, negative, backwards
  * @param speed in ticks, 0<s<1
@@ -47,25 +48,9 @@ public class AutoAPI {
  		resetDriveTrain();
 		SmartDashboard.putString("autoState", "drive");
  		distance *= TICKS_PER_INCH;
- 		//speed *= Math.signum(distance);// may not be needed
+ 		speed *= Math.signum(distance);// may not be needed
  		autoPhase++;
- 		Robot.driveTrain.rightMidDrive.setSensorPhase(true);
- 		Robot.driveTrain.rightMidDrive.configMotionCruiseVelocity(speed, 0);
- 		Robot.driveTrain.rightMidDrive.configMotionAcceleration(acceleration, 0);
  		
- 		Robot.driveTrain.rightMidDrive.set(ControlMode.MotionMagic, -distance);
- 		Robot.driveTrain.rightTopDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
- 		Robot.driveTrain.rightBottomDrive.set(ControlMode.Follower,RobotMap.rightMidDriveID);
- 		
- 		
- 		Robot.driveTrain.leftMidDrive.configMotionCruiseVelocity(speed, 0);
- 		Robot.driveTrain.leftMidDrive.configMotionAcceleration(acceleration, 0);
- 		
- 		Robot.driveTrain.leftMidDrive.set(ControlMode.MotionMagic, distance);
- 		Robot.driveTrain.leftTopDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
- 		Robot.driveTrain.leftBottomDrive.set(ControlMode.Follower,RobotMap.leftMidDriveID);
- 		
-
  		while( Math.abs(Robot.driveTrain.rightMidDrive.getSelectedSensorPosition(0)) < distance &&
  			  Math.abs(Robot.driveTrain.leftMidDrive.getSelectedSensorPosition(0)) < distance 
  			  && !breakAuto && Math.abs(15-Timer.getMatchTime())<15){
@@ -180,6 +165,7 @@ public class AutoAPI {
 		
 		
 	}
+	
 	public static void resetDriveTrain()
 	{		
 		Robot.driveTrain.rightMidDrive.setSelectedSensorPosition(0, 0, 0);

@@ -55,11 +55,12 @@ public class DriveTrain extends Subsystem {
 	// Grouping Together Drives
 	
 	
-	SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
-	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
+	public SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
+	public 	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
 	
 	
 	DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
+	
 	
 
 	// Put methods for controlling this subsystem
@@ -95,23 +96,15 @@ public class DriveTrain extends Subsystem {
 		leftEnc.setReverseDirection(false);
 	}
 	public void drive(double y, double z) {
-		if(Robot.pdp.getVoltage()>8){
+		
     	drive.arcadeDrive(y, z*.95);
-		}
-		else{
-			drive.arcadeDrive(y/2, z*.95/2);
-		}
+		
+		
     }
-	public void autoDrive(double y, double z) {
-	//	if(Robot.pdp.getVoltage()>8){
-			
-	    	drive.arcadeDrive(y, z,false);
-	    	
-		//	}
-		//	else{
-	//			
-		//		drive.arcadeDrive(y/2, z/2,false);
-		//	}
+	public void autoDrive(double left, double right) {
+		
+	    	drive.tankDrive(left, right);
+	    
     }
     
 	public void driveWithXbox(double y,double z){

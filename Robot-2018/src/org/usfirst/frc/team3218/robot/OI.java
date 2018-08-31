@@ -95,11 +95,11 @@ public class OI {
 	 public OI(){
 		 
 
-		leftBumper.whenPressed(new GearShiftLow());
-		rightBumper.whenPressed(new GearShiftHigh());
-		leftJoyClick.toggleWhenPressed(new LiftGearLow());
-		rightJoyClick.toggleWhenPressed(new LiftGearHigh());
-		startButton.whileHeld(new DriverDown());
+		 leftBumper.whenPressed(new GearShiftLow());
+		 rightBumper.whenPressed(new GearShiftHigh());
+		 leftJoyClick.toggleWhenPressed(new LiftGearLow());
+		 rightJoyClick.toggleWhenPressed(new LiftGearHigh());
+		 startButton.whileHeld(new DriverDown());
 		
 		 liftBottom.whileHeld(new SetLiftPositionBottom());
 		 liftSwitch.whileHeld(new SetLiftPositionSwitch());
@@ -110,14 +110,16 @@ public class OI {
 	 }
 	 
 	 
+	 public boolean getBackButtonStatus() {
+		 return backButton.get();
+	 }
 	 
-	 
-	 public static double getXboxControllerLeftY(){
+	 public double getXboxControllerLeftY(){
 	
 		 return -xbox.getY(Hand.kLeft);
 	
 	 }
-	 public static double getXboxControllerLeftZ(){
+	 public double getXboxControllerLeftZ(){
 			
 		 return xbox.getX(Hand.kLeft);
 	

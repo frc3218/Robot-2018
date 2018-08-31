@@ -31,6 +31,7 @@ public class Scale extends Command {
     			switch(sendableChosenString){
     			case "1L":
     				AutoAPI.driveStraight(AutoAPI.MID_LINE, 2000, 250);
+    				
         			AutoAPI.rotate(90, 1000, 1000);
         			AutoAPI.moveToHeight(5);
         			Robot.cubeControl.cubeEjection(1);

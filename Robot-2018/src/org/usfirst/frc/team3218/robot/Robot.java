@@ -8,6 +8,7 @@ import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.Auto.AutoGroup;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
+import org.usfirst.frc.team3218.robot.commands.Auto.NewScale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Nothing;
 import org.usfirst.frc.team3218.robot.commands.Auto.Scale;
 import org.usfirst.frc.team3218.robot.commands.Auto.Switch;
@@ -100,7 +101,6 @@ public class Robot extends IterativeRobot {
 		objective.addObject("Scale", "Scale");
 		objective.addObject("SwitchScale", "SwitchScale");
 		objective.addObject("SideSwitch", "SideSwitch");
-		objective.addObject("SimpleSwitch" , "SimpleSwitch");
 		
 		path.addDefault("Close", "close");
 		path.addObject("Far", "far");
@@ -144,14 +144,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		driveTrain.gyro.reset();
-		lift.liftPIDConfig();
-		driveTrain.drivePIDConfig();
-		pdp.clearStickyFaults();
-		AutoAPI.breakAuto = false;
+		System.out.println("about to auto");
+		new NewScale().start();
 		lift.gearHigh();
 		//autonomousCommand = chooser.getSelected();
 		
+		
+		System.out.println("auto'd");
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -163,10 +162,11 @@ public class Robot extends IterativeRobot {
 			case "Nothing": autonomousCommand = new Nothing(); break; 
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
-			case "Scale": autonomousCommand = new Scale(); break;
+			case "Scale": autonomousCommand = new NewScale(); break;
 			//case "SwitchScale": autonomousCommand = new AutoGroup(); break;
 		//	case "SideSwitch": autonomousCommand = new SideSwitch(); break;
 			case "SimpleSwitch": autonomousCommand = new SimpleSwitch(); break;
+			default: autonomousCommand = new NewScale(); break;
 			}
 		
 			
