@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3218.robot.commands.Auto;
 
 import org.usfirst.frc.team3218.robot.EazyBreezy_Auto;
+import org.usfirst.frc.team3218.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,8 +18,10 @@ public class NewScale extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("in scale new");
-		Command arcing = new AutoDrive(-60, 1, 0, "none", "low", false, null, false);
-		//Command toSwitch = new AutoDrive(24,1,0,"straight","low",true,arcing,false);
+		
+    	Command arcing = new AutoDrive(72, 1, 90, "right", "low", false, null, false);
+		Command straight = new AutoDrive(12,1,0,"none","low",true,arcing,false);
+    	//Command toSwitch = new AutoDrive(24,1,0,"straight","low",true,arcing,false);
 		
 		System.out.println("made command");
 		EazyBreezy_Auto.autoDriving(arcing);
@@ -42,6 +45,7 @@ public class NewScale extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	
     }
 
     // Called when another command which requires one or more of the same

@@ -122,15 +122,6 @@ public class AutoDrive extends Command {
     default: Robot.driveTrain.lowGear();
    System.out.println("initalized it all");
     }
-    System.out.println("two pi" +(2*Math.PI));
-    System.out.println("per full" + arcsPerFull);
-    System.out.println("big rad" +biggerRadius);
-    System.out.println("small rad" +smallerRadius);
-    System.out.println("big arc" +biggerEncoderDistance);
-    System.out.println("small arc" + smallerEncoderDistance);
-    System.out.println("left sped" +leftSpeed);
-    System.out.println("right sped" +rightSpeed);
-    
     //Calculating the efficiency difference
     if(rightEncTarget>leftEncTarget) {
     	if(Math.abs(leftSpeed)<=0.2) 
@@ -167,23 +158,56 @@ public class AutoDrive extends Command {
   
     leftSpeed = Math.signum(leftEncTarget)*leftSpeed;
     rightSpeed = Math.signum(rightEncTarget)*rightSpeed;
+    System.out.println("two pi" +(2*Math.PI));
+    System.out.println("per full" + arcsPerFull);
+    System.out.println("big rad" +biggerRadius);
+    System.out.println("small rad" +smallerRadius);
+    System.out.println("big arc" +biggerEncoderDistance);
+    System.out.println("small arc" + smallerEncoderDistance);
+    System.out.println("left sped" +leftSpeed);
+    System.out.println("right sped" +rightSpeed);
+    System.out.println("right target" +rightEncTarget);
+    System.out.println("left target" + leftEncTarget);
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     //The driving command call
     // If both encoders hit their mark or if a button is pushed that cancels autonomous (if in Tele-op and is stuck)
-   
+    if(Math.signum(leftEncTarget)==1) {
     	
-    if(Robot.driveTrain.rightEnc.get()<rightEncTarget&&Robot.driveTrain.leftEnc.get()<leftEncTarget) 
-    	Robot.driveTrain.autoDrive(leftSpeed, rightSpeed);
-    
+    if(Robot.driveTrain.rightEnc.get()<rightEncTarget)
+    	Robot.driveTrain.rightDrive.set(rightSpeed);
+    else 
+    	Robot.driveTrain.rightDrive.set(0);
+    if(Robot.driveTrain.leftEnc.get()<leftEncTarget)
+    	Robot.driveTrain.leftDrive.set(leftSpeed);
     else
+    	Robot.driveTrain.leftDrive.set(leftSpeed);
+    
+    if(Robot.driveTrain.leftEnc.get()>leftEncTarget&&Robot.driveTrain.rightEnc.get()>rightEncTarget) {
+    	System.out.println("left enc" +Robot.driveTrain.leftEnc.get());
+    	
     	end = true;
+    }
+    }
+   
+    else {
+        if(Robot.driveTrain.rightEnc.get()>rightEncTarget&&Robot.driveTrain.leftEnc.get()>leftEncTarget) 
+        	Robot.driveTrain.autoDrive(leftSpeed, rightSpeed);
+        
+        else {
+        	System.out.println("left enc" +Robot.driveTrain.leftEnc.get());
+        	
+        	end = true;
+        }
+    }
+    
+    
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if(end) {
-        	
+        	System.out.println("right enc"+Robot.driveTrain.rightEnc.get());
         	return true;
         }
         else {
