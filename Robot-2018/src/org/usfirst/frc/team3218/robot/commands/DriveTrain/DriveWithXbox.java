@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveWithXbox extends Command {
-
     public DriveWithXbox() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
+    	 
     }
 
     // Called just before this Command runs the first time
@@ -27,11 +27,14 @@ public class DriveWithXbox extends Command {
     	 if(Robot.oi.xbox.getTriggerAxis(Hand.kRight) > .9){
 			 new TurnToTarget().start();
 		 }
-    	Robot.driveTrain.driveWithXbox(Robot.oi.getXboxControllerLeftY(), Robot.oi.getXboxControllerLeftZ());    	    }
-
+    	Robot.driveTrain.driveWithXbox(Robot.oi.getXboxControllerLeftY(), Robot.oi.getXboxControllerLeftZ());    	   
+    }
+    
+    	
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+       
+    	return false;
     }
 
     // Called once after isFinished returns true
