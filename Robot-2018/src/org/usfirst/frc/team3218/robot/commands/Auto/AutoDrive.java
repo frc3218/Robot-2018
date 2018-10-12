@@ -54,6 +54,7 @@ public class AutoDrive extends Command {
     double secondaryRate;
   // percentage to be used to equalize the efficiency
     double efficiencyDifference;
+    double smallSpeed;
     public AutoDrive(double distance, double speed, double degrees, String arc, String gear, boolean sequentialCommand, Command sequence, boolean isSequential) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -124,36 +125,18 @@ public class AutoDrive extends Command {
     }
     //Calculating the efficiency difference
     if(rightEncTarget>leftEncTarget) {
-    	if(Math.abs(leftSpeed)<=0.2) 
-    		secondaryRate = 0.402* (Math.pow(leftSpeed, 1.535));
-    	else
-    		secondaryRate = 26.85987*(Math.pow(leftSpeed, 0.188));
-    	
-    	if(Math.abs(rightSpeed)<=0.2)
-    		primaryRate = 0.402*(Math.pow(rightSpeed, 1.535));	
-    	else 
-    		primaryRate = 26.85987*(Math.pow(rightSpeed, 0.188));
-    	
-    	efficiencyDifference = primaryRate/secondaryRate;
-    	leftSpeed= leftSpeed*efficiencyDifference;
+    	smallSpeed = EazyBreezy_Auto.findLowerMotorPercentage(rightEncTarget, leftEncTarget, speed);
+    	rightSpeed = speed;
+    	leftSpeed = smallSpeed;
     }
     
     else if(rightEncTarget==leftEncTarget) {
-    	primaryRate = 1;
-    	secondaryRate = 1;
+    	smallSpeed = speed;
     }
     else {
-    	if(Math.abs(rightSpeed)<=0.2) 
-    		secondaryRate = 0.402* (Math.pow(rightSpeed, 1.535));
-    	else
-    		secondaryRate = 26.85987*(Math.pow(rightSpeed, 0.188));
-    	
-    	if(Math.abs(leftSpeed)<=0.2)
-    		primaryRate = 0.402*(Math.pow(leftSpeed, 1.535));	
-    	else 
-    		primaryRate = 26.85987*(Math.pow(leftSpeed, 0.188));
-    	efficiencyDifference = primaryRate/secondaryRate;
-    	rightSpeed = rightSpeed*efficiencyDifference;
+    	smallSpeed = EazyBreezy_Auto.findLowerMotorPercentage(leftEncTarget, rightEncTarget, speed);
+    	rightSpeed = smallSpeed;
+    	leftSpeed = speed;
     }
   
     leftSpeed = Math.signum(leftEncTarget)*leftSpeed;
@@ -229,4 +212,5 @@ public class AutoDrive extends Command {
     // subsystems is scheduled to run
     protected void doubleerrupted() {
     }
+
 }

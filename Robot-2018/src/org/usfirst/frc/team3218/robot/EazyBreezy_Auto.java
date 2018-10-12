@@ -56,5 +56,15 @@ public class EazyBreezy_Auto {
 	 		Robot.driveTrain.gyro.reset();
 		
 		}
+
+	 public static double findLowerMotorPercentage(double bigEnc, double smallEnc, double bigSpeed) {
+		 double pRate = smallEnc/bigEnc;
+		 double hypoBig = 68.308*(bigSpeed)-558.133;
+		 double hypoSmall = hypoBig*pRate;
+		 return (hypoSmall + 558.133)/68.308;
+		 
+		 
+		 
+	 }
 }
 
