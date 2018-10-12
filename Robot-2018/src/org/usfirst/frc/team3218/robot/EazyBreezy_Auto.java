@@ -59,9 +59,9 @@ public class EazyBreezy_Auto {
 
 	 public static double findLowerMotorPercentage(double bigEnc, double smallEnc, double bigSpeed) {
 		 double pRate = smallEnc/bigEnc;
-		 double hypoBig = 68.308*(bigSpeed)-558.133;
+		 double hypoBig = 68.308*(bigSpeed*100)-558.133;
 		 double hypoSmall = hypoBig*pRate;
-		 return (hypoSmall + 558.133)/68.308;
+		 return ((hypoSmall + 558.133)/68.308)/100;
 		 
 		 
 		 
