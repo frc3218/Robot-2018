@@ -20,7 +20,7 @@ public class NewScale extends Command {
     	System.out.println("in scale new");
 		
     	Command arcing = new AutoDrive(84, 1, 90, "right", "low", false, null, false);
-		//Command straight = new AutoDrive(12,1,0,"none","low",true,arcing,false);
+    	//Command straight = new AutoDrive(12,1,0,"none","low",true,arcing,false);
     	//Command toSwitch = new AutoDrive(24,1,0,"straight","low",true,arcing,false);
 		
 		System.out.println("made command");

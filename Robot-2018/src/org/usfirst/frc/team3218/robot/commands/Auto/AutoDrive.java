@@ -55,6 +55,7 @@ public class AutoDrive extends Command {
   // percentage to be used to equalize the efficiency
     double efficiencyDifference;
     double smallSpeed;
+    
     public AutoDrive(double distance, double speed, double degrees, String arc, String gear, boolean sequentialCommand, Command sequence, boolean isSequential) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -99,18 +100,11 @@ public class AutoDrive extends Command {
    
     //Setting the distances and speed dependent on which side it is arcing. 
     switch(arc) {
-     case "left": leftEncTarget = smallerEncoderDistance; rightEncTarget = biggerEncoderDistance;
-     leftSpeed = speed*(smallerEncoderDistance/biggerEncoderDistance);
-     rightSpeed = speed;
-     break;
-     case "right" : rightEncTarget = smallerEncoderDistance; leftEncTarget = biggerEncoderDistance;
-     rightSpeed = speed*(smallerEncoderDistance/biggerEncoderDistance);
-     leftSpeed = speed;
-     break;
-     default : leftEncTarget = biggerEncoderDistance; rightEncTarget = biggerEncoderDistance;
-     leftSpeed = speed; rightSpeed = speed;
-     break;
-     
+    case "left": rightSpeed = speed; leftSpeed = EazyBreezy_Auto.findLowerMotorPercentage(rightEncTarget,leftEncTarget,speed);
+    break;
+    case "right": leftSpeed = speed; rightSpeed = EazyBreezy_Auto.findLowerMotorPercentage(leftEncTarget, rightEncTarget, speed);
+    break;
+    default: rightSpeed = speed; leftSpeed=speed;
     }
     
     //Switching depending on gear requested
@@ -121,24 +115,11 @@ public class AutoDrive extends Command {
     case "high" : Robot.driveTrain.highGear();
     break;
     default: Robot.driveTrain.lowGear();
-   System.out.println("initalized it all");
+    System.out.println("initalized it all");
     }
     //Calculating the efficiency difference
-    if(rightEncTarget>leftEncTarget) {
-    	smallSpeed = EazyBreezy_Auto.findLowerMotorPercentage(rightEncTarget, leftEncTarget, speed);
-    	rightSpeed = speed;
-    	leftSpeed = smallSpeed;
-    }
     
-    else if(rightEncTarget==leftEncTarget) {
-    	smallSpeed = speed;
-    }
-    else {
-    	smallSpeed = EazyBreezy_Auto.findLowerMotorPercentage(leftEncTarget, rightEncTarget, speed);
-    	rightSpeed = smallSpeed;
-    	leftSpeed = speed;
-    }
-  
+    
     leftSpeed = Math.signum(leftEncTarget)*leftSpeed;
     rightSpeed = Math.signum(rightEncTarget)*rightSpeed;
     System.out.println("two pi" +(2*Math.PI));
@@ -165,7 +146,22 @@ public class AutoDrive extends Command {
     if(Robot.driveTrain.leftEnc.get()<leftEncTarget)
     	Robot.driveTrain.leftDrive.set(leftSpeed);
     else
-    	Robot.driveTrain.leftDrive.set(leftSpeed);
+    	Robot.driveTrain.leftDrive.set(0);
+    
+    /*
+     * if(Robot.driveTrain.rightEnc.get()<rightEncTarget&&Robot.driveTrain.leftEnc.get()<leftEncTarget){
+     * 
+     * Robot.driveTrain.autoDrive(leftSpeed,rightSpeed);
+     * 
+     * 
+     * }
+     * 
+     * else
+     * end = true;
+     * 
+     * 
+     * 
+     */
     
     if(Robot.driveTrain.leftEnc.get()>leftEncTarget&&Robot.driveTrain.rightEnc.get()>rightEncTarget) {
     	System.out.println("left enc" +Robot.driveTrain.leftEnc.get());
@@ -173,14 +169,14 @@ public class AutoDrive extends Command {
     	end = true;
     }
     }
-   
+    
     else {
         if(Robot.driveTrain.rightEnc.get()>rightEncTarget&&Robot.driveTrain.leftEnc.get()>leftEncTarget) 
         	Robot.driveTrain.autoDrive(leftSpeed, rightSpeed);
         
         else {
         	System.out.println("left enc" +Robot.driveTrain.leftEnc.get());
-        	
+        	System.out.println("right enc: "+ Robot.driveTrain.rightEnc.get());
         	end = true;
         }
     }
@@ -190,7 +186,6 @@ public class AutoDrive extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if(end) {
-        	System.out.println("right enc"+Robot.driveTrain.rightEnc.get());
         	return true;
         }
         else {
