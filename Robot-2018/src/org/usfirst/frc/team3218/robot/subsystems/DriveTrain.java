@@ -43,15 +43,15 @@ public class DriveTrain extends Subsystem {
 	public AnalogAccelerometer accelerometer = new AnalogAccelerometer(RobotMap.accelerometerPort);
 	//public AnalogInput sonarA = new AnalogInput(RobotMap.sonarAPort);
 	//public AnalogInput sonarB = new AnalogInput(RobotMap.sonarBPort);
-	public static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
+	public AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 
-	public static Solenoid leftHighGearShift = new Solenoid(1, RobotMap.leftHighGearShiftPort);
-	public static Solenoid leftLowGearShift = new Solenoid(1, RobotMap.leftLowGearShiftPort);
-	public static Solenoid rightHighGearShift = new Solenoid(1,RobotMap.rightHighGearShiftPort);
-	public static Solenoid rightLowGearShift = new Solenoid(1, RobotMap.rightLowGearShiftPort);
+	public Solenoid leftHighGearShift = new Solenoid(1, RobotMap.leftHighGearShiftPort);
+	public Solenoid leftLowGearShift = new Solenoid(1, RobotMap.leftLowGearShiftPort);
+	public Solenoid rightHighGearShift = new Solenoid(1,RobotMap.rightHighGearShiftPort);
+	public Solenoid rightLowGearShift = new Solenoid(1, RobotMap.rightLowGearShiftPort);
 	
 	public Encoder leftEnc = new Encoder(RobotMap.leftEncoderPortA, RobotMap.leftEncoderPortB);
-	public Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB);
+	public Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB,true);
 	// Grouping Together Drives
 	
 	
@@ -61,7 +61,7 @@ public class DriveTrain extends Subsystem {
 	
 	DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
 	
-	
+
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -92,31 +92,30 @@ public class DriveTrain extends Subsystem {
     	rightMidDrive.config_kD(0, 0, 0);
 		rightEnc.reset();
 		leftEnc.reset();
-		rightEnc.setReverseDirection(true);
-		leftEnc.setReverseDirection(false);
 	}
+	
 	public void drive(double y, double z) {
 		
-    	drive.arcadeDrive(y, z*.95);
+    	drive.arcadeDrive(y, z,false);
 		
 		
     }
 	public void autoDrive(double left, double right) {
-		
-	    	drive.tankDrive(left, right);
-	    
+			SmartDashboard.putNumber("auto drive left" , left);
+			SmartDashboard.putNumber("auto drive right" , right);
+	    	drive.tankDrive(left, right,false);
+	    	
     }
     
 	public void driveWithXbox(double y,double z){
-		
 		if(Math.abs(y) < .2)  y=0;
 		
+		if(Math.abs(z)<.2) z = 0;
 		if(y>-0.3){
 			Robot.driveTrain.drive(y,z);
 		}else{
 			Robot.driveTrain.drive(y,-z);
 		}
-		
 		
 	}
     public void lowGear(){

@@ -43,7 +43,7 @@ public class AutoDrive extends Command {
   //The smaller radius, in inches
     double smallerRadius;
   // The gap between the wheels, used to calculate the secondary radius from the first (measured in inches)
-    final double wheelGap = 18.75;
+    final double wheelGap = 22.5;
   // speeds for each side
     double leftSpeed, rightSpeed;
   // used for calculating the distance in inches that the robot moved on the x and y axes.
@@ -55,7 +55,7 @@ public class AutoDrive extends Command {
   // percentage to be used to equalize the efficiency
     double efficiencyDifference;
     double smallSpeed;
-    
+    boolean leftFinished = false,rightFinished = false;
     public AutoDrive(double distance, double speed, double degrees, String arc, String gear, boolean sequentialCommand, Command sequence, boolean isSequential) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -100,9 +100,11 @@ public class AutoDrive extends Command {
    
     //Setting the distances and speed dependent on which side it is arcing. 
     switch(arc) {
-    case "left": rightSpeed = speed; leftSpeed = EazyBreezy_Auto.findLowerMotorPercentage(rightEncTarget,leftEncTarget,speed);
+    case "left": leftEncTarget = smallerEncoderDistance; rightEncTarget = biggerEncoderDistance;
+    	rightSpeed = speed; leftSpeed = EazyBreezy_Auto.findLowerMotorPercentage(rightEncTarget,leftEncTarget,speed);
     break;
-    case "right": leftSpeed = speed; rightSpeed = EazyBreezy_Auto.findLowerMotorPercentage(leftEncTarget, rightEncTarget, speed);
+    case "right": rightEncTarget = smallerEncoderDistance; leftEncTarget = biggerEncoderDistance;
+    	leftSpeed = speed; rightSpeed = EazyBreezy_Auto.findLowerMotorPercentage(leftEncTarget, rightEncTarget, speed);
     break;
     default: rightSpeed = speed; leftSpeed=speed;
     }
@@ -132,42 +134,37 @@ public class AutoDrive extends Command {
     System.out.println("right sped" +rightSpeed);
     System.out.println("right target" +rightEncTarget);
     System.out.println("left target" + leftEncTarget);
+    System.out.println("Signum ofleftEncTarget is: "+ Math.signum(leftEncTarget));
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     //The driving command call
     // If both encoders hit their mark or if a button is pushed that cancels autonomous (if in Tele-op and is stuck)
     if(Math.signum(leftEncTarget)==1) {
-    	
-    if(Robot.driveTrain.rightEnc.get()<rightEncTarget)
-    	Robot.driveTrain.rightDrive.set(rightSpeed);
-    else 
-    	Robot.driveTrain.rightDrive.set(0);
-    if(Robot.driveTrain.leftEnc.get()<leftEncTarget)
-    	Robot.driveTrain.leftDrive.set(leftSpeed);
-    else
-    	Robot.driveTrain.leftDrive.set(0);
-    
     /*
-     * if(Robot.driveTrain.rightEnc.get()<rightEncTarget&&Robot.driveTrain.leftEnc.get()<leftEncTarget){
-     * 
-     * Robot.driveTrain.autoDrive(leftSpeed,rightSpeed);
-     * 
-     * 
-     * }
-     * 
-     * else
-     * end = true;
-     * 
-     * 
-     * 
-     */
-    
-    if(Robot.driveTrain.leftEnc.get()>leftEncTarget&&Robot.driveTrain.rightEnc.get()>rightEncTarget) {
-    	System.out.println("left enc" +Robot.driveTrain.leftEnc.get());
-    	
+    if(Robot.driveTrain.rightEnc.get()>rightEncTarget)
+    	rightFinished = true;
+    if(Robot.driveTrain.leftEnc.get()>leftEncTarget)
+    	leftFinished = true;
+    if(rightFinished&&leftFinished)
     	end = true;
-    }
+    else if(!rightFinished&&leftFinished)
+    	Robot.driveTrain.autoDrive(0,rightSpeed);
+    else if(!leftFinished&&rightFinished)
+    	Robot.driveTrain.autoDrive(leftSpeed,0);
+    else if(!leftFinished&&!rightFinished)
+    	Robot.driveTrain.autoDrive(leftSpeed,rightSpeed);
+    */  
+      if(Robot.driveTrain.rightEnc.get()<rightEncTarget&&Robot.driveTrain.leftEnc.get()<leftEncTarget){
+      Robot.driveTrain.autoDrive(leftSpeed,rightSpeed);
+      }
+      else {
+      end = true;
+      System.out.println("Signum was ==1");
+      System.out.println("Gyro at end: "+ Robot.driveTrain.gyro.getAngle());
+      System.out.println("Left enc at end :"+ Robot.driveTrain.leftEnc.get());
+      System.out.println("Right enc at end :"+ Robot.driveTrain.rightEnc.get());
+      }
     }
     
     else {
@@ -175,12 +172,12 @@ public class AutoDrive extends Command {
         	Robot.driveTrain.autoDrive(leftSpeed, rightSpeed);
         
         else {
-        	System.out.println("left enc" +Robot.driveTrain.leftEnc.get());
-        	System.out.println("right enc: "+ Robot.driveTrain.rightEnc.get());
+        	System.out.println("Gyro at end: "+ Robot.driveTrain.gyro.getAngle());
+            System.out.println("Left enc at end :"+ Robot.driveTrain.leftEnc.get());
+            System.out.println("Right enc at end :"+ Robot.driveTrain.rightEnc.get());
         	end = true;
         }
     }
-    
     
     }
     // Make this return true when this Command no longer needs to run execute()
@@ -205,7 +202,8 @@ public class AutoDrive extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void doubleerrupted() {
+    protected void interrupted() {
+   
     }
 
 }

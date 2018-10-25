@@ -10,13 +10,15 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import java.lang.invoke.SwitchPoint;
 import java.util.function.DoubleToLongFunction;
 
-import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.AverageEncoder;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
-import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.FastDrop;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.MediumDrop;
+import org.usfirst.frc.team3218.robot.commands.CubeControl.SlowDrop;
 import org.usfirst.frc.team3218.robot.commands.Lift.DriverDown;
 import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearHigh;
 import org.usfirst.frc.team3218.robot.commands.Lift.LiftGearLow;
@@ -57,8 +59,6 @@ public class OI {
 	public static Button startButton = new JoystickButton(xbox,8);
 	public static Button leftJoyClick = new JoystickButton(xbox,9);
 	public static Button rightJoyClick = new JoystickButton(xbox,10);
-	
-	
 	public static Button liftBottom = new JoystickButton(guitar, 5);
 	public static Button liftSwitch = new JoystickButton(guitar, 3);
 	public static Button liftScaleLow = new JoystickButton(guitar, 4);
@@ -106,7 +106,10 @@ public class OI {
 	//	 liftScaleLow.whileHeld(new SetLiftPositionScaleLow());
 		 liftScaleMid.whileHeld(new SetLiftPositionScaleMid());
 		 liftScaleHigh.whileHeld(new SetLiftPositionScaleHigh());
-
+		 bButton.whileHeld(new FastDrop());
+		 aButton.whileHeld(new MediumDrop());
+		 xButton.whileHeld(new SlowDrop());
+		 yButton.whenPressed(new AverageEncoder());
 	 }
 	 
 	 

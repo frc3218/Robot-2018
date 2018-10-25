@@ -5,7 +5,6 @@ import java.security.PublicKey;
 import javax.print.attribute.standard.Compression;
 
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
-import org.usfirst.frc.team3218.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3218.robot.commands.Auto.AutoGroup;
 import org.usfirst.frc.team3218.robot.commands.Auto.CrossLine;
 import org.usfirst.frc.team3218.robot.commands.Auto.NewScale;
@@ -25,10 +24,7 @@ import org.usfirst.frc.team3218.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3218.robot.subsystems.Lift;
 import org.usfirst.frc.team3218.robot.subsystems.Vision;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -189,7 +185,7 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 		SmartDashboard.putNumber("Left Encoder", driveTrain.leftMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Encoder", driveTrain.rightMidDrive.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Encoder", lift.liftMaster.getSelectedSensorPosition(0));
-	
+		
 	}
 
 	@Override
@@ -251,6 +247,8 @@ SmartDashboard.putString("autoString",  position.getSelected() + path.getSelecte
 	    
 	    SmartDashboard.putBoolean("Compressor Pressure Switch", compressor.getPressureSwitchValue());
 	    SmartDashboard.putNumber("Right stick y", oi.getXboxControllerRightY());
+	
+	    SmartDashboard.putNumber("Averaged Encoder Rates (L+R)", (driveTrain.leftEnc.getRate()+driveTrain.rightEnc.getRate())/2);
 	}
 
 	/**

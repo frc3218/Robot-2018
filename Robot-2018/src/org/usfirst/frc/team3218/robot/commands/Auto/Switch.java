@@ -77,7 +77,6 @@ public class Switch extends Command {
     				Robot.cubeControl.cubeEjection(.8);
     				Timer.delay(2);
     				AutoAPI.simpleDrive(-18);
-    			
     			break;
     			case "3R":
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH-36, 2000, 250);
