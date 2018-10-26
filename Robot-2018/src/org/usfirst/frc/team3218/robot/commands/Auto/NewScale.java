@@ -19,12 +19,12 @@ public class NewScale extends Command {
     protected void initialize() {
     	System.out.println("in scale new");
 		
-    	Command arcing = new AutoDrive(84, 1, 90, "right", "low", false, null, false);
-    	//Command straight = new AutoDrive(12,1,0,"none","low",true,arcing,false);
+    	Command arcing = new AutoDrive(72, 1, 90, "right", "low", false, null, true);
+    	Command straight = new AutoDrive(12,1,0,"none","low",true,arcing,false);
     	//Command toSwitch = new AutoDrive(24,1,0,"straight","low",true,arcing,false);
 		
 		System.out.println("made command");
-		EazyBreezy_Auto.autoDriving(arcing);
+		EazyBreezy_Auto.autoDriving(straight);
 		System.out.println("did auto driving to switch");
 		stop = true;
 		

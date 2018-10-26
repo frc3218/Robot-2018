@@ -140,12 +140,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		System.out.println("about to auto");
-		new NewScale().start();
+		driveTrain.gyro.reset();
+		lift.liftPIDConfig();
+		driveTrain.drivePIDConfig();
+		pdp.clearStickyFaults();
+		AutoAPI.breakAuto = false;
 		lift.gearHigh();
-		//autonomousCommand = chooser.getSelected();
-		
-		
 		System.out.println("auto'd");
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -158,11 +158,11 @@ public class Robot extends IterativeRobot {
 			case "Nothing": autonomousCommand = new Nothing(); break; 
 			case "Line": autonomousCommand = new CrossLine(); break;
 			case "Switch": autonomousCommand = new Switch(); break;
-			case "Scale": autonomousCommand = new NewScale(); break;
+			case "Scale": autonomousCommand = new Scale(); break;
 			//case "SwitchScale": autonomousCommand = new AutoGroup(); break;
 		//	case "SideSwitch": autonomousCommand = new SideSwitch(); break;
 			case "SimpleSwitch": autonomousCommand = new SimpleSwitch(); break;
-			default: autonomousCommand = new NewScale(); break;
+			default: autonomousCommand = new CrossLine(); break;
 			}
 		
 			
@@ -170,7 +170,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 SmartDashboard.putString("autoString",  position.getSelected() + path.getSelected() + Robot.gameData);
-	
+SmartDashboard.putData(autonomousCommand);
 	}
 	/**
 	 * This function is called periodically during autonomous

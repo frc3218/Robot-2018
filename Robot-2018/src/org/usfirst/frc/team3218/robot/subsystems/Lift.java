@@ -101,9 +101,7 @@ public class Lift extends Subsystem {
     public void manual(){
     	//0 is up -1 is hold 180 is down
     	//Cim values need to be checked against the actual motor
-
-
-    
+    	
 		switch (Robot.oi.guitar.getPOV()) {
 
 		case GUITAR_MANUAL_UP:

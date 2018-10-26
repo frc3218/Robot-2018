@@ -21,8 +21,8 @@ public class CrossLine extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	Command driveStraight = new AutoDrive(EazyBreezy_Auto.AUTOLINE, 1, 0, "straight", "low", false, null, false);
-    	EazyBreezy_Auto.autoDriving(driveStraight);
+    	AutoAPI.driveStraight(AutoAPI.AUTOLINE-24, 2000, 250);
+
     }
 
     // Called repeatedly when this Command is scheduled to run

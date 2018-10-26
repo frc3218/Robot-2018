@@ -51,9 +51,8 @@ public class DriveTrain extends Subsystem {
 	public Solenoid rightLowGearShift = new Solenoid(1, RobotMap.rightLowGearShiftPort);
 	
 	public Encoder leftEnc = new Encoder(RobotMap.leftEncoderPortA, RobotMap.leftEncoderPortB);
-	public Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB,true);
+	public Encoder rightEnc = new Encoder(RobotMap.rightEncoderPortA, RobotMap.rightEncoderPortB);
 	// Grouping Together Drives
-	
 	
 	public SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftBottomDrive, leftMidDrive, leftTopDrive);
 	public 	SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightBottomDrive, rightMidDrive, rightTopDrive);
@@ -92,27 +91,41 @@ public class DriveTrain extends Subsystem {
     	rightMidDrive.config_kD(0, 0, 0);
 		rightEnc.reset();
 		leftEnc.reset();
+		
 	}
 	
 	public void drive(double y, double z) {
 		
-    	drive.arcadeDrive(y, z,false);
+    	drive.arcadeDrive(y, z);
 		
 		
     }
-	public void autoDrive(double left, double right) {
+	/*public void autoDrive(double left, double right) {
 			SmartDashboard.putNumber("auto drive left" , left);
 			SmartDashboard.putNumber("auto drive right" , right);
 	    	drive.tankDrive(left, right,false);
 	    	
     }
-    
+    */
+	
+	public void autoDrive(double y, double z) {
+		//	if(Robot.pdp.getVoltage()>8){
+				
+		    	drive.arcadeDrive(y, z,false);
+		    	
+			//	}
+			//	else{
+		//			
+			//		drive.arcadeDrive(y/2, z/2,false);
+			//	}
+	}
+	
 	public void driveWithXbox(double y,double z){
 		if(Math.abs(y) < .2)  y=0;
 		
 		if(Math.abs(z)<.2) z = 0;
-		if(y>-0.3){
-			Robot.driveTrain.drive(.3,0);
+		if(y>-0.45){
+			Robot.driveTrain.drive(y,z);
 		}else{
 			Robot.driveTrain.drive(y,-z);
 		}

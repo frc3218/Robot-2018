@@ -62,16 +62,16 @@ public class EazyBreezy_Auto {
 		 //old formula y= 68.308x-558.133
 		 //new formula y= -7.6767x10^-4(x^3)+.0553x^2+61.917x-507.642
 		 //new inverse y= 0.0168x + 6.3983
+		 double bigSpeedHundo = bigSpeed*100;
 		 
 		 double pRate = smallEnc/bigEnc;
-		 double hypoBig = (-7.6767*Math.pow(10,-4)*Math.pow(bigSpeed,3)) + 0.553*Math.pow(bigSpeed,2)
-		 +61.917*bigSpeed -507.642;
+		 double hypoBig = ((-7.6767*Math.pow(10,-4))*Math.pow(bigSpeedHundo,3)) + (0.0553*Math.pow(bigSpeedHundo,2))
+		 +(61.917*bigSpeedHundo) -507.642;
 		 double hypoSmall = hypoBig*pRate;
 		 System.out.println("hypo small: "+ hypoSmall);
 		 System.out.println("Hypo big: "+ hypoBig);
-		 return (0.0168*hypoSmall)+6.3983;
-		 
-		 
+		 return ((0.0168*hypoSmall)+6.3983)/100;
+		
 		 
 	 }
 }

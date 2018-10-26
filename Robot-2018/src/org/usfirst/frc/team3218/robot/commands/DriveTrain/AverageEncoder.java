@@ -22,11 +22,11 @@ public class AverageEncoder extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    if(times<100) {
+    if(times<250) {
     	bigNumber = bigNumber+Robot.driveTrain.rightEnc.getRate();
     }
     else {
-    	System.out.println((bigNumber/100));
+    	System.out.println((bigNumber/250));
     	end = true;
     }
     	times++;

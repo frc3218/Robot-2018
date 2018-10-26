@@ -30,6 +30,7 @@ public class Switch extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("entered switch");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -77,6 +78,7 @@ public class Switch extends Command {
     				Robot.cubeControl.cubeEjection(.8);
     				Timer.delay(2);
     				AutoAPI.simpleDrive(-18);
+    			
     			break;
     			case "3R":
     				AutoAPI.driveStraight(AutoAPI.WALL_TO_SWITCH-36, 2000, 250);

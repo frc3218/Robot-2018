@@ -19,7 +19,7 @@ public class Scale extends Command {
     	requires(Robot.lift);
     	requires(Robot.cubeControl);
     }
-
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     }

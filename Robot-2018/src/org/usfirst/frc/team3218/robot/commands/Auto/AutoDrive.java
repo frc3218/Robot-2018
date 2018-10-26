@@ -43,7 +43,7 @@ public class AutoDrive extends Command {
   //The smaller radius, in inches
     double smallerRadius;
   // The gap between the wheels, used to calculate the secondary radius from the first (measured in inches)
-    final double wheelGap = 22.5;
+    final double wheelGap = 24;
   // speeds for each side
     double leftSpeed, rightSpeed;
   // used for calculating the distance in inches that the robot moved on the x and y axes.
