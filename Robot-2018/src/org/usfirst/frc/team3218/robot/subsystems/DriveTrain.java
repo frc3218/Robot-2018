@@ -112,7 +112,7 @@ public class DriveTrain extends Subsystem {
 		
 		if(Math.abs(z)<.2) z = 0;
 		if(y>-0.3){
-			Robot.driveTrain.drive(y,z);
+			Robot.driveTrain.drive(.3,0);
 		}else{
 			Robot.driveTrain.drive(y,-z);
 		}

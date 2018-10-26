@@ -13,6 +13,7 @@ import java.util.function.DoubleToLongFunction;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.AverageEncoder;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftHigh;
 import org.usfirst.frc.team3218.robot.commands.DriveTrain.GearShiftLow;
+import org.usfirst.frc.team3218.robot.commands.DriveTrain.testing;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeCollectionOn;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeControlOff;
 import org.usfirst.frc.team3218.robot.commands.CubeControl.CubeEjectionOn;
@@ -108,8 +109,9 @@ public class OI {
 		 liftScaleHigh.whileHeld(new SetLiftPositionScaleHigh());
 		 bButton.whileHeld(new FastDrop());
 		 aButton.whileHeld(new MediumDrop());
-		 xButton.whileHeld(new SlowDrop());
+		// xButton.whileHeld(new SlowDrop());
 		 yButton.whenPressed(new AverageEncoder());
+		 xButton.whileHeld(new testing());
 	 }
 	 
 	 
